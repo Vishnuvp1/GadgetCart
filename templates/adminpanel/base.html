@@ -1,0 +1,45 @@
+{% load static %}
+
+<!DOCTYPE html>
+    <html lang="en">
+
+    
+<!-- Mirrored from coderthemes.com/hyper/saas/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 11 Nov 2021 07:48:55 GMT -->
+        <head>
+        <meta charset="utf-8" />
+        <title>{% block title %} {% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+        <meta content="Coderthemes" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{% static 'adminpanel/images/favicon.ico' %}">
+
+        <!-- third party css -->
+        <link href="{% static 'adminpanel/css/vendor/jquery-jvectormap-1.2.2.css' %}" rel="stylesheet" type="text/css" />
+        <!-- third party css end -->
+
+        <!-- App css -->
+        <link href="{% static 'adminpanel/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'adminpanel/css/app.min.css' %}" rel="stylesheet" type="text/css" id="light-style" />
+        <link href="{% static 'adminpanel/css/app-dark.min.css' %}" rel="stylesheet" type="text/css" id="dark-style" />
+
+    </head>
+
+    <!-- sidebar -->
+    {% include 'adminpanel/includes/sidebar.html' %}
+
+    <!-- navbar -->
+    {% include 'adminpanel/includes/navbar.html' %}
+
+    {% block content %}
+    <!-- content -->
+    {% endblock %}
+
+    {% block script %}
+    {% endblock %}
+
+   
+    
+
+
+    </html>
