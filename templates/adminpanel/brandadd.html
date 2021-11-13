@@ -1,63 +1,32 @@
 {% extends 'adminpanel/base.html' %}
 
+{% load crispy_forms_tags %}
+
+{% load crispy_forms_filters %}
+
 {% load static %}
 
 {% block content %}
 <!-- Start Content-->
 
-<div class="container">
-    <h4 class="ml-5 mt-3 mb-3">PRODUCT LIST</h4>
 
 
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
 
-                    <div class="tab-content">
-                        <div class="tab-pane show active" id="striped-rows-preview">
-                            <div class="table-responsive-sm">
-                                <table class="table table-centered mb-0" style="color: black;">
-                                    <thead>
-                                        <tr>
-                                            <th>Product</th>
-                                            <th>Price</th>
-                                            <th>Category</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for product in products %}
-                                        <tr>
-                                            <td class="table-user">
-                                                <img src="{{ product.images.url }}" alt="table-user" />
-                                                {{ product.product_name }}
-                                            </td>
-                                            <td>{{ product.price }}</td>
-                                            <td>{{ product.category }}</td>
-                                            <td class="table-action">
-                                                <a href=""><span class="material-icons">edit</span></a>
-                                                <a href="{% url 'productdelete' product.id %}"><span
-                                                        class="material-icons">delete</span></a>
-                                                <!-- <a href="{% url 'productdelete' product.id %}" onclick="deleteproduct()"><span
-                                                    class="material-icons">delete</span></a> -->
+<div class="card mx-auto mt-4" style="max-width:700px;">
+    <article class="card-body">
+        <div class="container col-10">
+            <div class="container-fluid text-center ">
+                <h4 class="ml-5 mt-3 mb-3 text-black">ADD CATEGORY</h4>
 
-
-                                            </td>
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div> <!-- end table-responsive-->
-                        </div> <!-- end preview-->
-                    </div>
-                </div>
             </div>
+            <form action="{% url 'brandadd' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form | crispy }}
+                <input type="submit" class="btn btn-outline-primary mt-2" value="Submit">
+            </form>
         </div>
-
-    </div>
+    </article>
 </div>
-
 
 
 <!-- Footer Start -->
@@ -193,25 +162,5 @@
 <script src="{% static 'adminpanel/js/pages/demo.dashboard.js' %}"></script>
 <!-- end demo js-->
 
-<script>
-    function deleteproduct() {
-        event.preventDefault();
-        var dlt = event.currentTarget.href
-        console.log(dlt)
-        swal.fire({
-            title: "Are you sure?",
-            text: "Once deleted, you will not be able to recover this imaginary file!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-            if(result.isConfirmed) {
-            window.location = dlt;
-        }
-    })
-}
-</script>
 
 {% endblock %}

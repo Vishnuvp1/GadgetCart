@@ -1,7 +1,7 @@
-   {% load static %}
-   
-   <!-- Begin page -->
-   <div class="wrapper">
+{% load static %}
+
+<!-- Begin page -->
+<div class="wrapper">
     <!-- ========== Left Sidebar Start ========== -->
     <div class="leftside-menu">
 
@@ -33,17 +33,19 @@
                 <!-- <li class="side-nav-title side-nav-item">Navigation</li> -->
 
                 <li class="side-nav-item">
-                    <a data-bs-toggle="collapse" href="#sidebarDashboards" aria-expanded="false" aria-controls="sidebarDashboards" class="side-nav-link">
+                    <a data-bs-toggle="collapse" href="#sidebarDashboards" aria-expanded="false"
+                        aria-controls="sidebarDashboards" class="side-nav-link">
                         <i class="uil-home-alt"></i>
                         <span> Dashboards </span>
                     </a>
-                   
+
                 </li>
 
-               
+
 
                 <li class="side-nav-item">
-                    <a data-bs-toggle="collapse" href="#sidebarEcommerce" aria-expanded="false" aria-controls="sidebarEcommerce" class="side-nav-link">
+                    <a data-bs-toggle="collapse" href="#sidebarEcommerce" aria-expanded="false"
+                        aria-controls="sidebarEcommerce" class="side-nav-link">
                         <i class="uil-store"></i>
                         <span> Products</span>
                         <span class="menu-arrow"></span>
@@ -56,17 +58,18 @@
                             <li>
                                 <a href="{% url 'productadd' %}">Add Product</a>
                             </li>
-                            
+
                         </ul>
                     </div>
                 </li>
 
-                
+
 
                 <li class="side-nav-item">
-                    <a data-bs-toggle="collapse" href="#sidebarEmail" aria-expanded="false" aria-controls="sidebarEmail" class="side-nav-link">
+                    <a data-bs-toggle="collapse" href="#sidebarEmail" aria-expanded="false" aria-controls="sidebarEmail"
+                        class="side-nav-link">
                         <i class="uil-envelope"></i>
-                        <span> Category  </span>
+                        <span> Category </span>
                         <span class="menu-arrow"></span>
                     </a>
                     <div class="collapse" id="sidebarEmail">
@@ -82,7 +85,27 @@
                 </li>
 
                 <li class="side-nav-item">
-                    <a data-bs-toggle="collapse" href="#sidebarProjects" aria-expanded="false" aria-controls="sidebarProjects" class="side-nav-link">
+                    <a data-bs-toggle="collapse" href="#sidebarMaps" aria-expanded="false" aria-controls="sidebarMaps"
+                        class="side-nav-link">
+                        <i class="uil-location-point"></i>
+                        <span> Brands </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="sidebarMaps">
+                        <ul class="side-nav-second-level">
+                            <li>
+                                <a href="{% url 'brandlist' %}">Brands List</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'brandadd' %}">Add Brands</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="side-nav-item">
+                    <a data-bs-toggle="collapse" href="#sidebarProjects" aria-expanded="false"
+                        aria-controls="sidebarProjects" class="side-nav-link">
                         <i class="uil-briefcase"></i>
                         <span> Orders </span>
                         <span class="menu-arrow"></span>
@@ -95,15 +118,16 @@
                             <li>
                                 <a href="apps-projects-details.html">Order History</a>
                             </li>
-                            
+
                         </ul>
                     </div>
                 </li>
 
-                
+
 
                 <li class="side-nav-item">
-                    <a data-bs-toggle="collapse" href="#sidebarTasks" aria-expanded="false" aria-controls="sidebarTasks" class="side-nav-link">
+                    <a data-bs-toggle="collapse" href="#sidebarTasks" aria-expanded="false" aria-controls="sidebarTasks"
+                        class="side-nav-link">
                         <i class="uil-clipboard-alt"></i>
                         <span> Users </span>
                         <span class="menu-arrow"></span>
@@ -116,17 +140,18 @@
                             <li>
                                 <a href="apps-tasks-details.html">Blocked Users</a>
                             </li>
-                            
+
                         </ul>
                     </div>
                 </li>
 
-                
 
-               
+
+
 
                 <li class="side-nav-item">
-                    <a data-bs-toggle="collapse" href="#sidebarPages" aria-expanded="false" aria-controls="sidebarPages" class="side-nav-link">
+                    <a data-bs-toggle="collapse" href="#sidebarPages" aria-expanded="false" aria-controls="sidebarPages"
+                        class="side-nav-link">
                         <i class="uil-copy-alt"></i>
                         <span> Banners </span>
                         <span class="menu-arrow"></span>
@@ -139,15 +164,16 @@
                             <li>
                                 <a href="pages-profile-2.html">Add Banners</a>
                             </li>
-                           
+
                         </ul>
                     </div>
                 </li>
 
-               
+
 
                 <li class="side-nav-item">
-                    <a data-bs-toggle="collapse" href="#sidebarLayouts" aria-expanded="false" aria-controls="sidebarLayouts" class="side-nav-link">
+                    <a data-bs-toggle="collapse" href="#sidebarLayouts" aria-expanded="false"
+                        aria-controls="sidebarLayouts" class="side-nav-link">
                         <i class="uil-window"></i>
                         <span> Coupons </span>
                         <span class="menu-arrow"></span>
@@ -163,10 +189,10 @@
                         </ul>
                     </div>
                 </li>
-    
-                
 
-               
+
+
+
 
 
                 <li class="side-nav-item">
@@ -178,7 +204,7 @@
 
             </ul>
 
-            
+
             <!-- End Sidebar -->
 
             <div class="clearfix"></div>

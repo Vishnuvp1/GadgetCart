@@ -10,36 +10,18 @@
 
         </div>
 
-        {% for category in categories %}
-
-            {{ category.category_name }}
-
-           <img src="{{ category.cat_image.url }}" > 
-
-
-        {% endfor %}
-
-        <div class="row">
+        <div class="row p-3">
             {% for category in categories %}
-            <div class="col-md-4">
-                <figure class="card card-product-grid">
-                    <div class="img-wrap"> 
-                       
-                        <div>
-                             <img src="{{ category.cat_image.url }}" > 
-                    </div>
-                    
-                        
+            <div class="col-md-2">
+                <figure class="card card-product-grid" style="display: flex; align-items: center; justify-content: start; padding-top: 1rem; height: 18rem; max-width: 300px;">
+                    <div class="img-wrap" > 
+                             <img src="{{ category.cat_image.url }}" style="width: 200px; height: 200px"> 
                     </div> <!-- img-wrap.// -->
                     <figcaption class="info-wrap">
                         <div class="fix-height">
-                            <a href="./product-detail.html" class="title">Great item name goes here</a>
-                            <div class="price-wrap mt-2">
-                                <span class="price">$1280</span>
-                                <del class="price-old">$1980</del>
-                            </div> <!-- price-wrap.// -->
+                            <a href="./product-detail.html" class="title" style="font-size: 1.5rem; font-weight: 900;">{{ category.category_name }}</a>
+                           
                         </div>
-                        <a href="#" class="btn btn-block btn-success">Added to cart </a>
                     </figcaption>
                 </figure>
                
@@ -158,8 +140,6 @@
                     <div class="d-grid mt-4">
                         <button class="btn btn-primary" id="resetBtn">Reset to Default</button>
             
-                        <a href="https://themes.getbootstrap.com/product/hyper-responsive-admin-dashboard-template/"
-                            class="btn btn-danger mt-3" target="_blank"><i class="mdi mdi-basket me-1"></i> Purchase Now</a>
                     </div>
                 </div> <!-- end padding-->
 

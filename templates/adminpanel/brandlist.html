@@ -1,35 +1,37 @@
 {% extends 'adminpanel/base.html' %}
 
-{% load crispy_forms_tags %}
-
-{% load crispy_forms_filters %}
-
-
-{% block title %} Add Product {% endblock %}
-
 {% load static %}
 
 {% block content %}
 <!-- Start Content-->
 
-    
-<div class="card mx-auto mt-4" style="max-width:700px;">
-    <article class="card-body">
-<div class="container col-10">
-    <div class="container-fluid text-center ">
-        <h4 class="ml-5 mt-3 mb-3 text-black">ADD PRODUCT</h4>
+    <div class="container-fluid ">
+            <h4 class="ml-5 mt-3">CATEGORY LIST</h4>
 
-    </div>
-        <form action="{% url 'productadd' %}" method="post" enctype="multipart/form-data" >
-            {% csrf_token %}
-            {{ form | crispy }}
-            <input type="submit"class="btn btn-outline-primary mt-3" value="Submit">
-        </form>
-    </div>
-</article>
-</div>
-        
-                          
+        </div>
+
+        <div class="row p-3">
+            {% for brand in brands %}
+            <div class="col-md-2">
+                <figure class="card card-product-grid" style="display: flex; align-items: center; justify-content: start; padding-top: 1rem; height: 18rem; max-width: 300px;">
+                    <div class="img-wrap" > 
+                             <img src="{{ brand.brand_image.url }}" style="width: 200px; height: 200px"> 
+                    </div> <!-- img-wrap.// -->
+                    <figcaption class="info-wrap">
+                        <div class="fix-height">
+                            <a href="./product-detail.html" class="title" style="font-size: 1.5rem; font-weight: 900;">{{ brand.brand_name }}</a>
+                           
+                        </div>
+                    </figcaption>
+                </figure>
+               
+            </div> <!-- col.// -->
+            {% endfor %}
+            
+        </div> <!-- row end.// -->
+
+
+
         
 
                 <!-- Footer Start -->
@@ -138,8 +140,6 @@
                     <div class="d-grid mt-4">
                         <button class="btn btn-primary" id="resetBtn">Reset to Default</button>
             
-                        <a href="https://themes.getbootstrap.com/product/hyper-responsive-admin-dashboard-template/"
-                            class="btn btn-danger mt-3" target="_blank"><i class="mdi mdi-basket me-1"></i> Purchase Now</a>
                     </div>
                 </div> <!-- end padding-->
 

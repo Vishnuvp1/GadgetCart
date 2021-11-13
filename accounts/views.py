@@ -52,8 +52,8 @@ def signout(request):
     auth.logout(request)
     messages.success(request, 'You are logged out.')
     return redirect('signin')
+
     
 
-def adminsignin(request):
-    return render(request, 'adminpanel/adminsignin.html')
+
 
