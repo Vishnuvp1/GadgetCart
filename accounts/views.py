@@ -1,9 +1,8 @@
-from django.contrib.auth.models import UserManager
-from django.shortcuts import render
-
-from accounts.models import Account
+from django.contrib import messages, auth
+from django.shortcuts import redirect, render
 from .forms import RegistrationForm
 from .models import Account
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -21,6 +20,8 @@ def register(request):
             user = Account.objects.create_user(first_name=first_name, last_name=last_name, email=email, username=username, password=password)
             user.phone_number = phone_number
             user.save()
+            messages.success(request, 'Registration Successful.')
+            return redirect('register')
     else:
         form = RegistrationForm()
 
@@ -30,11 +31,27 @@ def register(request):
     return render(request, 'user/register.html', context)
 
 def signin(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        password = request.POST['password']
+
+        user = auth.authenticate(email=email, password=password)
+
+        if user is not None:
+            auth.login(request, user)
+            # messages.success(request, 'You are now logged in.')
+            return redirect('homepage')
+        else:
+            messages.error(request, 'Invalid login credentials')
+            return redirect('signin')
     return render(request, 'user/signin.html')
 
 
+@login_required(login_url = 'signin')
 def signout(request):
-    return 
+    auth.logout(request)
+    messages.success(request, 'You are logged out.')
+    return redirect('signin')
     
 
 def adminsignin(request):
