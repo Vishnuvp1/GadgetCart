@@ -14,6 +14,43 @@ def adminpanel(request):
 
     return render(request, 'adminpanel/adminpanel.html')
 
+
+def adminsignin(request):
+
+    if request.user.is_authenticated:
+        return redirect('adminpanel')
+
+
+    if request.method == 'POST':
+        email = request.POST['email']
+        password = request.POST['password']
+
+        user = auth.authenticate(email=email, password=password)
+
+        if user is not None:
+
+            if user.is_admin:
+                auth.login(request, user)
+                
+                return redirect('adminpanel')
+            else:
+                messages.info(request, 'You are not admin')
+                return redirect('adminsignin')
+        else:
+            messages.error(request, 'Invalid login credentials')
+            return redirect('adminsignin')
+    else:
+        return render(request, 'adminpanel/adminsignin.html')
+        
+
+
+@login_required(login_url = 'adminsignin')
+def adminsignout(request):
+    auth.logout(request)
+    messages.success(request, 'You are logged out.')
+    return redirect('adminsignin')
+
+
 def productlist(request):
 
     products = Product.objects.all().filter(is_available=True)
@@ -42,6 +79,33 @@ def productadd(request):
     }
 
     return render(request, 'adminpanel/productadd.html', context)
+
+
+
+
+def productdelete(request,product_id):
+    dlt = Product.objects.get(id=product_id)
+    dlt.delete()
+    return redirect('productlist')
+
+
+def productedit(request, product_id):
+    product = Product.objects.get(pk=product_id)
+    form = ProductForm(instance=product)
+
+    if request.method == 'POST':
+        form = ProductForm(request.POST, instance=product)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Successfully product updated')
+            return redirect('productlist')
+
+    context = {
+        'form': form
+    }
+    return render(request, 'adminpanel/productedit.html', context)
+
+
 
 
 
@@ -96,63 +160,6 @@ def categoryedit(request, category_id):
         'form': form
     }
     return render(request, 'adminpanel/categoryedit.html', context)
-
-
-
-def adminsignin(request):
-
-    if request.user.is_authenticated:
-        return redirect('adminpanel')
-
-
-    if request.method == 'POST':
-        email = request.POST['email']
-        password = request.POST['password']
-
-        user = auth.authenticate(email=email, password=password)
-
-        if user is not None:
-            if user.is_admin:
-                auth.login(request, user)
-                
-                return redirect('adminpanel')
-            else:
-                messages.info(request, 'You are not admin')
-                return redirect('adminsignin')
-        else:
-            messages.error(request, 'Invalid login credentials')
-            return redirect('adminsignin')
-    
-
-    return render(request, 'adminpanel/adminsignin.html')
-
-@login_required(login_url = 'adminsignin')
-def adminsignout(request):
-    auth.logout(request)
-    messages.success(request, 'You are logged out.')
-    return redirect('adminsignin')
-
-def productdelete(request,product_id):
-    dlt = Product.objects.get(id=product_id)
-    dlt.delete()
-    return redirect('productlist')
-
-
-def productedit(request, product_id):
-    product = Product.objects.get(pk=product_id)
-    form = ProductForm(instance=product)
-
-    if request.method == 'POST':
-        form = ProductForm(request.POST, instance=product)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Successfully product updated')
-            return redirect('productlist')
-
-    context = {
-        'form': form
-    }
-    return render(request, 'adminpanel/productedit.html', context)
 
 
 

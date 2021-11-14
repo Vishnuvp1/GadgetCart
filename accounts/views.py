@@ -55,6 +55,38 @@ def signout(request):
     return redirect('signin')
 
 
+# def forgotpassword(request):
+#     if request.method == 'POST':
+#         email = request.POST['email']
+#         if Account.objects.filter(email=email).exists():
+#             user = Account.objects.get(emial__exact=email)
 
+#             # Reset password email
+#             current_site = get_current_site(request)
+#             mail_subject = 'Reset your password'
+#             message = render_to_string('user/reset_password_email.html',{
+#                 'user' : user,
+#                 'domain' : current_site,
+#                 'uid' : urlsafe_base64_encode(force_bytes(user.pk)),
+#                 'token' : default_token_generator.make_token(user),
+#             })
+#             to_email = email
+#             send_email = EmailMessage(mail_subject, message, to=[to_email])
+#             send_email.send()
+
+#             messages.success(request, 'Password reset email has been sent to your email address.')
+#             return redirect('signin')
+
+
+
+
+#         else:
+#             messages.error(request, 'Account does not Exist!')
+#             return redirect('forgotpassword')
+#     return render(request, 'user/forgotpassword.html')
+
+    
+# def resetpassword_validate(request):
+#     return HttpResponse('ok')
 
 
