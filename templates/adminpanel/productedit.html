@@ -4,22 +4,23 @@
 
 {% load crispy_forms_filters %}
 
+
+{% block title %} Add Product {% endblock %}
+
 {% load static %}
 
 {% block content %}
 <!-- Start Content-->
 
 
-
-
 <div class="card mx-auto mt-4" style="max-width:700px;">
     <article class="card-body">
         <div class="container col-10">
             <div class="container-fluid text-center ">
-                <h4 class="ml-5 mt-3 mb-3 text-black">ADD CATEGORY</h4>
+                <h4 class="ml-5 mt-3 mb-3 text-black">EDIT PRODUCT</h4>
 
             </div>
-            <form action="{% url 'brandadd' %}" method="post" enctype="multipart/form-data">
+            <form action="" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form | crispy }}
                 <input type="submit" class="btn btn-outline-primary mt-2" value="Submit">
@@ -47,6 +48,8 @@
     </div>
 </footer>
 <!-- end Footer -->
+
+
 
 
 

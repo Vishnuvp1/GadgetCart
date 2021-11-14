@@ -17,4 +17,4 @@ class ProductForm(ModelForm):
         
        
         for field in self.fields:
-            self.fields[field].widget.attrs['class'] = 'form-control'
+            self.fields[field].widget.attrs['class'] = 'form-control mt-1 mb-2'

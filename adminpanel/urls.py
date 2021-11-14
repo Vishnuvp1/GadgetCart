@@ -4,15 +4,24 @@ from . import views
 
 urlpatterns = [
     path('', views.adminpanel, name="adminpanel"),
-    path('productlist/', views.productlist, name="productlist"),
-    path('productadd/', views.productadd, name="productadd"),
-    path('categorylist/', views.categorylist, name="categorylist"),
-    path('categoryadd/', views.categoryadd, name="categoryadd"),
     path('adminsignin/', views.adminsignin, name='adminsignin'),
     path('adminsignout/', views.adminsignout, name='adminsignout'),
+
+    path('productlist/', views.productlist, name="productlist"),
+    path('productadd/', views.productadd, name="productadd"),
     path('productdelete/<int:product_id>/', views.productdelete, name='productdelete'),
+    path('productedit/<int:product_id>/', views.productedit, name='productedit'),
+
+    path('categorylist/', views.categorylist, name="categorylist"),
+    path('categoryadd/', views.categoryadd, name="categoryadd"),
+    path('categorydelete/<int:category_id>/', views.categorydelete, name='categorydelete'),
+    path('categoryedit/<int:category_id>/', views.categoryedit, name='categoryedit'),
+    
+    
     path('brandlist', views.brandlist , name='brandlist'),
     path('brandadd', views.brandadd , name='brandadd'),
+    path('branddelete/<int:brand_id>/', views.branddelete, name='branddelete'),
+    path('brandedit/<int:brand_id>/', views.brandedit, name='brandedit'),
     
     
 ]

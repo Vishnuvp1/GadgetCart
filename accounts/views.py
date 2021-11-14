@@ -1,4 +1,5 @@
 from django.contrib import messages, auth
+from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
 from .forms import RegistrationForm
 from .models import Account
@@ -53,7 +54,7 @@ def signout(request):
     messages.success(request, 'You are logged out.')
     return redirect('signin')
 
-    
+
 
 
 

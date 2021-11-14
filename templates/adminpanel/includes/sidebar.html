@@ -3,14 +3,22 @@
 <!-- Begin page -->
 <div class="wrapper">
     <!-- ========== Left Sidebar Start ========== -->
-    <div class="leftside-menu">
+    <div class="leftside-menu" style="    width: 260
+    px
+    ;
+        z-index: 10;
+        background: linear-gradient(135deg,#313a46 0,#313a46 60%);
+        bottom: 0;
+        position: fixed;
+        top: 0;
+        padding-top: 70px;">
 
         <!-- LOGO -->
         <a href="index-2.html" class="logo text-center logo-light">
-            <span class="logo-lg">
+            <span class="logo-lg" style="background-color: #313a46;">
                 <img src="{% static 'adminpanel/images/logo.png' %}" alt="" height="16">
             </span>
-            <span class="logo-sm">
+            <span class="logo-sm" style="background-color: #313a46;">
                 <img src="{% static 'adminpanel/images/logo_sm.png' %}" alt="" height="16">
             </span>
         </a>
@@ -30,15 +38,13 @@
             <!--- Sidemenu -->
             <ul class="side-nav">
 
-                <!-- <li class="side-nav-title side-nav-item">Navigation</li> -->
+                 <!-- <li class="side-nav-title side-nav-item">Navigation</li>  -->
 
                 <li class="side-nav-item">
-                    <a data-bs-toggle="collapse" href="#sidebarDashboards" aria-expanded="false"
-                        aria-controls="sidebarDashboards" class="side-nav-link">
+                    <a href="{% url 'adminpanel' %}" class="side-nav-link">
                         <i class="uil-home-alt"></i>
                         <span> Dashboards </span>
                     </a>
-
                 </li>
 
 
