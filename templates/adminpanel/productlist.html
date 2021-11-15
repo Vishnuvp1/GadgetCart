@@ -41,11 +41,9 @@
                                                 <a href="{% url 'productedit' product.id %}"><span
                                                     class="material-icons">edit</span></a>
 
-                                                <a href="{% url 'productdelete' product.id %}"><span
+                                                <a href="{% url 'productdelete' product.id %}" onclick="deleteItems(event)"><span
                                                         class="material-icons">delete</span></a>
 
-                                                <!-- <a href="{% url 'productdelete' product.id %}" onclick="approve(event)" name="{{product.product_id}}"><span
-                                                    class="material-icons">delete</span></a> -->
 
 
                                             </td>
@@ -83,9 +81,6 @@
     </div>
 </footer>
 <!-- end Footer -->
-
-
-
 
 
 

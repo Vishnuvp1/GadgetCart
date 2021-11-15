@@ -5,7 +5,7 @@ from .models import Brand
 class BrandForm(ModelForm):
     class Meta:
         model = Brand
-        fields = ['brand_name', 'brand_image', 'slug' ]
+        fields = ['brand_name', 'brand_image' ]
 
     def __init__(self , *args , **kwargs):
         super(BrandForm, self).__init__(*args , **kwargs)

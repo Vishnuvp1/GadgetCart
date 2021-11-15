@@ -9,21 +9,18 @@
     <section class="section-conten padding-y" style="min-height:84vh">
     
     <!-- ============================ COMPONENT LOGIN   ================================= -->
-        <div class="card mx-auto" style="max-width: 600px; margin-top:100px;">
+        <div class="card mx-auto" style="max-width: 380px; margin-top:100px;">
           <div class="card-body">
-          <h4 class="card-title mb-4">Forgot Password</h4>
+          <h4 class="card-title mb-4">ENTER OTP</h4>
           {% include 'user/includes/alerts.html' %}
-          <form action="{% url 'forgotpassword' %}" method="post">
+          <form action="{% url 'otpverification' %}" method="post">
             {% csrf_token %}
               <div class="form-group">
-                 <input type="email" class="form-control" placeholder="Email Address" name="email">
+                 <input type="email" class="form-control" placeholder="Enter OTP" name="otp">
               </div> <!-- form-group// -->
    
               
-              <div class="form-group">
-                  <a href="{% url 'signin' %}" class="float-right">Got password? Login</a> 
-               
-              </div> <!-- form-group form-check .// -->
+              
               <div class="form-group">
                   <button type="submit" class="btn btn-primary btn-block"> Submit </button>
               </div> <!-- form-group// -->    

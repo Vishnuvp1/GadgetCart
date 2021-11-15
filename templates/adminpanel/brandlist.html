@@ -29,11 +29,11 @@
 
             <div class="d-flex justify-content-around">
                 <div><a href="{% url 'brandedit' brand.id %}"><span class="material-icons"
-                            style="color: #aaaaaa;">edit</span></a>
+                            style="color: #cecece;">edit</span></a>
                 </div>
                 <div>
-                    <a type="button" class="close" href="{% url 'branddelete' brand.id %}"
-                        data-dismiss="alert"><span class="material-icons" style="color: #aaaaaa;">delete</span></a>
+                    <a type="button" class="close" href="{% url 'branddelete' brand.id %}" onclick="deleteItems(event)"
+                        data-dismiss="alert"><span class="material-icons" style="color: #cecece;">delete</span></a>
                 </div>
             </div>
 

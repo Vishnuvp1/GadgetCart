@@ -9,7 +9,7 @@ from brand.forms import BrandForm
 from brand.models import Brand
 
 
-
+@login_required(login_url='adminsignin') 
 def adminpanel(request):
 
     return render(request, 'adminpanel/adminpanel.html')
@@ -41,7 +41,7 @@ def adminsignin(request):
             return redirect('adminsignin')
     else:
         return render(request, 'adminpanel/adminsignin.html')
-        
+
 
 
 @login_required(login_url = 'adminsignin')
@@ -71,6 +71,8 @@ def productadd(request):
         form = ProductForm(request.POST, request.FILES)
 
         if form.is_valid():
+            product = form.save(commit=False)
+            product.slug = product.product_name.lower().replace(" ", "-")
             form.save()
             return redirect('productlist')
 
@@ -94,7 +96,7 @@ def productedit(request, product_id):
     form = ProductForm(instance=product)
 
     if request.method == 'POST':
-        form = ProductForm(request.POST, instance=product)
+        form = ProductForm(request.POST, request.FILES, instance=product)
         if form.is_valid():
             form.save()
             messages.success(request, 'Successfully product updated')
@@ -129,6 +131,8 @@ def categoryadd(request):
         form = CategoryForm(request.POST, request.FILES)
 
         if form.is_valid():
+            category = form.save(commit=False)
+            category.slug = category.category_name.lower().replace(" ", "-")
             form.save()
             return redirect('categorylist')
 
@@ -150,7 +154,7 @@ def categoryedit(request, category_id):
     form = CategoryForm(instance=category)
 
     if request.method == 'POST':
-        form = CategoryForm(request.POST, instance=category)
+        form = CategoryForm(request.POST, request.FILES, instance=category)
         if form.is_valid():
             form.save()
             messages.success(request, 'Successfully category updated')
@@ -182,6 +186,8 @@ def brandadd(request):
         form = BrandForm(request.POST, request.FILES)
 
         if form.is_valid():
+            brand = form.save(commit=False)
+            brand.slug = brand.brand_name.lower().replace(" ", "-")
             form.save()
             return redirect('brandlist')
 
@@ -203,7 +209,7 @@ def brandedit(request, brand_id):
     form = BrandForm(instance=product)
 
     if request.method == 'POST':
-        form = BrandForm(request.POST, instance=product)
+        form = BrandForm(request.POST, request.FILES, instance=product)
         if form.is_valid():
             form.save()
             messages.success(request, 'Successfully product updated')
