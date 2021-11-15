@@ -15,7 +15,7 @@
           <article class="card-body">
             {% include 'user/includes/alerts.html' %}
             <header class="mb-4"><h4 class="card-title">Sign up</h4></header>
-            <form action="{% url 'otpverification' %}" method="post">
+            <form action="{% url 'register' %}" method="post">
               {% csrf_token %}
               
                     <div class="form-row">

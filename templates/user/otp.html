@@ -13,10 +13,10 @@
           <div class="card-body">
           <h4 class="card-title mb-4">ENTER OTP</h4>
           {% include 'user/includes/alerts.html' %}
-          <form action="{% url 'otpverification' %}" method="post">
+          <form action="{% url 'verifyaccount' %}" method="post">
             {% csrf_token %}
               <div class="form-group">
-                 <input type="email" class="form-control" placeholder="Enter OTP" name="otp">
+                 <input type="number" class="form-control" placeholder="Enter OTP" name="otp">
               </div> <!-- form-group// -->
    
               
