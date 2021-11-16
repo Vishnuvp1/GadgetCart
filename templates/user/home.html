@@ -18,14 +18,14 @@
         </ol>
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <img src="{% static 'images/banners/1.jpg' %}" class="img-fluid rounded d-block w-100" alt="First slide">
+            <img src="{% static 'images/banners/gadgets.jpg' %}" class="img-fluid rounded d-block w-100" alt="First slide">
             
           </div>
           <div class="carousel-item">
-            <img src="{% static 'images/banners/1.jpg' %}" class="img-fluid rounded d-block w-100" alt="First slide">
+            <img src="{% static 'images/banners/gadgets.jpg' %}" class="img-fluid rounded d-block w-100" alt="First slide">
           </div>
           <div class="carousel-item">
-            <img src="{% static 'images/banners/1.jpg' %}" class="img-fluid rounded d-block w-100" alt="First slide">
+            <img src="{% static 'images/banners/gadgets.jpg' %}" class="img-fluid rounded d-block w-100" alt="First slide">
           </div>
         </div>
         <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -48,7 +48,7 @@
 <div class="container">
 
 <header class="section-heading">
-	<a href="./store.html" class="btn btn-outline-primary float-right">See all</a>
+	<a href="{% url 'store' %}" class="btn btn-outline-primary float-right">See all</a>
 	<h3 class="section-title">Popular products</h3>
 </header><!-- sect-heading -->
 
@@ -57,9 +57,9 @@
 	{% for product in products %}
 	<div class="col-md-3">
 		<div class="card card-product-grid">
-			<a href="./product-detail.html" class="img-wrap"> <img src="{{ product.images.url }}"> </a>
+			<a href="{{ product.get_url  }}" class="img-wrap"> <img src="{{ product.images.url }}"> </a>
 			<figcaption class="info-wrap">
-				<a href="./product-detail.html" class="title">{{ product.product_name }}</a>
+				<a href="{{ product.get_url  }}" class="title">{{ product.product_name }}</a>
 				<div class="price mt-1">{{ product.price }}</div> <!-- price-wrap.// -->
 			</figcaption>
 		</div>
