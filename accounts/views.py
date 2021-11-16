@@ -20,10 +20,11 @@ def register(request):
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
             username = email.split("@")[0]
-            user = Account.objects.create_user(first_name=first_name, last_name=last_name, email=email, username=username, password=password)
-            user.phone_number = phone_number
-            user.save()
+            user = Account.objects.create_user(first_name=first_name, last_name=last_name, email=email, username=username, password=password ,phone_number=phone_number)
+           
             request.session['mobile'] = phone_number
+            user.save()
+            
             send_otp(phone_number)
             messages.success(request, 'Registration Successful.')
             return redirect('verifyaccount')
@@ -43,9 +44,10 @@ def signin(request):
         user = auth.authenticate(email=email, password=password)
 
         if user is not None:
-            auth.login(request, user)
-            # messages.success(request, 'You are now logged in.')
-            return redirect('homepage')
+            if user.is_verified:
+                auth.login(request, user)
+                # messages.success(request, 'You are now logged in.')
+                return redirect('homepage')
         else:
             messages.error(request, 'Invalid login credentials')
             return redirect('signin')
@@ -68,7 +70,7 @@ def verifyaccount(request):
     #Verifying the user account and updating is_verified filed
     
     if request.user.is_authenticated:
-        return redirect('home')
+        return redirect('homepage')
 
     if request.method == 'POST':
         try:

@@ -1,9 +1,10 @@
 from twilio.rest import Client
+from django.conf import settings
 
+twilio_account_sid = settings.SECRET_KEY
+twilio_auth_token = settings.AUTH_KEY
+verification_sid = settings.VERIFICATION_KEY
 
-twilio_account_sid = 'ACd939105454ca82283f00583000ea62d2'
-twilio_auth_token = '54c75c0013f7af4420ba22bdda4b10e4'
-verification_sid = 'VA2f29e15c44299f5544304c8bc6de12d8'
 
 client = Client(twilio_account_sid, twilio_auth_token)
 

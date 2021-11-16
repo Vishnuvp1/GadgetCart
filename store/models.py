@@ -1,6 +1,7 @@
 from django.db import models
 
 from category.models import Category
+from brand.models import Brand 
 
 # Create your models here.
 
@@ -12,6 +13,7 @@ class Product(models.Model):
     images        = models.ImageField(upload_to='photos/products')
     stock         = models.IntegerField()
     is_available  = models.BooleanField(default=True)
+    brand         = models.ForeignKey(Brand, on_delete=models.CASCADE)
     category      = models.ForeignKey(Category, on_delete=models.CASCADE)
     created_date  = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)

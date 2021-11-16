@@ -5,7 +5,7 @@ from .models import Product
 class ProductForm(ModelForm):
     class Meta:
         model = Product
-        fields = ['product_name', 'description', 'stock', 'price', 'category', 'images']
+        fields = ['product_name', 'description', 'stock', 'price', 'brand', 'category', 'images']
 
     def __init__(self , *args , **kwargs):
         super(ProductForm, self).__init__(*args , **kwargs)
@@ -17,4 +17,4 @@ class ProductForm(ModelForm):
         
        
         for field in self.fields:
-            self.fields[field].widget.attrs['class'] = 'form-control mt-1 mb-2' 
+            self.fields[field].widget.attrs['class'] = 'form-control mt-1 mb-2 ' 

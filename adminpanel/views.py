@@ -74,7 +74,8 @@ def productadd(request):
             product = form.save(commit=False)
             product.slug = product.product_name.lower().replace(" ", "-")
             form.save()
-            return redirect('productlist')
+            messages.success(request, 'Product added successfully')
+            return redirect('productadd')
 
     context = {
         'form' : form
@@ -99,7 +100,7 @@ def productedit(request, product_id):
         form = ProductForm(request.POST, request.FILES, instance=product)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Successfully product updated')
+            messages.success(request, 'Product successfully updated')
             return redirect('productlist')
 
     context = {
@@ -134,7 +135,8 @@ def categoryadd(request):
             category = form.save(commit=False)
             category.slug = category.category_name.lower().replace(" ", "-")
             form.save()
-            return redirect('categorylist')
+            messages.success(request, 'Category added successfully')
+            return redirect('categoryadd')
 
     context = {
         'form' : form
@@ -189,7 +191,8 @@ def brandadd(request):
             brand = form.save(commit=False)
             brand.slug = brand.brand_name.lower().replace(" ", "-")
             form.save()
-            return redirect('brandlist')
+            messages.success(request, 'Brand added successfully')
+            return redirect('brandadd')
 
     context = {
         'form' : form
