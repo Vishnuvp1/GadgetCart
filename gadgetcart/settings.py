@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'category',
     'store',
     'brand',
+    'carts',
 
 
     
