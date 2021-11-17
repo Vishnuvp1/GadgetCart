@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponse
 from store.models import Product
 from .models import Cart, CartItem
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -86,6 +87,7 @@ def cart(request, total=0, quantity=0, cart_items=None):
 
 
 
+@login_required(login_url='signin')
 def checkout(request, total=0, quantity=0, cart_items=None):
 
     try:

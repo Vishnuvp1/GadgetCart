@@ -15,7 +15,8 @@
     <div class="card">
         <div class="card-body">
             <h4 class="card-title mb-4">Billing Address</h4>
-            <form action="">
+            <form action="" method="post">
+                {% csrf_token %}
                 <div class="form-row">
                     <div class="col form-group">
                         <label for="">First Name</label>
@@ -80,7 +81,7 @@
                     </div>
                 
                 
-            </form>
+            
         </div>
     
     </div> <!-- card.// -->
@@ -137,7 +138,9 @@
                 
                 
                 <a href="./place-order.html" class="btn btn-primary btn-block"> Place order </a>
+                <button type="button" name="submit" class="btn btn-primary btn-block"></button>
                 <a href="{% url 'store' %}" class="btn btn-light btn-block">Continue Shopping</a>
+            </form>
             </div> <!-- card-body.// -->
             </div> <!-- card.// -->
     

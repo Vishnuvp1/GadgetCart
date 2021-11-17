@@ -1,11 +1,21 @@
+from typing import Protocol
 from django.contrib import messages, auth
 from django.contrib.auth.models import User
 from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
+
+from carts.models import Cart, CartItem
+from store.models import Product
 from .forms import RegistrationForm
 from .models import Account
 from django.contrib.auth.decorators import login_required
 from accounts.verification import send_otp, verify_otp_number
+
+from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth import login
+
+from carts.views import _cart_id
+from carts.models import Cart, CartItem
 
 # Create your views here.
 
@@ -44,6 +54,18 @@ def signin(request):
         user = auth.authenticate(email=email, password=password)
 
         if user is not None:
+            try:
+                cart = Cart.objects.get(cart_id=_cart_id(request))
+                is_cart_item_exists = CartItem.objects.filter(cart=cart).exists()
+                if is_cart_item_exists:
+                    cart_item = CartItem.objects.filter(cart=cart)
+                    print(cart_item)
+
+                    for item in cart_item:
+                        item.user = user
+                        item.save()
+            except:
+                pass
             if user.is_verified:
                 auth.login(request, user)
                 # messages.success(request, 'You are now logged in.')
@@ -94,6 +116,59 @@ def verifyaccount(request):
             return redirect('verifyaccount')
 
     return render(request, 'user/otp.html')
+
+
+def mobile_login(request):
+    if request.user.is_authenticated:
+        return redirect('homepage')
+
+    if request.method == 'POST':
+        phone_number = request.POST['phone']
+        
+        try:           
+            Account.objects.get(phone_number=phone_number)
+            request.session['phone_number'] = phone_number
+            send_otp(phone_number)
+            messages.success(request, 'OTP sent to this number')
+            return redirect('mobile_login_otp_verify')
+        except ObjectDoesNotExist:
+            messages.error(request, 'Enter a registered mobile number')
+            return redirect('signin')
+
+
+
+def mobile_login_otp_verify(request):
+
+    if request.user.is_authenticated:
+        return redirect('homepage')
+    
+    if request.method == 'POST':
+        print('post')
+        try:
+            print('try')
+            phone_number = request.session['phone_number']
+            
+        except:
+            print('exept')
+            messages.info(request, 'Session timeout')
+            return redirect('signin')
+        
+        otp = request.POST.get('otp')
+        verified = verify_otp_number(phone_number, otp)
+
+        if verified:
+            user = Account.objects.get(phone_number=phone_number)
+            login(request, user)
+            messages.info(request, 'Successfully logged in')
+            return redirect('homepage')
+        
+        messages.error(request, 'Invalid OTP')
+        return redirect('mobile_login_otp_verify')
+
+    return render(request, 'user/otp.html')
+
+
+
 
 
 
