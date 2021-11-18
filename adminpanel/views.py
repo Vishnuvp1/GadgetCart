@@ -221,4 +221,4 @@ def brandedit(request, brand_id):
     context = {
         'form': form
     }
-    return render(request, 'adminpanel/productedit.html', context)
+    return render(request, 'adminpanel/brandedit.html', context)
