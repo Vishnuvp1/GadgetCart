@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.deletion import CASCADE
 from category.models import Category
 from brand.models import Brand 
 from django.urls import reverse
@@ -27,3 +28,29 @@ class Product(models.Model):
 
     def __str__(self):
         return self.product_name
+
+
+class VariationManager(models.Manager):
+    def colors(self):
+        return super(VariationManager, self).filter(variation_category='color' , is_active=True)
+
+    def memories(self):
+        return super(VariationManager, self).filter(variation_category='memory' , is_active=True)
+
+
+variation_category_choices = (
+    ('color', 'color'),
+    ('memory', 'memory'),
+)
+
+class Variation(models.Model):
+    product             = models.ForeignKey(Product, on_delete=models.CASCADE)
+    variation_category  = models.CharField(max_length=100, choices=variation_category_choices)
+    variation_value     = models.CharField(max_length=100)
+    is_active           = models.BooleanField(default=True)
+    created_date        = models.DateTimeField(auto_now=True)
+
+    objects = VariationManager()
+
+    def __str__(self):
+        return self.variation_value
