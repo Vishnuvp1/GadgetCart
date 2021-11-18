@@ -168,6 +168,80 @@ def mobile_login_otp_verify(request):
     return render(request, 'user/otp.html')
 
 
+def phone_number(request):
+    if request.user.is_authenticated:
+        return redirect('homepage')
+
+    if request.method == 'POST':
+        phone_number = request.POST['phone']
+        
+        try:           
+            Account.objects.get(phone_number=phone_number)
+            request.session['phone_number'] = phone_number
+            send_otp(phone_number)
+            messages.success(request, 'OTP sent to this number')
+            return redirect('reset_password_otp_verify')
+        except ObjectDoesNotExist:
+            messages.error(request, 'Enter a registered mobile number')
+            return redirect('phone_number')
+
+    return render(request, 'user/phone_number.html')
+
+
+def reset_password_otp_verify(request):
+    
+    if request.method == 'POST':
+        print('post')
+        try:
+            print('try')
+            phone_number = request.session['phone_number']
+            
+        except:
+            print('exept')
+            messages.info(request, 'Session timeout')
+            return redirect('phone_number')
+        
+        otp = request.POST.get('otp')
+        verified = verify_otp_number(phone_number, otp)
+
+        if verified:
+            user = Account.objects.get(phone_number=phone_number)
+            login(request, user)
+            messages.info(request, 'Successfull')
+            return redirect('set_new_password')
+        
+        messages.error(request, 'Invalid OTP')
+        return redirect('reset_password_otp_verify')
+
+    return render(request, 'user/reset_password_otp_verify.html')
+
+
+def set_new_password(request):
+
+    if 'phone_number' not in request.session:
+        return redirect('signin')
+
+    if request.method == 'POST':
+        password = request.POST['new_password']
+        confirm_password = request.POST['confirm_password']
+
+        if password == confirm_password:
+            phone_number = request.session['phone_number']
+            print(phone_number)
+
+            user = Account.objects.get(phone_number=phone_number)
+            user.set_password(password)
+            user.save()
+            messages.success(request, 'Password is successfully reset')
+            return redirect('signin')
+
+        else:
+            messages.error(request, 'Password not matching')
+            return redirect('set_new_password')
+
+    return render(request, 'user/set_new_password.html')
+
+
 
 
 

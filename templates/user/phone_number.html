@@ -11,20 +11,21 @@
     <!-- ============================ COMPONENT LOGIN   ================================= -->
         <div class="card mx-auto shadow p-3 mb-5 bg-white rounded" style="max-width: 380px; margin-top:100px;">
           <div class="card-body">
-          <h4 class="card-title mb-4">Enter OTP</h4>
+          <h5 class="card-title mb-4">Phone Number</h5>
           {% include 'user/includes/alerts.html' %}
-          <form action="" method="post">
-            {% csrf_token %}
+          
+
+              <form action="{% url 'phone_number' %}" method="post">
+                {% csrf_token %}
+             
               <div class="form-group">
-                 <input type="number" class="form-control" placeholder="Enter OTP" name="otp">
-              </div> <!-- form-group// -->
-   
-              
-              
+                <input type="text" class="form-control" placeholder="Enter phone number" name="phone">
+              </div>
               <div class="form-group">
-                  <button type="submit" class="btn btn-primary btn-block"> Submit </button>
-              </div> <!-- form-group// -->    
+                <button type="submit" class="btn btn-primary btn-block"> Submit  </button>
+            </div>
           </form>
+         
           </div> <!-- card-body.// -->
         </div> <!-- card .// -->
     

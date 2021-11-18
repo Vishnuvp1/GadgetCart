@@ -422,6 +422,7 @@ p:last-child {
 }
 
 .header-main {
+  background-color: #0E3951;
   position: relative;
   padding-top: 2rem;
   padding-bottom: 2rem;
@@ -447,7 +448,7 @@ p:last-child {
   position: relative;
 }
 .widget-header a {
-  color: #343a40;
+  color: #ffffff;
 }
 .widget-header a:hover {
   color: #3167eb;
