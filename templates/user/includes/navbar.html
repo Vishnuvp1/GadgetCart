@@ -15,7 +15,7 @@
         </div>
         <div class="col-lg col-sm col-md col-6 flex-grow-0">
             <div class="category-wrap dropdown d-inline-block float-right">
-                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" style="color: black; background-color: white; border-color: #0E3951"> 
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" style="color: black; background-color: white; border-color: #ffffff"> 
                     <i class="fa fa-bars"></i> All category 
                 </button>
                 <div class="dropdown-menu">
@@ -26,7 +26,7 @@
                 </div>
             </div>  <!-- category-wrap.// -->
         </div> <!-- col.// -->
-        <a href="{% url 'store' %}" class="btn btn-outline-primary" style="color: black; background-color: white; border-color: #0E3951">Store</a>
+        <a href="{% url 'store' %}" class="btn btn-outline-primary" style="color: black; background-color: white; border-color: #ffffff">Store</a>
         <div class="col-lg  col-md-6 col-sm-12 col">
             <form action="#" class="search">
                 <div class="input-group w-100">
@@ -56,7 +56,7 @@
                         <div class="widget-header">
                             <small class="title text-muted">Welcome {{user.first_name}}!</small>
                             <div> 
-                                <a href="">dashboard</a> <span class="dark-transp"> | </span>
+                                <a href="">dashboard</a> <span class="dark-transp" style="color: aqua;"> | </span>
                                 <a href="{% url 'signout' %}"> Logout</a>
                             </div>
                         </div>

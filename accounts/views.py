@@ -66,9 +66,10 @@ def signin(request):
                         item.save()
             except:
                 pass
+            
             if user.is_verified:
                 auth.login(request, user)
-                # messages.success(request, 'You are now logged in.')
+                messages.success(request, 'You are now logged in.')
                 return redirect('homepage')
         else:
             messages.error(request, 'Invalid login credentials')

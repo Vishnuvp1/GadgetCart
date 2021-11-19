@@ -15,12 +15,12 @@
     <div class="col-sm-6 col-md-4 col-lg-2">
         <figure class="card card-product-grid"
             style="display: flex; align-items: center; justify-content: start; padding-top: 1rem; height: 18rem; max-width: 300px;">
-            <div class="img-wrap">
+            <div class="img-wrap border-bottom">
                 <img src="{{ brand.brand_image.url }}" style="width: 200px; height: 200px">
             </div> <!-- img-wrap.// -->
             <figcaption class="info-wrap">
                 <div class="fix-height">
-                    <a href="./product-detail.html" class="title" style="font-size: 1.5rem; font-weight: 900;">{{ brand.brand_name }}</a>
+                    <a href="./product-detail.html" class="title" style="font-size: 1.5rem; font-weight: 500; color: #313a46">{{ brand.brand_name }}</a>
 
                     
 
@@ -29,11 +29,11 @@
 
             <div class="d-flex justify-content-around">
                 <div><a href="{% url 'brandedit' brand.id %}"><span class="material-icons"
-                            style="color: #cecece;">edit</span></a>
+                            style="color: #b5b5b5;">edit</span></a>
                 </div>
                 <div>
                     <a type="button" class="close" href="{% url 'branddelete' brand.id %}" onclick="deleteItems(event)"
-                        data-dismiss="alert"><span class="material-icons" style="color: #cecece;">delete</span></a>
+                        data-dismiss="alert"><span class="material-icons" style="color: #6b6b6b;">delete</span></a>
                 </div>
             </div>
 

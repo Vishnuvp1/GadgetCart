@@ -9,7 +9,7 @@ class CategoryForm(ModelForm):
 
     def __init__(self , *args , **kwargs):
         super(CategoryForm, self).__init__(*args , **kwargs)
-        self.fields['category_name'].widget.attrs['placeholder'] = 'Enter CategoryName'
+        self.fields['category_name'].widget.attrs['placeholder'] = 'Enter Category Name'
         
        
         for field in self.fields:

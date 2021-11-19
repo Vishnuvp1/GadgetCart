@@ -1,6 +1,7 @@
+from django.db.models import fields
 from django.forms import ModelForm
-
 from .models import Product
+from .models import Variation
 
 class ProductForm(ModelForm):
     class Meta:
@@ -18,3 +19,9 @@ class ProductForm(ModelForm):
        
         for field in self.fields:
             self.fields[field].widget.attrs['class'] = 'form-control mt-1 mb-2 ' 
+
+
+class VariantsForm(ModelForm):
+    class Meta:
+        model = Variation
+        fields = ['product', 'variation_category', 'variation_value']

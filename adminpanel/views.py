@@ -1,7 +1,7 @@
 from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
-from store.forms import ProductForm
+from store.forms import ProductForm, VariantsForm
 from store.models import Product
 from category.forms import CategoryForm
 from category.models import Category
@@ -198,7 +198,6 @@ def brandadd(request):
         'form' : form
     }
 
-
     return render(request, 'adminpanel/brandadd.html', context)
 
 def branddelete(request,brand_id):
@@ -222,3 +221,21 @@ def brandedit(request, brand_id):
         'form': form
     }
     return render(request, 'adminpanel/brandedit.html', context)
+
+def variantadd(request):
+    form = VariantsForm()
+
+    if request.method == 'POST':
+
+        form = VariantsForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Variant added successfully')
+            return redirect('variantadd')
+
+    context = {
+        'form' : form
+    } 
+
+    return render(request, 'adminpanel/variantadd.html', context)

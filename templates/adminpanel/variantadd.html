@@ -1,0 +1,81 @@
+{% extends 'adminpanel/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% load crispy_forms_filters %}
+
+{% load static %}
+
+{% block content %}
+<!-- Start Content-->
+
+
+
+
+<div class="card mx-auto mt-4" style="max-width:700px;">
+    <article class="card-body">
+        <div class="container col-10">
+            <div class="container-fluid text-center ">
+                <h4 class="ml-5 mt-3 mb-3 text-black">ADD BRAND</h4>
+
+            </div>
+            {% include 'adminpanel/includes/alerts.html' %}
+            <form action="{% url 'variantadd' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form | crispy }}
+                <div class="form-group">
+					<div id="image-box" class="image-container"></div>
+					<button class="btn btn-outline-info" id="crop-btn"
+						style="width: 100%; margin-top: 10px; display: none;" type="button">Crop</button>
+					<button class="btn btn-outline-info" id="confirm-btn" style="width: 100%; margin-top: 10px;"
+						type="submit">Post</button>
+				</div>
+            </form>
+        </div>
+    </article>
+</div>
+
+
+<!-- Footer Start -->
+<footer class="footer">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-6">
+				<script>document.write(new Date().getFullYear())</script> © Hyper - Coderthemes.com
+			</div>
+			<div class="col-md-6">
+				<div class="text-md-end footer-links d-none d-md-block">
+					<a href="javascript: void(0);">About</a>
+					<a href="javascript: void(0);">Support</a>
+					<a href="javascript: void(0);">Contact Us</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<!-- end Footer -->
+
+
+<div class="rightbar-overlay"></div>
+<!-- /End-bar -->
+
+<!-- bundle -->
+<script src="{% static 'adminpanel/js/vendor.min.js' %}"></script>
+<script src="{% static 'adminpanel/js/app.min.js' %}"></script>
+
+<!-- third party js -->
+<script src="{% static 'adminpanel/js/vendor/apexcharts.min.js' %}"></script>
+<script src="{% static 'adminpanel/js/vendor/jquery-jvectormap-1.2.2.min.js' %}"></script>
+<script src="{% static 'adminpanel/js/vendor/jquery-jvectormap-world-mill-en.js' %}"></script>
+<!-- third party js ends -->
+
+<!-- demo app -->
+<script src="{% static 'adminpanel/js/pages/demo.dashboard.js' %}"></script>
+<!-- end demo js-->
+
+
+
+
+
+{% endblock %}
+
