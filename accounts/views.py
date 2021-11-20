@@ -1,6 +1,7 @@
 from typing import Protocol
 from django.contrib import messages, auth
 from django.contrib.auth.models import User
+from django.db.models import query
 from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
 
@@ -16,6 +17,7 @@ from django.contrib.auth import login
 
 from carts.views import _cart_id
 from carts.models import Cart, CartItem
+import requests
 
 # Create your views here.
 
@@ -98,7 +100,17 @@ def signin(request):
             if user.is_verified:
                 auth.login(request, user)
                 messages.success(request, 'You are now logged in.')
-                return redirect('homepage')
+                url = request.META.get('HTTP_REFERER')
+                try:
+                    query = requests.utils.urlparse(url).query
+                    # next=/cart/checkout/
+                    params = dict(x.split('=') for x in query.split('&'))
+                    if 'next' in params:
+                        nextPage = params['next']
+                        return redirect(nextPage)
+                    
+                except:
+                    return redirect('homepage')
         else:
             messages.error(request, 'Invalid login credentials')
             return redirect('signin')
