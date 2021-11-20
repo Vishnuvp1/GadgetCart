@@ -1,6 +1,8 @@
 from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
+from accounts.models import Account
 from store.forms import ProductForm, VariantsForm
 from store.models import Product
 from category.forms import CategoryForm
@@ -239,3 +241,12 @@ def variantadd(request):
     } 
 
     return render(request, 'adminpanel/variantadd.html', context)
+
+
+def userdetails(request):
+    users = Account.objects.all().order_by('id')
+
+    context = {
+        'users' : users
+    }
+    return render(request, 'adminpanel/userdetails.html',context )

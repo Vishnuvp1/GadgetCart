@@ -24,6 +24,8 @@ urlpatterns = [
     path('brandedit/<int:brand_id>/', views.brandedit, name='brandedit'),
 
     path('variantadd', views.variantadd, name='variantadd'),
+
+    path('userdetails', views.userdetails, name='userdetails'),
     
     
 ]
