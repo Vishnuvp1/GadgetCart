@@ -40,6 +40,9 @@ $(document).ready(function() {
 // jquery end
 </script>
 
+<!-- Sweetalert -->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 <body>
 
@@ -52,6 +55,9 @@ $(document).ready(function() {
 
     <!-- footer -->
     {% include 'user/includes/footer.html' %}
+
+    {% block script %}
+    {% endblock %}
 
 
 </body>

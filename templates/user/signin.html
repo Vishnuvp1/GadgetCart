@@ -13,7 +13,7 @@
           <div class="card-body">
           <h4 class="card-title mb-4">Sign in</h4>
           {% include 'user/includes/alerts.html' %}
-          <form action="{% url 'signin' %}" method="post">
+          <form action="{% url 'signin' %}" method="post"  id="usersigninform">
             {% csrf_token %}
               <div class="form-group">
                  <input type="email" class="form-control" placeholder="Email Address" name="email">
@@ -55,6 +55,26 @@
     <!-- ========================= SECTION CONTENT END// ========================= -->
     
     
-  
+    {% block script %}
+<script>
+
+    $(document).ready(function () {
+        $("#usersigninform").validate({
+            rules: {
+              email: {
+                    required: true,
+
+                },
+                password: {
+                    required: true,
+                },
+
+                
+            }
+        })
+    })
+</script>
+
+{% endblock %}
 
     {% endblock %}
