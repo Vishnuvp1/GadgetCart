@@ -1,22 +1,25 @@
+from django.http.response import JsonResponse
 from django.shortcuts import redirect, render
+from accounts.models import Account
+from accounts.views import phone_number
 from carts.models import CartItem
+from store.models import Product
 from .models import Order, OrderProduct, Payment
 from .forms import OrderForm
 import datetime
 import json
+from .send_sms import send_sms
 
 # Create your views here.
 
 
 def payments(request):
     body = json.loads(request.body)
-    print(body)
     order = Order.objects.get(user=request.user, is_ordered=False, order_number=body['orderID'])
     print(order)
     
     # Store transaction details inside Payment model
     payment = Payment(
-        print('payment'),
         user = request.user,
         payment_id = body['transID'],
         payment_method = body['payment_method'],
@@ -24,12 +27,10 @@ def payments(request):
         status = body['status'],
     )
     payment.save()
-    print(payment)
 
     order.payment = payment
     order.is_ordered = True
     order.save()
-    print(order, '123')
 
     # Move to the cart items to Order Product table
     cart_items = CartItem.objects.filter(user=request.user)
@@ -52,17 +53,28 @@ def payments(request):
         orderproduct.save()
 
 
-    # Reduce the quality of the sold products
+        # Reduce the quality of the sold products
+        product = Product.objects.get(id=item.product_id)
+        product.stock -= item.quantity
+        product.save()
 
 
     # Clear cart
+    CartItem.objects.filter(user=request.user).delete()
 
 
-    # Send order recieved email to customer
+    # Send order recieved sms to customer
+    # user = Account.objects.get()
+    # phone = user.phone_number
+    
 
 
     # Send order number and transaction id back to senddata method via json response
-    return render(request, 'user/payments.html')
+    data = {
+        'order_number' : order.order_number,
+        'transID' : payment.payment_id,
+    }
+    return JsonResponse(data)
 
 
 def place_order(request, total=0, quantity=0):
@@ -128,3 +140,32 @@ def place_order(request, total=0, quantity=0):
         
     return redirect('checkout')
 
+
+def order_complete(request):
+    order_number = request.GET.get('order_number')
+    transID = request.GET.get('payment_id')
+
+    try:
+        order = Order.objects.get(order_number=order_number, is_ordered=True)
+        ordered_products = OrderProduct.objects.filter(order_id=order.id)
+
+        subtotal = 0
+        for i in ordered_products:
+            subtotal += i.product_price * i.quantity
+
+        payment = Payment.objects.get(payment_id=transID)
+
+        context = {
+            'order' : order,
+            'ordered_products' : ordered_products,
+            'order_number' : order.order_number,
+            'transID' : payment.payment_id,
+            'payment' : payment,
+            'subtotal' : subtotal
+
+
+        }
+        return render(request, 'user/order_complete.html',context)
+
+    except(Payment.DoesNotExist, Order.DoesNotExist):
+        return redirect('homepage')
