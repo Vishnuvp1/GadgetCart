@@ -151,9 +151,9 @@
                                     </div> <!-- price-wrap.// -->
                                 </div>
                                 <div class="row">
-                                    <div class="col-6"><a href="{% url 'add_cart' product.id %}"
-                                            class="btn btn-block btn-outline-warning">Add to cart </a></div>
-                                    <div class="col-6"><a href="#" class="btn btn-block btn-primary">Buy now </a></div>
+                                    <div class="col-12"><a href="{{ product.get_url }}"
+                                            class="btn btn-block btn-primary">View Details </a></div>
+                                    
                                 </div>
                             </figcaption>
                         </figure>
@@ -172,7 +172,7 @@
                     <ul class="pagination">
                         {% if products.has_previous %}
                         <li class="page-item"><a class="page-link"
-                                href="?=page={{products.previous_page_number}}">Previous</a></li>
+                                href="?page={{products.previous_page_number}}">Previous</a></li>
                         {% else %}
                         <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
                         {% endif %}
@@ -181,12 +181,12 @@
                         {% if products.number == i %}
                         <li class="page-item active"><a class="page-link" href="#">{{i}}</a></li>
                         {% else %}
-                        <li class="page-item"><a class="page-link" href="?=page={{i}}">{{i}}</a></li>
+                        <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
                         {% endif %}
                         {% endfor %}
 
                         {% if products.has_next %}
-                        <li class="page-item"><a class="page-link" href="?=page={{products.next_page_number}}">Next</a></li>
+                        <li class="page-item"><a class="page-link" href="?page={{products.next_page_number}}">Next</a></li>
                         {% else %}
                         <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
 

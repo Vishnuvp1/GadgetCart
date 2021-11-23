@@ -15,16 +15,16 @@
             <div class="img-big-wrap">
 							<a href="#"><img class="big_img" src="{{ single_product.image1.url }}"></a>
 						</div> <!-- img-big-wrap.// -->
-						<div class="row mt-5 exzoom" id="exzoom">
-							<div class="col-md-3 col-3 text-center border">
+						<div class="row mt-5 mb-4 ml-3 exzoom" id="exzoom">
+							<div class="col-md-3 col-3 ml-4 text-center border" style="max-width: 20%;">
 								<a href="#"><img class="small_img" src="{{ single_product.image1.url }}"
 										height="100px"></a>
 							</div>
-							<div class="col-md-3 col-3 text-center border">
+							<div class="col-md-3 col-3 ml-2 text-center border" style="max-width: 20%;">
 								<a href="#"><img class="small_img" src="{{ single_product.image2.url }}"
 										height="100px"></a>
 							</div>
-							<div class="col-md-3 col-3 text-center border">
+							<div class="col-md-3 col-3 ml-2 text-center border" style="max-width: 20%;">
 								<a href="#"><img class="small_img" src="{{ single_product.image3.url }}"
 										height="100px"></a>
 							</div>
@@ -76,7 +76,7 @@
               {% if single_product.stock <= 0 %} 
               <h5 class="text-danger">Out of stock</h5>
                 {% else %}
-                <button type="submit" class="btn  btn-primary"> <span class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i> </button type="submit">
+                <button type="submit" class="btn  btn-primary"> <span class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i> </button>
                 {% endif %}
             </article> <!-- product-info-aside .// -->
           </form>
