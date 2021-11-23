@@ -10153,3 +10153,20 @@ h3 {
 }
 
 /*# sourceMappingURL=bootstrap.css.map */
+
+ul.sub-image{
+  margin: 0 auto;
+  padding: 0;
+  float: left;
+}
+
+ul.sub-image li{
+  list-style: none;
+  margin: 10px;
+}
+
+ul.sub-image li img{
+  width: 80px;
+  height: 80px;
+  border: 1px solid gray;
+}

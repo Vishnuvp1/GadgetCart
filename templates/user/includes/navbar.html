@@ -28,9 +28,9 @@
         </div> <!-- col.// -->
         <a href="{% url 'store' %}" class="btn btn-outline-primary" style="color: black; background-color: white; border-color: #ffffff">Store</a>
         <div class="col-lg  col-md-6 col-sm-12 col">
-            <form action="#" class="search">
+            <form action="{% url 'search' %}" class="search" method="get">
                 <div class="input-group w-100">
-                    <input type="text" class="form-control" style="width:60%; border-color: white;" placeholder="Search" >
+                    <input type="text" class="form-control" style="width:60%; border-color: white;" placeholder="Search" name="keyword">
                     
                     <div class="input-group-append">
                       <button class="btn btn-primary" type="submit" style="color: #0E3951; background-color: #ffffff; border-color: #ffffff">
