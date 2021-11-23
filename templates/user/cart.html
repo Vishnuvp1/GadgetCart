@@ -23,7 +23,7 @@
     <div class="card">
     <table class="table table-borderless table-shopping-cart">
     <thead class="text-muted">
-    <tr class="small text-uppercase">
+    <tr class="small text-uppercase text-dark">
       <th scope="col">Product</th>
       <th scope="col" width="120">Quantity</th>
       <th scope="col" width="120">Price</th>
@@ -39,7 +39,7 @@
                <a href="{{ cart_item.product.get_url }}"> <div class="aside"><img src="{{ cart_item.product.image1.url }}" class="img-sm"></div></a>
                 <figcaption class="info">
                     <a href="{{ cart_item.product.get_url }}" class="title text-dark">{{ cart_item.product.product_name }}</a>
-                    <p class="text-muted small" style="color: black;">
+                    <p class="text-muted small text-dark">
                         {% if cart_item.variations.all %}
                             {% for item in cart_item.variations.all %}
                                 {{ item.variation_category | capfirst }} : {{ item.variation_value | capfirst }} <br>
@@ -125,30 +125,5 @@
     <!-- ========================= SECTION CONTENT END// ========================= -->
 
 
-    <script>
-        function approve() {
-            event.preventDefault();
-            var linkURL = event.currentTarget.href;
-            var name = event.currentTarget.name;
-            console.log(linkURL)
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-              }).then((result) => {
-                if (result.isConfirmed) {
-                  Swal.fire(
-                    'Deleted!',
-                    'Your file has been deleted.',
-                    'success'
-                  )
-                }
-              })
-    }
-    </script>
 
 {% endblock %}

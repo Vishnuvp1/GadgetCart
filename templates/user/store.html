@@ -28,7 +28,7 @@
                                 <h6 class="title">Categories</h6>
                             </a>
                         </header>
-                        <div class="filter-content collapse show" id="collapse_1" style="">
+                        <div class="filter-content collapse show" id="collapse_1">
                             <div class="card-body">
 
                                 <ul class="list-menu">
@@ -81,7 +81,7 @@
                                 <h6 class="title">Price range </h6>
                             </a>
                         </header>
-                        <div class="filter-content collapse show" id="collapse_3" style="">
+                        <div class="filter-content collapse show" id="collapse_3">
                             <div class="card-body">
 
                                 <div class="form-row">
@@ -192,6 +192,35 @@
     </div> <!-- container .//  -->
 </section>
 <!-- ========================= SECTION CONTENT END// ========================= -->
+
+
+<!-- onclick="addItems(event)"
+<script>
+    function addItems(event){
+      event.preventDefault();
+      var link = event.currentTarget.href;
+      var name = event.currentTarget.name;
+      
+        
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+          })
+          
+          Toast.fire({
+            icon: 'success',
+            title: 'Signed in successfully'
+          })
+      
+    }
+  </script> -->
 
 
 {% endblock %}
