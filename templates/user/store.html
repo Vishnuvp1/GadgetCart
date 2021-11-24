@@ -93,25 +93,25 @@
                                         <label>Min</label>
                                         <!-- <input class="form-control" placeholder="$0" type="number"> -->
                                         <select class="mr-2 form-control">
-                                            <option value="0">$0</option>
-                                            <option value="50">$50</option>
-                                            <option value="100">$100</option>
-                                            <option value="150">$150</option>
-                                            <option value="200">$200</option>
-                                            <option value="500">$500</option>
-                                            <option value="1000">$1000</option>
+                                            <option value="0">₹0</option>
+                                            <option value="50">₹50</option>
+                                            <option value="100">₹100</option>
+                                            <option value="150">₹150</option>
+                                            <option value="200">₹200</option>
+                                            <option value="500">₹500</option>
+                                            <option value="1000">₹1000</option>
                                         </select>
                                     </div>
                                     <div class="form-group text-right col-md-6">
                                         <label>Max</label>
                                         <select class="mr-2 form-control">
-                                            <option value="50">$50</option>
-                                            <option value="100">$100</option>
-                                            <option value="150">$150</option>
-                                            <option value="200">$200</option>
-                                            <option value="500">$500</option>
-                                            <option value="1000">$1000</option>
-                                            <option value="2000">$2000+</option>
+                                            <option value="50">₹50</option>
+                                            <option value="100">₹100</option>
+                                            <option value="150">₹150</option>
+                                            <option value="200">₹200</option>
+                                            <option value="500">₹500</option>
+                                            <option value="1000">₹1000</option>
+                                            <option value="2000">₹2000+</option>
                                         </select>
                                     </div>
                                 </div> <!-- form-row.// -->
@@ -146,8 +146,8 @@
                                 <div class="fix-height">
                                     <a href="{{ product.get_url }}" class="title">{{ product.product_name }}</a>
                                     <div class="price-wrap mt-2">
-                                        <span class="price">$ {{ product.price }}</span>
-                                        <del class="price-old">$1980</del>
+                                        <span class="price">₹ {{ product.price }}</span>
+                                        <del class="price-old">₹1980</del>
                                     </div> <!-- price-wrap.// -->
                                 </div>
                                 <div class="row">
@@ -203,34 +203,6 @@
 </section>
 <!-- ========================= SECTION CONTENT END// ========================= -->
 
-
-<!-- onclick="addItems(event)"
-<script>
-    function addItems(event){
-      event.preventDefault();
-      var link = event.currentTarget.href;
-      var name = event.currentTarget.name;
-      
-        
-        const Toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-              toast.addEventListener('mouseenter', Swal.stopTimer)
-              toast.addEventListener('mouseleave', Swal.resumeTimer)
-            }
-          })
-          
-          Toast.fire({
-            icon: 'success',
-            title: 'Signed in successfully'
-          })
-      
-    }
-  </script> -->
 
 
 {% endblock %}

@@ -90,8 +90,8 @@
                                 </td>
                                 <td>
                                     <div class="price-wrap">
-                                        <var class="price">${{ cart_item.sub_total }}</var>
-                                        <small> ${{ cart_item.product.price }} each</small>
+                                        <var class="price">₹{{ cart_item.sub_total }}</var>
+                                        <small> ₹{{ cart_item.product.price }} each</small>
                                     </div> <!-- price-wrap .// -->
                                 </td>
 
@@ -117,15 +117,15 @@
             <div class="card-body">
                 <dl class="dlist-align">
                   <dt>Total price:</dt>
-                  <dd class="text-right">${{ total }}</dd>
+                  <dd class="text-right">₹{{ total }}</dd>
                 </dl>
                 <dl class="dlist-align">
                   <dt>Tax:</dt>
-                  <dd class="text-right"> ${{ tax }}</dd>
+                  <dd class="text-right"> ₹{{ tax }}</dd>
                 </dl>
                 <dl class="dlist-align">
                   <dt>Grand Total:</dt>
-                  <dd class="text-right text-dark b"><strong>${{ grand_total }}</strong></dd>
+                  <dd class="text-right text-dark b"><strong>₹{{ g_total }} </strong></dd>
                 </dl>
                 <hr>
                 <p class="text-center mb-3">
@@ -229,6 +229,35 @@
         }).render('#paypal-button-container');
     </script>
 
+    <!-- onclick="addItems(event)"
+    <script>
+        function addItems(event){
+          event.preventDefault();
+          var link = event.currentTarget.href;
+          var name = event.currentTarget.name;
+          
+            
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer)
+                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+              })
+              
+              Toast.fire({
+                icon: 'success',
+                title: 'Signed in successfully'
+              })
+          
+        }
+      </script> -->
+
+      
 
 
 {% endblock %}
