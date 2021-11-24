@@ -13,6 +13,8 @@ urlpatterns = [
 
     path('phone_number/', views.phone_number, name='phone_number'),
     path('reset_password_otp_verify/', views.reset_password_otp_verify, name='reset_password_otp_verify'),
-    path('set_new_password/', views.set_new_password, name='set_new_password')
+    path('set_new_password/', views.set_new_password, name='set_new_password'),
+
+    path('dashboard/', views.dashboard, name='dashboard'),
     
 ] 

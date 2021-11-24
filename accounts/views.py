@@ -283,6 +283,11 @@ def set_new_password(request):
     return render(request, 'user/set_new_password.html')
 
 
+@login_required(login_url = 'signin')
+def dashboard(request):
+    return render(request, 'user/dashboard.html')
+
+
 
 
 

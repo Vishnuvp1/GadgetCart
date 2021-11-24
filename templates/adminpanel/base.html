@@ -1,94 +1,111 @@
 {% load static %}
 
 <!DOCTYPE html>
-    <html lang="en">
+<html lang="en">
 
-    
+
 <!-- Mirrored from coderthemes.com/hyper/saas/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 11 Nov 2021 07:48:55 GMT -->
-        <head>
-        <meta charset="utf-8" />
-        <title>{% block title %} {% endblock %}</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
-        <meta content="Coderthemes" name="author" />
-        <!-- App favicon -->
-        <link rel="shortcut icon" href="{% static 'adminpanel/images/favicon.ico' %}">
 
-        <!-- third party css -->
-        <link href="{% static 'adminpanel/css/vendor/jquery-jvectormap-1.2.2.css' %}" rel="stylesheet" type="text/css" />
-        <!-- third party css end -->
+<head>
+  <meta charset="utf-8" />
+  <title>{% block title %} {% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+  <meta content="Coderthemes" name="author" />
 
-        <!-- App css -->
-        <link href="{% static 'adminpanel/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
-        <link href="{% static 'adminpanel/css/app.min.css' %}" rel="stylesheet" type="text/css" id="light-style" />
-        <link href="{% static 'adminpanel/css/app-dark.min.css' %}" rel="stylesheet" type="text/css" id="dark-style" />
+  <!-- jquery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"></script>
 
-         <!-- icons -->
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- App favicon -->
+  <link rel="shortcut icon" href="{% static 'adminpanel/images/favicon.ico' %}">
 
-        <!-- Sweetalert -->
-        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-        
-        <!-- Cropper JS -->
-        <head>
-          <meta charset="utf-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.11/cropper.css">
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.11/cropper.js"></script>
-        </head>
-
-        
-    </head>
-
-    <!-- sidebar -->
-    {% include 'adminpanel/includes/sidebar.html' %}
-
-    <!-- navbar -->
-    {% include 'adminpanel/includes/navbar.html' %}
-
-    {% block content %}
-    <!-- content -->
-    {% endblock %}
-
-    {% block script %}
-    {% endblock %}
+  <!-- third party css -->
+  <link href="{% static 'adminpanel/css/vendor/jquery-jvectormap-1.2.2.css' %}" rel="stylesheet" type="text/css" />
+  <!-- third party css end -->
 
 
-    <script>
-        function deleteItems(event){
-          event.preventDefault();
-          var link = event.currentTarget.href;
-          var name = event.currentTarget.name;
-          Swal.fire({
-            title: 'Are you sure?',
-            text: "Do you want to delete "+name,
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes'
-          }).then((result) => {
-            if (result.isConfirmed) {
-              Swal.fire(
-                'Deleted!',
-                'Item has been deleted.',
-                'success'
-              )
-              window.location = link;
-            }
-            else
-              {
-                return false;
-              }
-          })
-        }
-      </script>
-
-   
-    
 
 
-    </html>
+  <!-- App css -->
+  <link href="{% static 'adminpanel/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+  <link href="{% static 'adminpanel/css/app.min.css' %}" rel="stylesheet" type="text/css" id="light-style" />
+  <link href="{% static 'adminpanel/css/app-dark.min.css' %}" rel="stylesheet" type="text/css" id="dark-style" />
+
+  <!-- icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- Sweetalert -->
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
+
+  <script type="text/javascript" charset="utf8"
+    src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+
+  <!-- Cropper JS -->
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.11/cropper.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.11/cropper.js"></script>
+  </head>
+
+
+</head>
+
+<!-- sidebar -->
+{% include 'adminpanel/includes/sidebar.html' %}
+
+<!-- navbar -->
+{% include 'adminpanel/includes/navbar.html' %}
+
+{% block content %}
+<!-- content -->
+{% endblock %}
+
+{% block script %}
+{% endblock %}
+
+
+
+<script>
+  function deleteItems(event) {
+    event.preventDefault();
+    var link = event.currentTarget.href;
+    var name = event.currentTarget.name;
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "Do you want to delete " + name,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Deleted!',
+          'Item has been deleted.',
+          'success'
+        )
+        window.location = link;
+      }
+      else {
+        return false;
+      }
+    })
+  }
+</script>
+
+<script>
+  $(document).ready(function () {
+    $('#myTable').DataTable();
+  });
+</script>
+
+
+</html>
