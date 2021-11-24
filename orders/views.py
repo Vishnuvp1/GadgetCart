@@ -92,7 +92,8 @@ def place_order(request, total=0, quantity=0):
         total += (cart_item.product.price * cart_item.quantity)
         quantity += cart_item.quantity
     tax = (2 * total)/100
-    grand_total = total + tax
+    g_total = total + tax
+    grand_total = g_total / 70
 
     if request.method == 'POST':
         form = OrderForm(request.POST)
@@ -123,6 +124,7 @@ def place_order(request, total=0, quantity=0):
             order_number = current_date + str(data.id)
             data.order_number = order_number
             data.save()
+
 
             order  = Order.objects.get(user=current_user, is_ordered=False, order_number=order_number)
             context = {
