@@ -74,7 +74,7 @@ class Account(AbstractBaseUser,PermissionsMixin):
         return True
 
 
-class Userprofile(models.Model):
+class UserProfile(models.Model):
     user = models.OneToOneField(Account, on_delete=models.CASCADE)
     address_line_1 = models.CharField(blank=True, max_length=100)
     address_line_2 = models.CharField(blank=True, max_length=100)

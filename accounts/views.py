@@ -1,14 +1,15 @@
+from functools import reduce
 from typing import Protocol
 from django.contrib import messages, auth
 from django.contrib.auth.models import User
 from django.db.models import query
 from django.http.response import HttpResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 
 from carts.models import Cart, CartItem
 from store.models import Product
-from .forms import RegistrationForm
-from .models import Account
+from .forms import RegistrationForm ,UserForm, UserProfileForm
+from .models import Account, UserProfile
 from django.contrib.auth.decorators import login_required
 from accounts.verification import send_otp, verify_otp_number
 
@@ -38,6 +39,12 @@ def register(request):
            
             request.session['mobile'] = phone_number
             user.save()
+
+            # Create User Profile
+            profile = UserProfile()
+            profile.user_id = user.id
+            profile.profile_picture = 'default/default-user.png'
+            profile.save()
             
             send_otp(phone_number)
             messages.success(request, 'Registration Successful.')
@@ -302,7 +309,24 @@ def my_orders(request):
     return render(request, 'user/my_orders.html', context)
 
 
-
-
+def edit_profile(request):
+    userprofile = get_object_or_404(UserProfile, user=request.user)
+    if request.method == 'POST':
+        user_form = UserForm(request.POST, instance=request.user)
+        profile_form = UserProfileForm(request.POST, request.FILES, instance=userprofile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, 'Your Profile has been updated.')
+            return redirect('edit_profile')
+    else:
+        user_form = UserForm(instance=request.user)
+        profile_form = UserProfileForm(instance=userprofile)
+    context = {
+        'user_form' : user_form,
+        'profile_form' : profile_form,
+        'userprofile' : userprofile,
+    }
+    return render(request, 'user/edit_profile.html', context)
 
 
