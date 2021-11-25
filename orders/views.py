@@ -9,6 +9,7 @@ from .forms import OrderForm
 import datetime
 import json
 from .send_sms import send_sms
+import razorpay
 
 # Create your views here.
 
@@ -64,8 +65,10 @@ def payments(request):
 
 
     # Send order recieved sms to customer
-    # user = Account.objects.get()
-    # phone = user.phone_number
+    
+    phone = request.user.phone_number
+    print("-----------------")
+    print(phone)
     
 
 
@@ -76,6 +79,7 @@ def payments(request):
     }
     return JsonResponse(data)
 
+client = razorpay.Client(auth=("rzp_test_fPDgsUrJCo7Fzl", "jKBDrLJcPoER9WfGikLZwNji"))
 
 def place_order(request, total=0, quantity=0):
     current_user = request.user
@@ -112,7 +116,7 @@ def place_order(request, total=0, quantity=0):
             data.state = form.cleaned_data['state']
             data.city = form.cleaned_data['city']
             data.order_note = form.cleaned_data['order_note']
-            data.order_total = grand_total
+            data.order_total = g_total
             data.tax = tax
             data.ip = request.META.get('REMOTE_ADDR')
             data.save()
@@ -126,6 +130,13 @@ def place_order(request, total=0, quantity=0):
             data.order_number = order_number
             data.save()
 
+            
+            order_amount = g_total * 100
+            order_currency = 'INR'
+            payment_order = client.order.create(dict(amount=order_amount, currency=order_currency, payment_capture=1))
+            payment_order_id = payment_order['id']
+            
+
 
             order  = Order.objects.get(user=current_user, is_ordered=False, order_number=order_number)
             context = {
@@ -135,6 +146,8 @@ def place_order(request, total=0, quantity=0):
                 'tax' : tax,
                 'grand_total' : grand_total,
                 'g_total' : g_total,
+                'amount' : order_amount,
+                'order_id' : payment_order_id,
             }
             return render(request, 'user/payments.html', context)
         else:
