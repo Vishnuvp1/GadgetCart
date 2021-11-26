@@ -34,13 +34,11 @@ class VariationManager(models.Manager):
     def colors(self):
         return super(VariationManager, self).filter(variation_category='color' , is_active=True)
 
-    def memories(self):
-        return super(VariationManager, self).filter(variation_category='memory' , is_active=True)
-
+    
 
 variation_category_choices = (
-    ('color', 'color'),
-    ('memory', 'memory'),
+    ('color', 'Color'),
+    
 )
 
 class Variation(models.Model):

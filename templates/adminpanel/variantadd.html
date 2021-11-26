@@ -16,7 +16,7 @@
     <article class="card-body">
         <div class="container col-10">
             <div class="container-fluid text-center ">
-                <h4 class="ml-5 mt-3 mb-3 text-black">ADD BRAND</h4>
+                <h4 class="ml-5 mt-3 mb-3 text-black">ADD Variant</h4>
 
             </div>
             {% include 'adminpanel/includes/alerts.html' %}
@@ -25,10 +25,8 @@
                 {{ form | crispy }}
                 <div class="form-group">
 					<div id="image-box" class="image-container"></div>
-					<button class="btn btn-outline-info" id="crop-btn"
-						style="width: 100%; margin-top: 10px; display: none;" type="button">Crop</button>
-					<button class="btn btn-outline-info" id="confirm-btn" style="width: 100%; margin-top: 10px;"
-						type="submit">Post</button>
+					
+					<button class="btn btn-outline-info" style="width: 100%; margin-top: 10px;" type="submit">Post</button>
 				</div>
             </form>
         </div>
