@@ -46,6 +46,7 @@ def register(request):
             profile.profile_picture = 'default/default-user.png'
             profile.save()
             
+            # Send otp
             send_otp(phone_number)
             messages.success(request, 'Registration Successful.')
             return redirect('verifyaccount')

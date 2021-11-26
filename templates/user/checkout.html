@@ -15,16 +15,16 @@
                 <div class="card shadow p-3 mb-5 bg-white rounded">
                     <div class="card-body">
                         <h4 class="card-title mb-4">Billing Address</h4>
-                        <form action="{% url 'place_order' %}" method="POST">
+                        <form action="{% url 'place_order' %}" method="POST" id="checkout_form">
                             {% csrf_token %}
                             <div class="form-row">
                                 <div class="col form-group">
                                   <label for="">First Name</label>
-                                  <input type="text" name="first_name" class="form-control" required>
+                                  <input type="text" name="first_name" class="form-control">
                                 </div>
                                 <div class="col form-group">
                                   <label for="">Last Name</label>
-                                  <input type="text" name="last_name" class="form-control" required>
+                                  <input type="text" name="last_name" class="form-control">
                                 </div>
                               </div>
 
@@ -149,5 +149,23 @@
     </div> <!-- container .//  -->
 </section>
 <!-- ========================= SECTION CONTENT END// ========================= -->
+
+<script>
+  $(document).ready(function () {
+    $("#checkout_form").validate({
+        rules: {
+          first_name: {
+                required: true,
+
+            },
+            last_name: {
+                required: true,
+            },
+
+            
+        }
+    })
+})
+</script>
 
 {% endblock %}

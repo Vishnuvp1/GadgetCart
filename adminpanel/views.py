@@ -250,3 +250,9 @@ def userdetails(request):
         'users' : users
     }
     return render(request, 'adminpanel/userdetails.html',context )
+
+def userdelete(request, account_id):
+    user = Account.objects.get(id=account_id)
+    print(id)
+    user.delete()
+    return redirect('userdetails')

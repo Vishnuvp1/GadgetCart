@@ -27,19 +27,19 @@
                
               </div> <!-- form-group form-check .// -->
               <div class="form-group">
-                  <button type="submit" class="btn btn-primary btn-block" style="background-color: #0E3951; border-color:#0E3951"> Login  </button>
+                  <button type="submit" class="btn btn-primary btn-block"> Login  </button>
               </div> <!-- form-group// -->    
               <br>
             </form>
 
-              <form action="{% url 'mobile_login' %}" method="post">
+              <form action="{% url 'mobile_login' %}" method="post" id="user_otp_form">
                 {% csrf_token %}
               <h6 class="text-center card-title mb-4">Sign in with OTP</h6>
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="Enter phone number" name="phone">
+                <input type="text" class="form-control" placeholder="Enter Phone Number" name="phone">
               </div>
               <div class="form-group">
-                <button type="submit" class="btn btn-primary btn-block" style="background-color: #0E3951; border-color:#0E3951"> Submit  </button>
+                <button type="submit" class="btn btn-primary btn-block"> Submit  </button>
             </div>
           </form>
          
@@ -73,7 +73,22 @@
             }
         })
     })
+
+    $(document).ready(function () {
+      $("#user_otp_form").validate({
+          rules: {
+            phone: {
+                  required: true,
+
+              },
+              
+
+              
+          }
+      })
+  })
 </script>
+
 
 {% endblock %}
 

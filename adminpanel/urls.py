@@ -18,14 +18,15 @@ urlpatterns = [
     path('categoryedit/<int:category_id>/', views.categoryedit, name='categoryedit'),
     
     
-    path('brandlist', views.brandlist , name='brandlist'),
-    path('brandadd', views.brandadd , name='brandadd'),
+    path('brandlist/', views.brandlist , name='brandlist'),
+    path('brandadd/', views.brandadd , name='brandadd'),
     path('branddelete/<int:brand_id>/', views.branddelete, name='branddelete'),
     path('brandedit/<int:brand_id>/', views.brandedit, name='brandedit'),
 
-    path('variantadd', views.variantadd, name='variantadd'),
+    path('variantadd/', views.variantadd, name='variantadd'),
 
-    path('userdetails', views.userdetails, name='userdetails'),
+    path('userdetails/', views.userdetails, name='userdetails'),
+    path('userdelete/<int:account_id>/', views.userdelete, name='userdelete'),
     
     
 ]

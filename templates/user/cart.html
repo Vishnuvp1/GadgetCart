@@ -76,7 +76,7 @@
             </div> <!-- price-wrap .// -->
         </td>
         <td class="text-right"> 
-        <a href="{% url 'remove_cart_item' cart_item.product.id cart_item.id %}" class="btn btn-danger" onclick="deleteItems(event)"> Remove</a>
+        <a href="{% url 'remove_cart_item' cart_item.product.id cart_item.id %}" class="btn" style="background-color: red; color: white;" onclick="deleteItems(event)"> Remove</a>
         </td>
     </tr>
 

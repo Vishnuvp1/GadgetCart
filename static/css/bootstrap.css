@@ -10170,3 +10170,20 @@ ul.sub-image li img{
   height: 80px;
   border: 1px solid gray;
 }
+
+.error {
+  color : red;
+}
+
+.errorlist{
+  color: red;
+}
+
+.btn{
+  background-color: #0E3951;
+  border-color: white;
+}
+
+.btn:hover{
+  background-color: #0a547d;
+}

@@ -15,7 +15,7 @@
           {% include 'user/includes/alerts.html' %}
           
 
-              <form action="{% url 'phone_number' %}" method="post">
+              <form action="{% url 'phone_number' %}" method="post" id="phone_number_form">
                 {% csrf_token %}
              
               <div class="form-group">
@@ -37,6 +37,23 @@
     </section>
     <!-- ========================= SECTION CONTENT END// ========================= -->
     
+    
+    <script>
+      $(document).ready(function () {
+        $("#phone_number_form").validate({
+            rules: {
+              phone: {
+                    required: true,
+  
+                }, 
+            }
+        })
+    })
+    </script>
+    
+    <style>
+      
+    </style>
     
   
 

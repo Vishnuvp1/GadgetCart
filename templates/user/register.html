@@ -15,7 +15,7 @@
           <article class="card-body">
             {% include 'user/includes/alerts.html' %}
             <header class="mb-4"><h4 class="card-title">Sign up</h4></header>
-            <form action="{% url 'register' %}" method="post">
+            <form action="{% url 'register' %}" method="post" id="register_form">
               {% csrf_token %}
               
                     <div class="form-row">
@@ -67,5 +67,14 @@
     </section>
     <!-- ========================= SECTION CONTENT END// ========================= -->
     
+
+    <script>
+        $(document).ready(function () {
+            $("#register_form").validate({
+                
+            })
+        })
+    
+    </script>
 
     {% endblock %}

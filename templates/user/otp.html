@@ -13,13 +13,12 @@
           <div class="card-body">
           <h4 class="card-title mb-4">Enter OTP</h4>
           {% include 'user/includes/alerts.html' %}
-          <form action="" method="post">
+          <form action="" method="post" id="otp_form">
             {% csrf_token %}
               <div class="form-group">
                  <input type="number" class="form-control" placeholder="Enter OTP" name="otp">
               </div> <!-- form-group// -->
    
-              
               
               <div class="form-group">
                   <button type="submit" class="btn btn-primary btn-block"> Submit </button>
@@ -36,6 +35,21 @@
     </section>
     <!-- ========================= SECTION CONTENT END// ========================= -->
     
+    <script>
+      $(document).ready(function () {
+        $("#otp_form").validate({
+            rules: {
+              otp: {
+                    required: true,
+  
+                },
+                
+  
+                
+            }
+        })
+    })
+    </script>
     
   
 
