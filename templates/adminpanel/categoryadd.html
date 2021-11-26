@@ -20,11 +20,11 @@
 
             </div>
             {% include 'adminpanel/includes/alerts.html' %}
-            <form action="{% url 'categoryadd' %}" method="post" enctype="multipart/form-data">
+            <form action="{% url 'categoryadd' %}" method="post" enctype="multipart/form-data" id="add_category_form">
                 {% csrf_token %}
                 {{ form | crispy }}
                 <div class="form-group">
-					<div id="image-box" class="image-container"></div>
+					<div id="image-box" class="image-container" required></div>
 					<button class="btn btn-outline-info" id="crop-btn"
 						style="width: 100%; margin-top: 10px; display: none;" type="button">Crop</button>
 					<button class="btn btn-outline-info" id="confirm-btn" style="width: 100%; margin-top: 10px;"
@@ -127,6 +127,24 @@
 	});
 </script>
 
+
+<script>
+	$(document).ready(function () {
+	  $("#add_category_form").validate({
+		  rules: {
+			category_name: {
+				  required: true,
+				  minlength : 3
+  
+			  },
+			  cat_image: {
+				  required: true,
+			  },
+			  
+		  }
+	  })
+  })
+  </script>
 
 
 

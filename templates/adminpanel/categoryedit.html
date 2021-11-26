@@ -20,7 +20,7 @@
                 <h4 class="ml-5 mt-3 mb-3 text-black">EDIT CATEGORY</h4>
 
             </div>
-            <form action="" method="post" enctype="multipart/form-data">
+            <form action="" method="post" enctype="multipart/form-data" id="category_add_form"> 
                 {% csrf_token %}
                 {{ form | crispy }}
                 <div class="form-group">
@@ -127,6 +127,24 @@
 	});
 </script>
 
+
+
+<script>
+	$(document).ready(function () {
+	  $("#category_add_form").validate({
+		  rules: {
+			category_name: {
+				  required: true,
+  
+			  },
+			  last_name: {
+				  required: true,
+			  },	
+			  
+		  }
+	  })
+  })
+  </script>
 
 
 
