@@ -20,7 +20,7 @@ from carts.views import _cart_id
 from carts.models import Cart, CartItem
 import requests
 
-from orders.models import Order
+from orders.models import Order, OrderProduct
 
 # Create your views here.
 
@@ -297,8 +297,10 @@ def set_new_password(request):
 def dashboard(request):
     orders = Order.objects.order_by('-created_at').filter(user_id=request.user.id, is_ordered=True)
     orders_count = orders.count()
+    userprofile = UserProfile.objects.get(user_id=request.user.id)
     context = {
-        'orders_count' : orders_count
+        'orders_count' : orders_count,
+        'userprofile' : userprofile,
     }
     return render(request, 'user/dashboard.html', context)
 
@@ -358,4 +360,20 @@ def change_password(request):
 
     return render(request, 'user/change_password.html')
 
+
+@login_required(login_url='signin')
+def order_detail(request, order_id):
+    order_detail = OrderProduct.objects.filter(order__order_number=order_id)
+    order = Order.objects.get(order_number=order_id)
+    subtotal = 0
+    for i in order_detail:
+        subtotal += i.product_price * i.quantity
+    context = {
+        'order_detail' : order_detail,
+        'order' : order,
+        'subtotal' : subtotal
+    }
+    return render(request, 'user/order_detail.html', context)
+
+     
 
