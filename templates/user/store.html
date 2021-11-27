@@ -40,43 +40,34 @@
                                     {% for category in links %}
                                     <li><a href="{{ category.get_url }}">{{ category.category_name}}</a></li>
                                     {% endfor %}
+                                </ul>
 
 
                             </div> <!-- card-body.// -->
                         </div>
                     </article> <!-- filter-group  .// -->
+
                     
-                    <!-- <article class="filter-group">
+                    
+                    <article class="filter-group">
                         <header class="card-header">
                             <a href="#" data-toggle="collapse" data-target="#collapse_4" aria-expanded="true" class="">
                                 <i class="icon-control fa fa-chevron-down"></i>
-                                <h6 class="title">Sizes </h6>
+                                <h6 class="title">Brands </h6>
                             </a>
                         </header>
-                        <div class="filter-content collapse show" id="collapse_4" style="">
+                        <div class="filter-content collapse show" id="collapse_4">
                             <div class="card-body">
-                                <label class="checkbox-btn">
-                                    <input type="checkbox">
-                                    <span class="btn btn-light"> XS </span>
-                                </label>
-
-                                <label class="checkbox-btn">
-                                    <input type="checkbox">
-                                    <span class="btn btn-light"> SM </span>
-                                </label>
-
-                                <label class="checkbox-btn">
-                                    <input type="checkbox">
-                                    <span class="btn btn-light"> LG </span>
-                                </label>
-
-                                <label class="checkbox-btn">
-                                    <input type="checkbox">
-                                    <span class="btn btn-light"> XXL </span>
-                                </label>
+                                <ul class="list-menu">
+                                    <li><a href="{% url 'store' %}">All Products</a></li>
+                                    {% for brand in link %}
+                                    <li><a href="{{ brand.get_url }}">{{ brand.brand_name}}</a></li>
+                                    {% endfor %}
+                                </ul>
+                               
                             </div>
                         </div>
-                    </article> -->
+                    </article>
 
                     <article class="filter-group">
                         <header class="card-header">

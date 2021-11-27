@@ -1,6 +1,7 @@
 from django.core import paginator
 from django.http.response import HttpResponse
 from django.shortcuts import render, get_object_or_404
+from brand.models import Brand
 from carts.models import CartItem
 from category.models import Category
 from .models import Product
@@ -10,10 +11,11 @@ from django.db.models import Q
 
 # Create your views here.
 
-def store(request, category_slug=None):
+def store(request, category_slug=None, brand_slug=None):
 
     categories = None
     products = None
+    brands = None
 
     if category_slug != None:
         categories = get_object_or_404(Category, slug=category_slug)
@@ -22,6 +24,15 @@ def store(request, category_slug=None):
         page = request.GET.get('page')
         paged_product = paginator.get_page(page)
         product_count = products.count()
+
+    elif brand_slug != None:
+        brands = get_object_or_404(Brand, slug=brand_slug)
+        products = Product.objects.filter(brand=brands, is_available=True)
+        paginator = Paginator(products, 6)
+        page = request.GET.get('page')
+        paged_product = paginator.get_page(page)
+        product_count = products.count()
+
     else:
 
         products = Product.objects.all().filter(is_available=True).order_by('id')
