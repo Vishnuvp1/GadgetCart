@@ -69,8 +69,7 @@
                                   <label for="">Order Note</label>
                                   <textarea name="order_note" rows="2" class="form-control"></textarea>
                                 </div>
-
-                    </div>
+                       </div>
 
                 </div> <!-- card.// -->
 
@@ -121,7 +120,7 @@
                                     <td>
                                         <div class="price-wrap">
                                             <var class="price">₹{{ cart_item.sub_total }}</var>
-                                            <small> ₹{{ cart_item.product.price }} each</small>
+                                            <small> ₹{{ cart_item.product.get_price.price }} each</small>
                                         </div> <!-- price-wrap .// -->
                                     </td>
 
@@ -163,9 +162,7 @@
             },
             email: {
               email : true,
-            }
-
-            
+            }           
         }
     })
 })

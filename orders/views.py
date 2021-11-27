@@ -67,10 +67,9 @@ def payments(request):
     # Send order recieved sms to customer
     
     phone = request.user.phone_number
-    print("-----------------")
+    print("--------PHONE NUMBER---------")
     print(phone)
     
-
 
     # Send order number and transaction id back to senddata method via json response
     data = {
@@ -94,7 +93,8 @@ def place_order(request, total=0, quantity=0):
     tax = 0
     g_total = 0
     for cart_item in cart_items:
-        total += (cart_item.product.price * cart_item.quantity)
+        offerprice = cart_item.product.get_price()
+        total += (offerprice['price'] * cart_item.quantity)
         quantity += cart_item.quantity
     tax = (2 * total)/100
     g_total = total + tax
@@ -133,7 +133,7 @@ def place_order(request, total=0, quantity=0):
             
             order_amount = g_total * 100
             order_currency = 'INR'
-            payment_order = client.order.create(dict(amount=order_amount, currency=order_currency, payment_capture=1))
+            payment_order = client.order.create(dict(amount=int(order_amount), currency=order_currency, payment_capture=1))
             payment_order_id = payment_order['id']
             
 
@@ -168,7 +168,8 @@ def order_complete(request):
 
         subtotal = 0
         for i in ordered_products:
-            subtotal += i.product_price * i.quantity
+            offerprice = i.product.get_price()
+            subtotal += offerprice['price'] * i.quantity
 
         payment = Payment.objects.get(payment_id=transID)
 
@@ -179,7 +180,6 @@ def order_complete(request):
             'transID' : payment.payment_id,
             'payment' : payment,
             'subtotal' : subtotal
-
 
         }
         return render(request, 'user/order_complete.html',context)

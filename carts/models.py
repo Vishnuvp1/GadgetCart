@@ -23,7 +23,8 @@ class CartItem(models.Model):
 
 
     def sub_total(self):
-        return self.product.price * self.quantity
+        offerprice = self.product.get_price()
+        return offerprice['price'] * self.quantity
 
 
     def __unicode__(self):

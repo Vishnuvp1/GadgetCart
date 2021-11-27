@@ -72,7 +72,7 @@
         <td> 
             <div class="price-wrap"> 
                 <var class="price">₹{{ cart_item.sub_total }}</var> 
-                <small class="text-muted"> ₹{{ cart_item.product.price }}</small> 
+                <small class="text-dark"> ₹{{ cart_item.product.get_price.price }}</small> 
             </div> <!-- price-wrap .// -->
         </td>
         <td class="text-right"> 

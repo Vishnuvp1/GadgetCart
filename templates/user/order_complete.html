@@ -77,7 +77,7 @@
                                                     </p>
                                                 </td>
                                                 <td class="text-center">{{item.quantity}}</td>
-                                                <td class="text-center">{{item.product_price}}</td>
+                                                <td class="text-center">{{item.product.get_price.price}} x {{item.quantity}}</td>
                                             </tr>
                                             {% endfor %}
                                         </tbody>

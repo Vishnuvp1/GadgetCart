@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'brand',
     'carts',
     'orders',
+    'offer',
 
 
     
