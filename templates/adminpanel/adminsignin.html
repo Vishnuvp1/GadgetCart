@@ -6,7 +6,14 @@
     <title>{% block title %} {% endblock %}</title>
     <!-- App css -->
     <link href="{% static 'adminpanel/css/app.min.css' %}" rel="stylesheet" type="text/css" id="light-style" />
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+  crossorigin="anonymous"></script>
+  <script src=https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js></script>
 </head>
+<body>
+    
+
 
 <div class="account-pages pt-2 pt-sm-5 pb-4 pb-sm-5">
     <div class="container">
@@ -31,12 +38,12 @@
                         </div>
                         {% include 'adminpanel/includes/alerts.html' %}
 
-                        <form action="{% url 'adminsignin' %}" method="post">
+                        <form action="{% url 'adminsignin' %}" method="post" id="admin_signin_form">
                             {% csrf_token %}
 
                             <div class="mb-3">
                                 <label for="emailaddress" class="form-label">Email address</label>
-                                <input class="form-control" type="email" id="emailaddress" required=""
+                                <input class="form-control" type="email" id="emailaddress"
                                     placeholder="Enter your email" name="email">
                             </div>
 
@@ -44,7 +51,7 @@
 
                                 <label for="password" class="form-label">Password</label>
                                 <div class="input-group input-group-merge">
-                                    <input type="password" id="password" class="form-control"
+                                    <input type="password" id="password" class="form-control col-12" style="width: 100%;"
                                         placeholder="Enter your password" name="password">
                                 </div>
                             </div>
@@ -74,5 +81,32 @@
 <!-- end page -->
 
 <!-- bundle -->
-<script src="{% static 'adminpanel/js/vendor.min.js' %}"></script>
-<script src="{% static 'adminpanel/js/app.min.js' %}"></script>
+<!-- <script src="{% static 'adminpanel/js/vendor.min.js' %}"></script>
+<script src="{% static 'adminpanel/js/app.min.js' %}"></script> -->
+
+<script>
+    $(document).ready(function () {
+        $("#admin_signin_form").validate({
+            rules: {
+              email: {
+                    required: true,
+
+                },
+                password: {
+                    required: true,
+                },
+
+                
+            }
+        })
+    })
+</script>
+
+<style>
+    .error{
+        color: red;
+    }
+</style>
+
+</body>
+</html>
