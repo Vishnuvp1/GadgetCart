@@ -303,10 +303,11 @@ def dashboard(request):
         'userprofile' : userprofile,
     }
     return render(request, 'user/dashboard.html', context)
+    
 
 @login_required(login_url='signin')
 def my_orders(request):
-    orders = Order.objects.filter(user=request.user, is_ordered=True).order_by('-created_at')
+    orders = OrderProduct.objects.filter(user=request.user).order_by('-created_at')
     context = {
        'orders' : orders
     }
@@ -419,6 +420,18 @@ def edit_address(request, pk):
 def delete_address(request, pk):
     Address.objects.get(id=pk).delete()
     return redirect('my_address')
+
+def cancel_order(request, pk):
+    product = OrderProduct.objects.get(pk=pk)
+    print(product)
+    product.status = 'Canceled'
+    product.save()
+    item = Product.objects.get(pk=product.product.id)
+    item.stock += product.quantity
+    item.save()
+    return redirect('my_orders')
+
+
 
      
 

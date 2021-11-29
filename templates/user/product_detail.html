@@ -11,29 +11,30 @@
     <div class="card shadow p-3 mb-5 bg-white rounded">
       <div class="row no-gutters">
         <aside class="col-md-6">
-          <article class="gallery-wrap">
-            <div class="img-big-wrap">
-							<a href="#"><img class="big_img" src="{{ single_product.image1.url }}"></a>
-						</div> <!-- img-big-wrap.// -->
-						<div class="row mt-5 mb-4 ml-3 exzoom" id="exzoom">
-							<div class="col-md-3 col-3 ml-4 text-center border" style="max-width: 20%;">
-								<a href="#"><img class="small_img" src="{{ single_product.image1.url }}"
-										height="100px"></a>
-							</div>
-							<div class="col-md-3 col-3 ml-2 text-center border" style="max-width: 20%;">
-								<a href="#"><img class="small_img" src="{{ single_product.image2.url }}"
-										height="100px"></a>
-							</div>
-							<div class="col-md-3 col-3 ml-2 text-center border" style="max-width: 20%;">
-								<a href="#"><img class="small_img" src="{{ single_product.image3.url }}"
-										height="100px"></a>
-							</div>
-							
-						</div>
+
+          <div class="card">
+            <article class="gallery-wrap"> 
+              <div class="img-big-wrap">
+                <div class="img-big-wrap">
+                  <a href="#"><img class="big_img" src="{{ single_product.image1.url }}"></a>
+                </div>
+              </div> 
+              <div class="thumbs-wrap">
+                <a href="#" class="item-thumb"> <img class="small_img" src="{{ single_product.image1.url }}"
+                  height="100px"></a>
+                <a href="#" class="item-thumb"> <img class="small_img" src="{{ single_product.image2.url }}"
+                  height="100px"></a>
+                <a href="#" class="item-thumb"> <img class="small_img" src="{{ single_product.image2.url }}"
+                  height="100px"></a>
+            
+              </div> 
+            </article>
+            </div> 
+
         </article> 
           
         </aside>
-        <main class="col-md-6 border-left">
+        <main class="col-md-6">
 
           <form action="{% url 'add_cart' single_product.id %}" method="post">
             {% csrf_token %}

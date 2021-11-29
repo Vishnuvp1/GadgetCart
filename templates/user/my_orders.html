@@ -21,21 +21,27 @@
                         <table class="table table-hover">
                             <thead>
                               <tr>
-                                <th scope="col">Order #</th>
-                                <th scope="col">Billing name</th>
-                                <th scope="col">Phone Number</th>
-                                <th scope="col">Order total</th>
+                                <th scope="col">Orderd Product</th>
+                                <th scope="col">Product name</th>
+                                <th scope="col">Quantity</th>
                                 <th scope="col">Order Date</th>
+                                <th scope="col">Order Status</th>
+                                <th scope="col">Cancel Order</th>
                               </tr>
                             </thead>
                             <tbody>
                                 {% for order in orders %}
                               <tr>
-                                <th scope="row"><a href="{% url 'order_detail' order.order_number %}">{{order.order_number}}</a></th>
-                                <td>{{order.full_name}}</td>
-                                <td>{{order.phone}}</td>
-                                <td>₹ {{order.order_total}}</td>
+                                <th><div><img src="{{order.product.image1.url}}" class="img-sm" alt=""></div></th>
+                                <td>{{order.product}}</td>
+                                <td>{{order.quantity}}</td>
                                 <td>{{order.created_at}}</td>
+                                <td>{{order.status}}</td>
+                                  {% if product.status == 'Canceled'  %}
+                                  <td><a class="btn text-white" href="{% url 'cancel_order' order.id %}">Cancel</a></td>
+                                  {% else %}
+                                  <td><p>Canceled</p></td>
+                                  {% endif %}
                               </tr>
                               {% endfor %}
                             </tbody>

@@ -41,7 +41,7 @@
                           <div class="card-footer">
                             <a class="text-dark">Default</a>
                             <a href="{% url 'edit_address' address.id %}" class="text-dark">Edit</a>
-                            <a href="{% url 'delete_address' address.id %}" class="text-dark">Delete</a>
+                            <a href="{% url 'delete_address' address.id %}" class="text-dark" onclick="deleteItems(event)">Delete</a>
                           </div>
                       </div>
                     </div>

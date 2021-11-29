@@ -6,6 +6,16 @@ from store.models import Product, Variation
 # Create your models here.
 
 
+STATUS1 = (
+        ('New', 'New'),
+        ('Placed', 'Placed'),
+        ('Shipped', 'Shipped'),
+        ('Accepted', 'Accepted'),
+        ('Delivered', 'Delivered'),
+        ('Canceled', 'Canceled'),
+    )
+
+
 class Payment(models.Model):
     user = models.ForeignKey(Account, on_delete=models.CASCADE)
     payment_id = models.CharField(max_length=100)
@@ -56,6 +66,8 @@ class Order(models.Model):
     def __str__(self):
         return self.first_name
 
+    
+
 
 class OrderProduct(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
@@ -68,6 +80,8 @@ class OrderProduct(models.Model):
     ordered = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    status = models.CharField(max_length=10, choices=STATUS1, default='New')
 
     def __str__(self):
         return self.product.product_name
+
