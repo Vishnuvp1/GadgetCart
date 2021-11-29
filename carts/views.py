@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from store.models import Product, Variation
 from .models import Cart, CartItem
 from django.contrib.auth.decorators import login_required
+from accounts.models import Address
 
 # Create your views here.
 
@@ -205,7 +206,7 @@ def cart(request, total=0, quantity=0, cart_items=None):
 
 @login_required(login_url='signin')
 def checkout(request, total=0, quantity=0, cart_items=None):
-
+    addresses = Address.objects.filter(user=request.user)
     try:
         tax = 0
         grand_total = 0
@@ -228,7 +229,8 @@ def checkout(request, total=0, quantity=0, cart_items=None):
         'quantity' : quantity,
         'cart_items' : cart_items,
         'tax' : tax,
-        'grand_total' : grand_total
+        'grand_total' : grand_total,
+        'addresses' : addresses
     }
 
     return render(request, 'user/checkout.html', context)

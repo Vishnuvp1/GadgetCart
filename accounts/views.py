@@ -2,14 +2,15 @@ from functools import reduce
 from typing import Protocol
 from django.contrib import messages, auth
 from django.contrib.auth.models import User
+from django.core.files.base import ContentFile
 from django.db.models import query
 from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
 from carts.models import Cart, CartItem
 from store.models import Product
-from .forms import RegistrationForm ,UserForm, UserProfileForm
-from .models import Account, UserProfile
+from .forms import AddressForm, RegistrationForm ,UserForm, UserProfileForm
+from .models import Account, Address, UserProfile
 from django.contrib.auth.decorators import login_required
 from accounts.verification import send_otp, verify_otp_number
 
@@ -374,6 +375,29 @@ def order_detail(request, order_id):
         'subtotal' : subtotal
     }
     return render(request, 'user/order_detail.html', context)
+
+@login_required(login_url='signin')
+def my_address(request):
+    form = AddressForm()
+    addresses = Address.objects.filter(user=request.user)
+
+    if request.method == 'POST':
+        form = AddressForm(request.POST)
+        print(request.POST)
+        if form.is_valid():
+            
+            instance = form.save(commit=False)
+            instance.user = request.user
+            instance.save()
+            messages.success(request, 'Successfuly added new address')
+            return redirect('my_address')
+
+    context = {
+        'form' : form,
+        'addresses' : addresses
+    }
+
+    return render(request, 'user/my_address.html', context)
 
      
 

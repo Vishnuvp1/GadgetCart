@@ -1,7 +1,8 @@
 from django import forms
 from django.db.models import fields
+from django.forms import models
 
-from .models import Account, UserProfile
+from .models import Account, UserProfile, Address
 
 class RegistrationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput(attrs={
@@ -60,3 +61,13 @@ class UserProfileForm(forms.ModelForm):
         super(UserProfileForm, self).__init__(*args , **kwargs)
         for field in self.fields:
             self.fields[field].widget.attrs['class'] = 'form-control'
+
+
+class AddressForm(forms.ModelForm):
+    class Meta:
+        model = Address
+        fields = ['first_name', 'last_name', 'email', 'phone_number', 'address_line', 'house_no', 'city', 'state', 'country', 'pin', 'type']
+
+# class UpdateAddressForm(forms.ModelForm):
+#     class Meta:
+#         model = 

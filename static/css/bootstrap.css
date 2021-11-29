@@ -10187,3 +10187,22 @@ ul.sub-image li img{
 .btn:hover{
   background-color: #0a547d;
 }
+
+.list-group-item.active {
+  z-index: 2;
+  color: #fff;
+  background-color: #0E3951;
+  border-color: #0E3951;
+}
+
+.list-group-item.active:hover{
+  background-color: #0a547d ;
+}
+
+a {
+  color: #0E3951;
+}
+
+a:hover{
+  color: #0a547d;
+}
