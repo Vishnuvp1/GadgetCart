@@ -67,7 +67,3 @@ class AddressForm(forms.ModelForm):
     class Meta:
         model = Address
         fields = ['first_name', 'last_name', 'email', 'phone_number', 'address_line', 'house_no', 'city', 'state', 'country', 'pin', 'type']
-
-# class UpdateAddressForm(forms.ModelForm):
-#     class Meta:
-#         model = 

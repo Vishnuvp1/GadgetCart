@@ -9,55 +9,14 @@
 
   {% include 'user/includes/alerts.html' %}
 
-    <div class="container">
         <div class="row">
-        {% include 'user/includes/dashboard_sidebar.html' %}
- 
-        <main class="col-md-9">
-            <div class="card shadow p-4 bg-white rounded">
-
-                <div class="row row-cols-1 row-cols-md-2 g-4">
-                    {% for address in addresses %}
-                    <div class="col">
-                      <div class="card">
-                        <div class="card-header">
-                            <div class="row">
-                            <h5 class="mt-3 ml-3">Address</h5>
-                            <h6 class="mt-3 ml-auto mr-3" style="border: 1px solid gray; padding: 6px;">{{address.type}}</h6>
-                        </div>  
-                        </div>
-                       
-                        <div class="card-body">
-                          <h5 class="card-title mb-0">{{address.full_name}}</h5>
-                          <p class="mb-0">{{address.address_line}}</p>
-                          <p class="mb-0">{{address.email}}</p>
-                          <p class="mb-0">{{address.phone_number}}</p>
-                          <p class="mb-0">{{address.house_no}}</p>
-                          <p class="mb-0">{{address.city}}</p>
-                          <p class="mb-0">{{address.pin}}</p>
-                          <p class="mb-0">{{address.state}}</p>
-                          <p class="mb-0">{{address.country}}</p>                      
-                          </div>
-                          <div class="card-footer">
-                            <a class="text-dark">Default</a>
-                            <a href="{% url 'edit_address' address.id %}" class="text-dark">Edit</a>
-                            <a href="{% url 'delete_address' address.id %}" class="text-dark">Delete</a>
-                          </div>
-                      </div>
-                    </div>
-                    {% endfor %}
-                    
-            </div>
-
-          
-        </div>
-
-            
+        <main class="container col-md-6">
+           
             <article class="card shadow p-3 bg-white rounded mt-2">
            
        
             <header class="card-header">
-                <strong class="d-inline-block mr-3">Add Address</strong>
+                <strong class="d-inline-block mr-3">Update Address</strong>
               
             </header>
             <div class="card-body">
@@ -154,7 +113,7 @@
                          
                    
                         
-                          <input type="submit" value="Add New Address" class="btn btn-outline-primary" style="color: white;">
+                          <input type="submit" value="Update Address" class="btn btn-outline-primary" style="color: white;">
                       </form>
                        
                     </div>
@@ -166,8 +125,7 @@
             </article> <!-- order-group.// --> 
         </main>
     </div> <!-- row.// -->
-    </div>
-    
+
     
     </section>
     <!-- ========================= SECTION CONTENT END// ========================= -->

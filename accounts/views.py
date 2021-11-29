@@ -1,5 +1,4 @@
 from functools import reduce
-from typing import Protocol
 from django.contrib import messages, auth
 from django.contrib.auth.models import User
 from django.core.files.base import ContentFile
@@ -398,6 +397,28 @@ def my_address(request):
     }
 
     return render(request, 'user/my_address.html', context)
+
+
+def edit_address(request, pk):
+    address = Address.objects.get(pk=pk)
+    form = AddressForm(instance=address)
+
+    if request.method == 'POST':
+        form = AddressForm(request.POST, instance=address)
+
+        if form.is_valid:
+            form.save()
+            messages.success(request, 'Your Address is updated')
+            return redirect('my_address')
+
+    context = {
+        'form' : form
+    }
+    return render(request, 'user/edit_address.html', context)
+
+def delete_address(request, pk):
+    Address.objects.get(id=pk).delete()
+    return redirect('my_address')
 
      
 
