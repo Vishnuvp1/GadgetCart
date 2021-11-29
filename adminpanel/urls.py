@@ -27,6 +27,10 @@ urlpatterns = [
 
     path('userdetails/', views.userdetails, name='userdetails'),
     path('userdelete/<int:account_id>/', views.userdelete, name='userdelete'),
+
+    path('brand_offer_add/', views.brand_offer_add, name='brand_offer_add'),
+    path('category_offer_add/', views.category_offer_add, name='category_offer_add'),
+    path('product_offer_add/', views.product_offer_add, name='product_offer_add'),
     
     
 ]

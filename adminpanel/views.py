@@ -3,12 +3,14 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 from accounts.models import Account
+from offer.forms import BrandOfferForm, CategoryOfferForm, ProductOfferForm
 from store.forms import ProductForm, VariantsForm
 from store.models import Product
 from category.forms import CategoryForm
 from category.models import Category
 from brand.forms import BrandForm
 from brand.models import Brand
+from offer.models import BrandOffer
 
 
 @login_required(login_url='adminsignin') 
@@ -256,3 +258,59 @@ def userdelete(request, account_id):
     print(id)
     user.delete()
     return redirect('userdetails')
+
+
+def product_offer_add(request):
+    form = ProductOfferForm()
+
+    if request.method == 'POST':
+
+        form = ProductOfferForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Product Offer added successfully')
+            return redirect('product_offer_add')
+
+    context = {
+        'form' : form
+    }
+    return render(request, 'adminpanel/product_offer_add.html', context)
+    
+
+
+def category_offer_add(request):
+    form = CategoryOfferForm()
+
+    if request.method == 'POST':
+
+        form = CategoryOfferForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Category Offer added successfully')
+            return redirect('category_offer_add')
+
+    context = {
+        'form' : form
+    }
+    return render(request, 'adminpanel/category_offer_add.html', context)
+
+
+
+def brand_offer_add(request):
+    form = BrandOfferForm()
+
+    if request.method == 'POST':
+
+        form = BrandOfferForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Brand Offer added successfully')
+            return redirect('brand_offer_add')
+
+    context = {
+        'form' : form
+    }
+    return render(request, 'adminpanel/brand_offer_add.html', context)

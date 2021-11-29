@@ -132,6 +132,27 @@
                     </div>
                 </li>
 
+                <li class="side-nav-item">
+                    <a data-bs-toggle="collapse" href="#sidebarTables" aria-expanded="false" aria-controls="sidebarTables" class="side-nav-link">
+                        <i class="uil-table"></i>
+                        <span> Offers </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="sidebarTables">
+                        <ul class="side-nav-second-level">
+                            <li>
+                                <a href="{% url 'product_offer_add' %}">Add Product Offer</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'category_offer_add' %}">Add Category Offer</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'brand_offer_add' %}">Add Brand Offer</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
 
 
                 

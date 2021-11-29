@@ -12,7 +12,7 @@
       <div class="row no-gutters">
         <aside class="col-md-6">
 
-          <div class="card">
+          <div class="card shadow-sm p-3 bg-white rounded">
             <article class="gallery-wrap"> 
               <div class="img-big-wrap">
                 <div class="img-big-wrap">
@@ -20,11 +20,11 @@
                 </div>
               </div> 
               <div class="thumbs-wrap">
-                <a href="#" class="item-thumb"> <img class="small_img" src="{{ single_product.image1.url }}"
+                <a href="#" class="item-thumb card shadow-sm bg-white rounded"> <img class="small_img" src="{{ single_product.image1.url }}"
                   height="100px"></a>
-                <a href="#" class="item-thumb"> <img class="small_img" src="{{ single_product.image2.url }}"
+                <a href="#" class="item-thumb card shadow-sm bg-white rounded"> <img class="small_img" src="{{ single_product.image2.url }}"
                   height="100px"></a>
-                <a href="#" class="item-thumb"> <img class="small_img" src="{{ single_product.image2.url }}"
+                <a href="#" class="item-thumb card shadow-sm bg-white rounded"> <img class="small_img" src="{{ single_product.image2.url }}"
                   height="100px"></a>
             
               </div> 
@@ -48,12 +48,12 @@
               </div> 
               <div class="mt-2 ml-2">
                 {% if not single_product.price == single_product.get_price.price %}
-                <var class="price h6"><del>₹{{ single_product.price }}</del></var>
+                <var class="price h6 text-secondary"><del>₹{{ single_product.price }}</del></var>
                 {% endif %}
               </div>
               <div class="mt-1 ml-3">
                 {% if single_product.get_price.discount %}
-                <var class="price h5 text-success">{{single_product.get_price.discount}} % </var>
+                <var class="price h5 text-success" style="font-weight: 800px;">{{single_product.get_price.discount}} % OFF </var>
                 {% endif %}
               </div> 
 
@@ -145,6 +145,18 @@
 		})
 	})
 </script>
+
+<style>
+  .gallery-wrap .thumbs-wrap .item-thumb {
+    width: 90px; 
+    height: 90px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin: 3px;
+    display: inline-block;
+    overflow: hidden;
+}
+</style>
 
 
 
