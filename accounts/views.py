@@ -38,7 +38,7 @@ def register(request):
             user = Account.objects.create_user(first_name=first_name, last_name=last_name, email=email, username=username, password=password ,phone_number=phone_number)
            
             request.session['mobile'] = phone_number
-            user.save()
+            # user.save()
 
             # Create User Profile
             profile = UserProfile()
@@ -48,7 +48,7 @@ def register(request):
             
             # Send otp
             send_otp(phone_number)
-            messages.success(request, 'Registration Successful.')
+            # messages.success(request, 'Registration Successful.')
             return redirect('verifyaccount')
     else:
         form = RegistrationForm()
