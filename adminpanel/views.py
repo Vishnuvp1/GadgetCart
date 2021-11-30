@@ -10,7 +10,7 @@ from category.forms import CategoryForm
 from category.models import Category
 from brand.forms import BrandForm
 from brand.models import Brand
-from offer.models import BrandOffer
+from offer.models import BrandOffer, CategoryOffer, ProductOffer
 
 
 @login_required(login_url='adminsignin') 
@@ -255,7 +255,6 @@ def userdetails(request):
 
 def userdelete(request, account_id):
     user = Account.objects.get(id=account_id)
-    print(id)
     user.delete()
     return redirect('userdetails')
 
@@ -314,3 +313,40 @@ def brand_offer_add(request):
         'form' : form
     }
     return render(request, 'adminpanel/brand_offer_add.html', context)
+
+
+def product_offer_list(request):
+    productoffers = ProductOffer.objects.all()
+
+    context = {
+        'productoffers' : productoffers
+    }
+    return render(request, 'adminpanel/product_offer_list.html', context)
+
+def product_offer_delete(request, id):
+    ProductOffer.objects.get(id=id).delete()
+    return redirect('product_offer_list')
+
+def category_offer_list(request):
+    categoryoffers = CategoryOffer.objects.all()
+
+    context = {
+        'categoryoffers' : categoryoffers
+    }
+    return render(request, 'adminpanel/category_offer_list.html', context)
+
+def category_offer_delete(request, id):
+    CategoryOffer.objects.get(id=id).delete()
+    return redirect('category_offer_list')
+
+def brand_offer_list(request):
+    brandoffers = BrandOffer.objects.all()
+
+    context = {
+        'brandoffers' : brandoffers
+    }
+    return render(request, 'adminpanel/brand_offer_list.html', context)
+
+def brand_offer_delete(request, id):
+    BrandOffer.objects.get(id=id).delete()
+    return redirect('brand_offer_list')

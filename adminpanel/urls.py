@@ -30,6 +30,13 @@ urlpatterns = [
     path('brand_offer_add/', views.brand_offer_add, name='brand_offer_add'),
     path('category_offer_add/', views.category_offer_add, name='category_offer_add'),
     path('product_offer_add/', views.product_offer_add, name='product_offer_add'),
+
+    path('product_offer_list/', views.product_offer_list, name='product_offer_list'),
+    path('product_offer_delete/<int:id>', views.product_offer_delete, name='product_offer_delete'),
+    path('category_offer_list/', views.category_offer_list, name='category_offer_list'),
+    path('category_offer_delete/<int:id>', views.category_offer_delete, name='category_offer_delete'),
+    path('brand_offer_list/', views.brand_offer_list, name='brand_offer_list'),
+    path('brand_offer_delete/<int:id>', views.brand_offer_delete, name='brand_offer_delete'),
     
     
 ]
