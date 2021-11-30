@@ -417,9 +417,20 @@ def edit_address(request, pk):
     }
     return render(request, 'user/edit_address.html', context)
 
+
 def delete_address(request, pk):
     Address.objects.get(id=pk).delete()
     return redirect('my_address')
+
+
+def default_address(request, pk):
+    Address.objects.filter(user=request.user, default=True).update(default=False)
+    address = Address.objects.get(pk=pk)
+    address.default = True
+    address.save()
+    messages.success(request, 'Default Address Changed')
+    return redirect('my_address')
+
 
 def cancel_order(request, pk):
     product = OrderProduct.objects.get(pk=pk)

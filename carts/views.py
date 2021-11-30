@@ -2,6 +2,7 @@ from django import http
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponse
+from orders.forms import OrderForm
 from store.models import Product, Variation
 from .models import Cart, CartItem
 from django.contrib.auth.decorators import login_required
@@ -224,7 +225,27 @@ def checkout(request, total=0, quantity=0, cart_items=None):
     except ObjectDoesNotExist:
         pass #just ignore
 
+    addresses = Address.objects.filter(user=request.user)
+    try:
+        default_address = addresses.get(default=True)
+        
+        form = OrderForm(
+            initial={
+                'first_name': default_address.first_name,
+                'last_name': default_address.last_name,
+                'email': default_address.email,
+                'phone_number': default_address.phone_number,
+                'address_line_1': default_address.address_line,
+                'city': default_address.city,
+                'state': default_address.state,
+                'country': default_address.country,
+            }
+        )
+    except ObjectDoesNotExist:
+        form = OrderForm()
+
     context = {
+        'form' : form,
         'total' : total,
         'quantity' : quantity,
         'cart_items' : cart_items,

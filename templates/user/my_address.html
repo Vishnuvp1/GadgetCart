@@ -33,14 +33,23 @@
                           <p class="mb-0">{{address.email}}</p>
                           <p class="mb-0">{{address.phone_number}}</p>
                           <p class="mb-0">{{address.house_no}}</p>
+                          <div class="row ml-0">
+                          <p class="mb-0">{{address.pin}}</p><span>,</span>
                           <p class="mb-0">{{address.city}}</p>
-                          <p class="mb-0">{{address.pin}}</p>
-                          <p class="mb-0">{{address.state}}</p>
-                          <p class="mb-0">{{address.country}}</p>                      
+                        </div>
+                        <div class="row ml-0">
+                          <p class="mb-0">{{address.state}}</p><span>,</span>
+                          <p class="mb-0">{{address.country}}</p>  
+                        </div>                    
                           </div>
                           <div class="card-footer">
-                            <a class="text-dark">Default</a>
-                            <a href="{% url 'edit_address' address.id %}" class="text-dark">Edit</a>
+                            {% if not address.default %}
+                            <a href="{% url 'default_address' address.id %}" class="text-dark">Set As Default</a>
+                            {% else %}
+                            <a>Default</a>
+                            {% endif %}
+                            <span>  |</span>
+                            <a href="{% url 'edit_address' address.id %}" class="text-dark">Edit</a><span>  |</span>
                             <a href="{% url 'delete_address' address.id %}" class="text-dark" onclick="deleteItems(event)">Delete</a>
                           </div>
                       </div>
@@ -57,7 +66,7 @@
            
        
             <header class="card-header">
-                <strong class="d-inline-block mr-3">Add Address</strong>
+                <h5 class="d-inline-block mr-3">Add Address</h5>
               
             </header>
             <div class="card-body">
