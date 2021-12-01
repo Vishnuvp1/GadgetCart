@@ -1,9 +1,12 @@
+from functools import reduce
 from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 from accounts.models import Account
 from offer.forms import BrandOfferForm, CategoryOfferForm, ProductOfferForm
+from orders.forms import OrderProductForm
+from orders.models import STATUS1, OrderProduct
 from store.forms import ProductForm, VariantsForm
 from store.models import Product
 from category.forms import CategoryForm
@@ -167,7 +170,7 @@ def categoryedit(request, category_id):
             return redirect('categorylist')
 
     context = {
-        'form': form
+        'form': form 
     }
     return render(request, 'adminpanel/categoryedit.html', context)
 
@@ -256,6 +259,20 @@ def userdetails(request):
 def userdelete(request, account_id):
     user = Account.objects.get(id=account_id)
     user.delete()
+    return redirect('userdetails')
+
+
+def block_user(request, account_id):
+    user = Account.objects.get(id=account_id)
+    user.is_active = False
+    user.save()
+    return redirect('userdetails')
+
+
+def unblock_user(request, account_id):
+    user = Account.objects.get(id=account_id)
+    user.is_active = True
+    user.save()
     return redirect('userdetails')
 
 
@@ -350,3 +367,36 @@ def brand_offer_list(request):
 def brand_offer_delete(request, id):
     BrandOffer.objects.get(id=id).delete()
     return redirect('brand_offer_list')
+
+
+def active_orders(request):
+    exclude_list = ['Delivered', 'Canceled']
+    active_orders = OrderProduct.objects.all().exclude(status__in=exclude_list)
+    status = STATUS1
+    context = {
+        'active_orders' : active_orders,
+        'status' : status
+    }
+    return render(request, 'adminpanel/active_orders.html', context)
+
+def order_history(request):
+    orders = OrderProduct.objects.filter(status__in=['Delivered','Canceled'])
+    context  = {
+        'orders' : orders
+    }
+    return render(request, 'adminpanel/order_history.html', context)
+
+def active_orders_edit(request, order_id):
+    order = OrderProduct.objects.get(id=order_id)
+    form = OrderProductForm(instance=order)
+    if request.method == 'POST':
+        form = OrderProductForm(request.POST, instance=order)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Order Updated Successfully')
+            return redirect('active_orders')
+
+    context = {
+        'form' : form
+    }
+    return render(request, 'adminpanel/active_orders_edit.html',context)

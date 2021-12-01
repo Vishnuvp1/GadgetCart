@@ -26,6 +26,9 @@ urlpatterns = [
 
     path('userdetails/', views.userdetails, name='userdetails'),
     path('userdelete/<int:account_id>/', views.userdelete, name='userdelete'),
+    path('block_user/<int:account_id>/', views.block_user, name='block_user'),
+    path('unblock_user/<int:account_id>/', views.unblock_user, name='unblock_user'),
+
 
     path('brand_offer_add/', views.brand_offer_add, name='brand_offer_add'),
     path('category_offer_add/', views.category_offer_add, name='category_offer_add'),
@@ -37,6 +40,9 @@ urlpatterns = [
     path('category_offer_delete/<int:id>', views.category_offer_delete, name='category_offer_delete'),
     path('brand_offer_list/', views.brand_offer_list, name='brand_offer_list'),
     path('brand_offer_delete/<int:id>', views.brand_offer_delete, name='brand_offer_delete'),
-    
+
+    path('active_orders/', views.active_orders, name='active_orders'),
+    path('active_orders_edit/<int:order_id>/', views.active_orders_edit, name='active_orders_edit'),
+    path('order_history/', views.order_history, name='order_history'),
     
 ]

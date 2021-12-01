@@ -63,6 +63,14 @@ def signin(request):
         email = request.POST['email']
         password = request.POST['password']
 
+        try:
+            user = Account.objects.get(email=email)
+            if not user.is_active:
+                messages.info(request,'Acces Denied')
+                return redirect('signin')
+        except:
+            pass
+
         user = auth.authenticate(email=email, password=password)
 
         if user is not None:

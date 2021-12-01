@@ -7,45 +7,47 @@
 
 
 <div class="container">
-    <h4 class="ml-3 mt-4 mb-4">USER DETAILS</h4>
+    <h4 class="ml-3 mt-4 mb-4">ACTIVE ORDERS</h4>
+
+    {% include 'adminpanel/includes/alerts.html' %}
 
     <div class="col-12" id="tables">
         <table class="table table-striped table-bordered table-hover bg-white bg-body shadow" id="myTable">
             <thead>
                 <tr>
                     <th>No.</th>
-                    <th>Username</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone Number</th>
-                    <th>Block | Unblock</th>
-                    <th>Action</th>
+                    <th>Customer name</th>
+                    <th>Product</th>
+                    <th>Total Price</th>
+                    <th>Quantity</th>
+                    <th>Order Status</th>
+                    <th>Order Date</th>
+                    <th>Edit</th>
                 </tr>
             </thead>
             <tbody>
-                {% for user in users %}
+                {% for order in active_orders %}
                 <tr>
                     <th scope="row"> {{forloop.counter}} </th>
-                    <td>{{user.username}}</td>
-                    <td>{{user.first_name}} {{user.last_name}}</td>
-                    <td>{{user.email}}</td>
-                    <td>{{user.phone_number}}</td>
-                    <td class="align-self-center">
-                        <center>
-                            {% if user.is_active %}
-                            <a href="{% url 'block_user' user.id %}"><span class="material-icons">lock_open</span></a>
-                            {% else %}
-                            <a href="{% url 'unblock_user' user.id %}"><span class="material-icons">https</span></a>
-                            {% endif %}
-                        </center>
+                    <td>{{order.user.full_name}}</td>
+                    <td>{{order.product}}</td>
 
+                    <td>
+                        {{ order.product.get_price.price }}
                     </td>
                     <td>
-
+                        <center>{{order.quantity}}</center>
+                    </td>
+                    <td>
                         <center>
-                            <a href="{% url 'userdelete' user.id %}" onclick="deleteItems(event)"><span
-                                    class="material-icons">delete</span></a>
+                            {{order.status}}
                         </center>
+                    </td>
+                    <td>
+                        {{order.updated_at}}
+                    </td>
+                    <td>
+                        <a href="{% url 'active_orders_edit' order.id %}" class="btn btn-outline-primary">Edit</a>
                     </td>
                 </tr>
                 {% endfor %}
@@ -77,15 +79,6 @@
 <!-- end Footer -->
 
 
-
-
-
-<style>
-    .table .table-user img {
-        height: 100px;
-        width: 100px;
-    }
-</style>
 
 <script>
     $(document).ready(function () {
