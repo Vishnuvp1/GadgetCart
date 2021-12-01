@@ -7,8 +7,14 @@
 
 
 <div class="container">
-    <h4 class="ml-3 mt-4 mb-4">PRODUCT OFFER LIST</h4>
-
+    <div class="row">
+        <div class="col">
+            <h4 class="ml-3 mt-4 mb-4">BRAND OFFERS</h4>
+        </div>
+        <div class="col">
+            <a href="{% url 'brand_offer_add' %}" type="button" class="btn btn-primary mt-4 mr-3 float-right">Add Offer</a>
+        </div>
+    </div>
     {% include 'adminpanel/includes/alerts.html' %}
 
     <div class="col-12" id="tables">

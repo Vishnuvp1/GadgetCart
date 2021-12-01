@@ -60,7 +60,7 @@ def adminsignout(request):
 
 def productlist(request):
 
-    products = Product.objects.all().filter(is_available=True)
+    products = Product.objects.all().filter(is_available=True).order_by('id')
 
     context = {
         'products' : products,
@@ -82,7 +82,7 @@ def productadd(request):
             product.slug = product.product_name.lower().replace(" ", "-")
             form.save()
             messages.success(request, 'Product added successfully')
-            return redirect('productadd')
+            return redirect('productlist')
 
     context = {
         'form' : form
@@ -239,7 +239,7 @@ def variantadd(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Variant added successfully')
-            return redirect('variantadd')
+            return redirect('productlist')
 
     context = {
         'form' : form
@@ -286,7 +286,7 @@ def product_offer_add(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Product Offer added successfully')
-            return redirect('product_offer_add')
+            return redirect('product_offer_list')
 
     context = {
         'form' : form
@@ -305,7 +305,7 @@ def category_offer_add(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Category Offer added successfully')
-            return redirect('category_offer_add')
+            return redirect('category_offer_list')
 
     context = {
         'form' : form
@@ -324,7 +324,7 @@ def brand_offer_add(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Brand Offer added successfully')
-            return redirect('brand_offer_add')
+            return redirect('brand_offer_list')
 
     context = {
         'form' : form

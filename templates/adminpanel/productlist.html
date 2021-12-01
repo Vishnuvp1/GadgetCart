@@ -7,7 +7,16 @@
 
 
 <div class="container">
-    <h4 class="ml-3 mt-4 mb-4">PRODUCT LIST</h4>
+    <div class="row">
+        <div class="col">
+            <h4 class="ml-3 mt-4 mb-4">PRODUCT LIST</h4>
+        </div>
+        <div class="col">
+            
+            <a href="{% url 'productadd' %}" type="button" class="btn btn-primary mt-4 mr-3 float-right">Add Product</a>
+            <a href="{% url 'variantadd' %}" type="button" class="btn btn-primary mt-4 mr-3 float-right">Add Variant</a>
+        </div>
+    </div>
 
     {% include 'adminpanel/includes/alerts.html' %}
 
@@ -16,6 +25,7 @@
             <thead>
                 <tr>
                     <th>Product</th>
+                    <th>Variants</th>
                     <th>Price</th>
                     <th>Brand</th>
                     <th>Category</th>
@@ -29,15 +39,25 @@
                         <img src="{{ product.image1.url }}" alt="table-user" />
                         {{ product.product_name }}
                     </td>
-                    <td>{{ product.price }}</td>
-                    <td>{{ product.brand }}</td>
-                    <td>{{ product.category }}</td>
-                    <td class="table-action">
+                   
+                    <td class="align-middle">
+                        {% for i in product.variation_set.all %}
+                        {{ i }} <br>
+                        {% endfor %}
+                    </td>
+                
+                   
+                    <td class="align-middle">₹{{ product.price }}</td>
+                    <td class="align-middle">{{ product.brand }}</td>
+                    <td class="align-middle">{{ product.category }}</td>
+                    <td class="table-action align-middle">
+                        <center>
 
-                        <a href="{% url 'productedit' product.id %}"><span class="material-icons">edit</span></a>
+                            <a href="{% url 'productedit' product.id %}"><span class="material-icons">edit</span></a>
 
-                        <a href="{% url 'productdelete' product.id %}" onclick="deleteItems(event)"><span
-                                class="material-icons">delete</span></a>
+                            <a href="{% url 'productdelete' product.id %}" onclick="deleteItems(event)"><span
+                                    class="material-icons">delete</span></a>
+                        </center>
                     </td>
                 </tr>
                 {% endfor %}
