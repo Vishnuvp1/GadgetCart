@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from offer.models import BrandOffer, CategoryOffer, ProductOffer
+from offer.models import BrandOffer, CategoryOffer, Coupon, ProductOffer, RedeemedCoupon
 
 # Register your models here.
 
@@ -17,3 +17,5 @@ class ProductOfferAdmin(admin.ModelAdmin):
 admin.site.register(BrandOffer, BrandOfferAdmin)
 admin.site.register(CategoryOffer, CategoryOfferAdmin)
 admin.site.register(ProductOffer, ProductOfferAdmin)
+admin.site.register(Coupon)
+admin.site.register(RedeemedCoupon)

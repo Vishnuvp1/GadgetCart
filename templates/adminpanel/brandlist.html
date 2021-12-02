@@ -47,9 +47,31 @@
 </div> <!-- row end.// -->
 
 
-
-
-
+<div class="card-deck col-lg-10">
+    {% for brand in brands %}
+    <div class="card">
+        <img class="card-img-top" src="{{ brand.brand_image.url }}" alt="Card image cap">
+        <div class="card-body">
+            <h4 class="card-title">
+                <center>{{ brand.brand_name }}</center>
+            </h4>
+            <div class="d-flex justify-content-center">
+                <div class="mr-2">
+                    <a href="{% url 'brandedit' brand.id %}">
+                        <span class="btn btn-secondary material-icons">edit</span>
+                    </a>
+                </div>
+                <div>
+                    <a type="button" href="{% url 'branddelete' brand.id %}" onclick="deleteItems(event)" data-dismiss="alert">
+                        <span class="btn btn-secondary material-icons">delete</span>
+                    </a>
+                </div>
+            </div>
+            <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
+        </div>
+    </div>
+    {% endfor %}
+</div>
 
 
 

@@ -1,12 +1,14 @@
-from functools import reduce
 from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib.messages.api import success
 from django.shortcuts import redirect, render
 from accounts.models import Account
+from banners.forms import BannerForm
+from banners.models import Banner
 from offer.forms import BrandOfferForm, CategoryOfferForm, ProductOfferForm
 from orders.forms import OrderProductForm
-from orders.models import STATUS1, OrderProduct
+from orders.models import STATUS1, Order, OrderProduct
 from store.forms import ProductForm, VariantsForm
 from store.models import Product
 from category.forms import CategoryForm
@@ -18,6 +20,12 @@ from offer.models import BrandOffer, CategoryOffer, ProductOffer
 
 @login_required(login_url='adminsignin') 
 def adminpanel(request):
+    products = Product.objects.all().count()
+    brands = Brand.objects.all().count()
+    categories = Category.objects.all().count()
+    users = Account.objects.all().count()
+
+  
 
     return render(request, 'adminpanel/adminpanel.html')
 
@@ -202,7 +210,7 @@ def brandadd(request):
             return redirect('brandadd')
 
     context = {
-        'form' : form
+        'form' : form 
     }
 
     return render(request, 'adminpanel/brandadd.html', context)
@@ -400,3 +408,32 @@ def active_orders_edit(request, order_id):
         'form' : form
     }
     return render(request, 'adminpanel/active_orders_edit.html',context)
+
+
+def banner_list(request):
+    banners = Banner.objects.all()
+    context = {
+        'banners' : banners
+    }
+    return render(request, 'adminpanel/banner_list.html', context)
+
+def banner_add(request):
+    form = BannerForm()
+
+    if request.method == 'POST':
+        form = BannerForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Banner Added Successfully.')
+            return redirect('banner_list')
+
+    context = {
+        'form' : form
+    }
+    return render(request, 'adminpanel/banner_add.html', context)
+
+
+def banner_delete(request, banner_id):
+    Banner.objects.get(id=banner_id).delete()
+    return redirect('banner_list')

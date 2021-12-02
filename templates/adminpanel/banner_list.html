@@ -1,0 +1,123 @@
+{% extends 'adminpanel/base.html' %}
+
+{% load static %}
+
+{% block content %}
+<!-- Start Content-->
+
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h4 class="ml-3 mt-4 mb-4">PRODUCT LIST</h4>
+        </div>
+        <div class="col">
+            
+            <a href="{% url 'banner_add' %}" type="button" class="btn btn-primary mt-4 mr-3 float-right">Add New Banner</a>
+        </div>
+    </div>
+
+    {% include 'adminpanel/includes/alerts.html' %}
+
+    <div class="col-12" id="tables">
+        <table class="table table-striped table-bordered table-hover bg-white bg-body shadow" id="myTable">
+            <thead>
+                <tr>
+                    <th>Banner Image</th>
+                    <th>Banner Name</th>
+                    <th>Product</th>
+                    <th>Brand</th>
+                    
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for banner in banners %}
+                <tr>
+                    <td class="table-user">
+                        <img src="{{ banner.banner_img.url }}" alt="table-user" />
+                       
+                    </td>
+                    <td class="align-middle"> {{ banner.banner_name }}</td>
+                   
+                    <td class="align-middle">{{ banner.product }}</td>
+                    <td class="align-middle">{{ banner.brand }}</td>
+                    <td class="table-action align-middle">
+                        <center>
+
+                            <a href="{% url 'banner_delete' banner.id %}" onclick="deleteItems(event)"><span
+                                    class="material-icons">delete</span></a>
+                        </center>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+<!-- Footer Start -->
+<footer class="footer">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <script>document.write(new Date().getFullYear())</script> © Hyper - Coderthemes.com
+            </div>
+            <div class="col-md-6">
+                <div class="text-md-end footer-links d-none d-md-block">
+                    <a href="javascript: void(0);">About</a>
+                    <a href="javascript: void(0);">Support</a>
+                    <a href="javascript: void(0);">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- end Footer -->
+
+
+
+<script>
+    function approve() {
+        event.preventDefault();
+        var linkURL = event.currentTarget.href;
+        var name = event.currentTarget.name;
+        console.log(linkURL)
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                )
+            }
+        })
+    }
+</script>
+
+
+<script>
+    $(document).ready(function () {
+        $('#myTable').DataTable();
+    });
+</script>
+
+
+<style>
+    .table .table-user img {
+        height: 100px;
+        width: 100%;
+    }
+</style>
+
+{% endblock %}

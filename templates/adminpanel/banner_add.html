@@ -4,27 +4,27 @@
 
 {% load crispy_forms_filters %}
 
-
-{% block title %} Edit Category {% endblock %}
-
 {% load static %}
 
 {% block content %}
 <!-- Start Content-->
 
 
+
+
 <div class="card mx-auto mt-4" style="max-width:700px;">
     <article class="card-body">
         <div class="container col-10">
             <div class="container-fluid text-center ">
-                <h4 class="ml-5 mt-3 mb-3 text-black">EDIT CATEGORY</h4>
+                <h4 class="ml-5 mt-3 mb-3 text-black">ADD CATEGORY</h4>
 
             </div>
-            <form action="" method="post" enctype="multipart/form-data" id="category_add_form"> 
+            {% include 'adminpanel/includes/alerts.html' %}
+            <form action="{% url 'banner_add' %}" method="post" enctype="multipart/form-data" id="add_banner_form">
                 {% csrf_token %}
                 {{ form | crispy }}
                 <div class="form-group">
-					<div id="image-box" class="image-container"></div>
+					<div id="image-box" class="image-container" required></div>
 					<button class="btn btn-outline-info" id="crop-btn"
 						style="width: 100%; margin-top: 10px; display: none;" type="button">Crop</button>
 					<button class="btn btn-outline-info" id="confirm-btn" style="width: 100%; margin-top: 10px;"
@@ -63,7 +63,7 @@
 	// crop-btn is the id of button that will trigger the event of change original file with cropped file.
 	const crop_btn = document.getElementById('crop-btn')
 	// id_image is the id of the input tag where we will upload the image
-	const input = document.getElementById('id_cat_image')
+	const input = document.getElementById('id_banner_img')
 
 	// When user uploads the image this event will get triggered
 	input.addEventListener('change', () => {
@@ -95,9 +95,9 @@
 			scalable: false,
 			zoomable: false,
 			movable: false,
-			aspectRatio : 1 / 1,
-			minCropBoxWidth: 200,
-			minCropBoxHeight: 200,
+            aspectRatio : 18 / 5,
+			minCropBoxWidth: 50,
+			minCropBoxHeight: 50,
 		})
 
 		// When crop button is clicked this event will get triggered
@@ -106,7 +106,7 @@
 			cropper.getCroppedCanvas().toBlob((blob) => {
 
 				// Gets the original image data
-				let fileInputElement = document.getElementById('id_cat_image');
+				let fileInputElement = document.getElementById('id_banner_img');
 				// Make a new cropped image file using that blob object, image_data.name will make the new file name same as original image
 				let file = new File([blob], img_data.name, { type: "image/*", lastModified: new Date().getTime() });
 				// Create a new container
@@ -129,24 +129,23 @@
 </script>
 
 
-
 <script>
 	$(document).ready(function () {
-	  $("#category_add_form").validate({
+	  $("#add_banner_form").validate({
 		  rules: {
 			category_name: {
 				  required: true,
+				  minlength : 3
   
 			  },
-			  last_name: {
+			  cat_image: {
 				  required: true,
-			  },	
+			  },
 			  
 		  }
 	  })
   })
   </script>
-
 
 
 

@@ -33,15 +33,20 @@
                                 {% for order in orders %}
                               <tr>
                                 <th><div><img src="{{order.product.image1.url}}" class="img-sm" alt=""></div></th>
-                                <td>{{order.product}}</td>
-                                <td>{{order.quantity}}</td>
-                                <td>{{order.created_at}}</td>
-                                <td>{{order.status}}</td>
-                                  {% if not product.status == 'Canceled'  %}
-                                      <td><a class="btn text-white" href="{% url 'cancel_order' order.id %}">Cancel</a></td>
-                                  {% else %}
-                                      <td><p>Canceled</p></td>
+                                <td class="align-middle">{{order.product}}</td>
+                                <td class="align-middle">{{order.quantity}}</td>
+                                <td class="align-middle">{{order.created_at}}</td>
+                                <td class="align-middle">{{order.status}}</td>
+                                <td class="align-middle">
+                                  {% if order.status == 'Canceled'  %}
+                                  <p>Order Canceled</p>
+                                  {% elif order.status == 'Delivered' %}
+                                   <p>Order Delivered</p>
+                                   {% else %}
+                                   <a class="btn text-white" href="{% url 'cancel_order' order.id %}">Cancel</a>
+                                   
                                   {% endif %}
+                                </td>
                               </tr>
                               {% endfor %}
                             </tbody>

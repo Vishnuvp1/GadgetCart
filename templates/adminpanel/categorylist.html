@@ -6,44 +6,38 @@
 <!-- Start Content-->
 
 <div class="container-fluid ">
-    <h4 class="ml-5 mt-3">CATEGORY LIST</h4>
+    <h4 class="mb-5 mt-5 ml-3">CATEGORY LIST</h4>
 
 </div>
 
 {% include 'adminpanel/includes/alerts.html' %}
 
 
-<div class="row p-3">
-    
+<div class="card-deck col-lg-9">
     {% for category in categories %}
-    <div class="col-sm-6 col-md-4 col-lg-2" >
-        <figure class="card card-product-grid"
-            style="display: flex; align-items: center; justify-content: start; padding-top: 1rem; height: 18rem; max-width: 300px;">
-
-            <div class="img-wrap border-bottom">
-                <img src="{{ category.cat_image.url }}" style="width: 200px; height: 200px">
-            </div> <!-- img-wrap.// -->
-            <figcaption class="info-wrap">
-                <div class="fix-height">
-                    <a href="./product-detail.html" class="title" style="font-size: 1.5rem; font-weight: 500; color: #313a46">{{ category.category_name }}</a>
+    <div class="card">
+        <img class="card-img-top" src="{{ category.cat_image.url }}" alt="Card image cap">
+        <div class="card-body">
+            <h4 class="card-title">
+                <center>{{ category.category_name }} </center>
+            </h4>
+            <div class="d-flex justify-content-center">
+                <div class="mr-2">
+                    <a href="{% url 'categoryedit' category.id %}">
+                        <span class="btn btn-secondary material-icons">edit</span>
+                    </a>
                 </div>
-
-            </figcaption>
-            <div class="d-flex justify-content-around">
-                <div><a href="{% url 'categoryedit' category.id %}"><span class="material-icons"
-                            style="color: #aaaaaa;">edit</span></a></div>
                 <div>
-                    <a type="button" class="close" href="{% url 'categorydelete' category.id %}" onclick="deleteItems(event)"
-                        data-dismiss="alert"><span class="material-icons" style="color: #6b6b6b;">delete</span></a>
+                    <a type="button" href="{% url 'categorydelete' category.id %}" onclick="deleteItems(event)" data-dismiss="alert">
+                        <span class="btn btn-secondary material-icons">delete</span>
+                    </a>
                 </div>
             </div>
-        </figure>
-
-    </div> <!-- col.// -->
+            <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
+        </div>
+    </div>
     {% endfor %}
-
-</div> <!-- row end.// -->
-
+</div>
 
 
 

@@ -44,5 +44,9 @@ urlpatterns = [
     path('active_orders/', views.active_orders, name='active_orders'),
     path('active_orders_edit/<int:order_id>/', views.active_orders_edit, name='active_orders_edit'),
     path('order_history/', views.order_history, name='order_history'),
+
+    path('banner_list/', views.banner_list, name='banner_list'),
+    path('banner_add/', views.banner_add, name='banner_add'),
+    path('banner_delete/<int:banner_id>', views.banner_delete, name='banner_delete'),
     
 ]
