@@ -1,5 +1,7 @@
 {% extends 'user/base.html' %}
 
+{% load humanize %}
+
 {% load static %}
 
 {% block content %}
@@ -163,8 +165,8 @@
                                     </td>
                                     <td>
                                         <div class="price-wrap">
-                                            <var class="price">₹{{ cart_item.sub_total }}</var>
-                                            <small> ₹{{ cart_item.product.get_price.price }} each</small>
+                                            <var class="price">₹{{ cart_item.sub_total | floatformat:"0" | intcomma  }}</var>
+                                            <small> ₹{{ cart_item.product.get_price.price | floatformat:"0" | intcomma  }} each</small>
                                         </div> <!-- price-wrap .// -->
                                     </td>
 
@@ -216,13 +218,9 @@
   function billingAddress(id) {
     console.log(id)
       let first_name = document.getElementById("first_name-" + id).textContent;
-      console.log(first_name)
       let last_name = document.getElementById("last_name-" + id).textContent;
-      console.log(last_name)
       let email = document.getElementById("email-" + id).textContent;
-      console.log(email)
       let phone_number = document.getElementById("phone_number-" + id).textContent;
-      console.log(phone_number)
       let address_line = document.getElementById("address_line-" + id).textContent;
       let city = document.getElementById("city-" + id).textContent;
       let state = document.getElementById("state-" + id).textContent;

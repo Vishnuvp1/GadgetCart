@@ -1,14 +1,16 @@
+import datetime
 from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.messages.api import success
+from django.db.models.aggregates import Sum
 from django.shortcuts import redirect, render
 from accounts.models import Account
 from banners.forms import BannerForm
 from banners.models import Banner
 from offer.forms import BrandOfferForm, CategoryOfferForm, ProductOfferForm
 from orders.forms import OrderProductForm
-from orders.models import STATUS1, Order, OrderProduct
+from orders.models import STATUS1, Order, OrderProduct, Payment
 from store.forms import ProductForm, VariantsForm
 from store.models import Product
 from category.forms import CategoryForm
@@ -16,6 +18,8 @@ from category.models import Category
 from brand.forms import BrandForm
 from brand.models import Brand
 from offer.models import BrandOffer, CategoryOffer, ProductOffer
+from django.utils import timezone
+from datetime import date, timedelta
 
 
 @login_required(login_url='adminsignin') 
@@ -24,10 +28,100 @@ def adminpanel(request):
     brands = Brand.objects.all().count()
     categories = Category.objects.all().count()
     users = Account.objects.all().count()
+    current_year = timezone.now().year
 
-  
+    total_orders = Order.objects.filter(is_ordered=True).count()
+    total_revenue = Order.objects.aggregate(Sum('order_total'))
+    total_profit = float(total_revenue['order_total__sum'])
 
-    return render(request, 'adminpanel/adminpanel.html')
+
+    order_products = OrderProduct.objects.filter(created_at__lt=datetime.date(current_year, 12, 31), status='Delivered')
+    month_wise_order_count = list()
+    mount = timezone.now().month
+    for i in range(1, mount + 1):
+        month_wise_order = order_products.filter(created_at__month=i).count()
+        month_wise_order_count.append(month_wise_order)
+
+    paypal_count = Payment.objects.filter(payment_method="PayPal").count()
+    razorpay_count = Payment.objects.filter(payment_method='razorpay').count()
+
+    new_count = OrderProduct.objects.filter(status='New').count()
+    placed_count = OrderProduct.objects.filter(status='Placed').count()
+    shipped_count = OrderProduct.objects.filter(status='Shipped').count()
+    accepted_count = OrderProduct.objects.filter(status='Accepted').count()
+    delivered_count = OrderProduct.objects.filter(status='Delivered').count()
+    cancelled_count = OrderProduct.objects.filter(status='Canceled').count()
+
+
+    # daily orders
+    today = date.today()
+    today_1 = today - timedelta(days=1)
+    today_2 = today - timedelta(days=2)
+    today_3 = today - timedelta(days=3)
+    today_4 = today - timedelta(days=4)
+    today_5 = today - timedelta(days=5)
+    today_6 = today - timedelta(days=6)
+    today_7 = today - timedelta(days=7)
+
+    last_week_days=[
+        today_6.strftime("%a %m/%d/%Y"),
+        today_5.strftime("%a %m/%d/%Y"),
+        today_4.strftime("%a %m/%d/%Y"),
+        today_3.strftime("%a %m/%d/%Y"),
+        today_2.strftime("%a %m/%d/%Y"),
+        today_1.strftime("%a %m/%d/%Y"),
+        today.strftime("%a %m/%d/%Y"),
+    ]
+
+    today_order = OrderProduct.objects.filter(created_at__range=[today_1, today]).count()
+    today_1_order = OrderProduct.objects.filter(created_at__range=[today_2, today_1]).count()
+    today_2_order = OrderProduct.objects.filter(created_at__range=[today_3, today_2]).count()
+    today_3_order = OrderProduct.objects.filter(created_at__range=[today_4, today_3]).count()
+    today_4_order = OrderProduct.objects.filter(created_at__range=[today_5, today_4]).count()
+    today_5_order = OrderProduct.objects.filter(created_at__range=[today_6, today_5]).count()
+    today_6_order = OrderProduct.objects.filter(created_at__range=[today_7, today_6]).count()
+
+    last_week_orders = [today_6_order,today_5_order,today_4_order,today_3_order,today_2_order,today_1_order,today_order]
+
+    # orders chart data
+    labels1 = []
+    data1 = []
+
+    orders = Order.objects.filter(is_ordered=True).order_by('-created_at')[:10]
+    for order in orders:
+        labels1.append(order.updated_at.day)
+        data1.append(order.order_total)
+
+   
+
+    context = {
+        'brands': brands,
+        'products': products,
+        'categories' : categories,
+        'users' : users,
+        'total_orders': total_orders,
+        'total_revenue': total_revenue['order_total__sum'],
+        'order_products' : order_products,
+        'total_profit' : total_profit,
+
+        'month_wise_order_count': month_wise_order_count,
+        'month_name': ['January', 'February', 'March', 'May', 'June', 'July', 'August', 'September', 'October',
+                       'November', 'December'],
+
+        'payment_method_status': [ paypal_count, razorpay_count],
+
+        'status_counter':[new_count, placed_count, shipped_count, accepted_count, delivered_count, cancelled_count],
+
+        # Weekly orders
+        'last_week_days' : last_week_days,
+        'last_week_orders' : last_week_orders,
+
+        'labels': labels1,
+        'data': data1,
+
+    }
+
+    return render(request, 'adminpanel/adminpanel.html', context)
 
 
 def adminsignin(request):
@@ -437,3 +531,18 @@ def banner_add(request):
 def banner_delete(request, banner_id):
     Banner.objects.get(id=banner_id).delete()
     return redirect('banner_list')
+
+
+def report(request):
+    brands = Brand.objects.all()
+    categories = Category.objects.all()
+    products = Product.objects.all()
+    orders = Order.objects.filter(is_ordered=True).order_by('-created_at')
+
+    context = {
+        'categories' : categories,
+        'brands': brands,
+        'products': products,
+        'orders': orders,
+    }
+    return render(request, 'adminpanel/report.html', context)
