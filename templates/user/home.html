@@ -74,16 +74,16 @@
       </div>
       <div class="row ml-1">
       <div>
-        <var class="price h5">₹{{ product.get_price.price }}</var>
+        <var class="price h6">₹{{ product.get_price.price }}</var>
       </div> 
       <div class="ml-2">
         {% if not product.price == product.get_price.price %}
-        <var class="price h6 text-secondary"><del>₹{{ product.price }}</del></var>
+        <var class="price text-secondary"><del>₹{{ product.price }}</del></var>
         {% endif %}
       </div>
       <div class="ml-2">
         {% if product.get_price.discount %}
-        <var class="price h5 text-success" style="font-weight: 500px;">{{product.get_price.discount}}% OFF </var>
+        <var class="price text-success" style="font-weight: 500px;">{{product.get_price.discount}}% OFF </var>
         {% endif %}
       </div>
       </div>

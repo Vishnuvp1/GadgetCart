@@ -1,82 +1,95 @@
 {% load static %}
 
+<body>
 
-<header class="section-header">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand p-4" href="{% url 'homepage' %}"><h4>Gadgetcart</h4></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse Justify-content-between" id="navbarSupportedContent">
+      <ul class="navbar-nav m6-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'homepage' %}">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'store' %}">Store</a>
+          </li>
+          
+        
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            All Category
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{% url 'store' %}">All Products</a>
+            {% for category in links %}
+            <a class="dropdown-item" href="{{ category.get_url }}">{{ category.category_name }}</a>
+            {% endfor %}
+            
+          </div>
+        </li>
+        
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              All Brands
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url 'store' %}">All Products</a>
+              {% for brand in link %}
+              <a class="dropdown-item" href="{{ brand.get_url }}">{{ brand.brand_name}}</a>
+              {% endfor %}
+             
+            </div>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'cart' %}">Cart ({{ cart_count }})</a>
+            </li>
 
 
-    <section class="header-main border-bottom">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-2 col-md-3 col-6">
-                    <a href="{% url 'homepage' %}" class="brand-wrap">
-                        <!-- <img class="logo" src="{% static './images/logo.png' %}"> -->
-                        <h3 style="color: white;">Gadgetcart</h3>
-                    </a> <!-- brand-wrap.// -->
-                </div>
-                <div class="col-lg col-sm col-md col-6 flex-grow-0">
-                    <div class="category-wrap dropdown d-inline-block float-right">
-                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
-                            style="color: black; background-color: white; border-color: #ffffff">
-                            <i class="fa fa-bars"></i> All category
-                        </button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="{% url 'store' %}">All Products</a>
-                            {% for category in links %}
-                            <a class="dropdown-item" href="{{ category.get_url }}">{{ category.category_name }}</a>
-                            {% endfor %}
-                        </div>
-                    </div> <!-- category-wrap.// -->
-                </div> <!-- col.// -->
-                <a href="{% url 'store' %}" class="btn btn-outline-primary"
-                    style="color: black; background-color: white; border-color: #ffffff">Store</a>
-                <div class="col-lg  col-md-6 col-sm-12 col">
-                    <form action="{% url 'search' %}" class="search" method="get">
-                        <div class="input-group w-100">
-                            <input type="text" class="form-control" style="width:60%; border-color: white;"
-                                placeholder="Search" name="keyword">
+            {% if user.id is None %}
+            <li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'signin' %}">Sign In</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'register' %}">Register</a>
+              </li>
+          </li>
+            {% else %}
+            <li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'signout' %}">Logout</a>
+              </li>
+          </li>
+          {% endif %}
 
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="submit"
-                                    style="color: #0E3951; background-color: #ffffff; border-color: #ffffff">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form> <!-- search-wrap .end// -->
-                </div> <!-- col.// -->
-                <div class="col-lg-3 col-sm-6 col-8 order-2 order-lg-3">
-                    <div class="d-flex justify-content-end mb-3 mb-lg-0">
-                        {% if user.id is None %}
+          
+        
 
-                        <div class="widget-header">
-                            <small class="title text-muted">Welcome guest!</small>
-                            <div>
-                                <a href="{% url 'signin' %}">Sign in</a> <span class="dark-transp"
-                                    style="color: rgb(255, 255, 255);"> | </span>
-                                <a href="{% url 'register' %}"> Register</a>
-                            </div>
-                        </div>
-                        {% else %}
+          <!-- <a href="{% url 'cart' %}" class="widget-header pl-3 ml-3">
+            <div class="icon icon-sm rounded-circle border"><i
+                    class="fa fa-shopping-cart" style="color: white;"></i></div>
+            <span class="badge badge-pill badge-danger notify">{{ cart_count }}</span>
+        </a> -->
+          
+      </ul>
 
-                        <div class="widget-header">
-                            <small class="title text-muted">Welcome {{user.first_name}}!</small>
-                            <div>
-                                <a href="{% url 'dashboard' %}">dashboard</a> <span class="dark-transp"
-                                    style="color: rgb(255, 255, 255);"> | </span>
-                                <a href="{% url 'signout' %}"> Logout</a>
-                            </div>
-                        </div>
 
-                        {% endif %}
-                        <a href="{% url 'cart' %}" class="widget-header pl-3 ml-3">
-                            <div class="icon icon-sm rounded-circle border" style="color: white;"><i
-                                    class="fa fa-shopping-cart" style="color: white;"></i></div>
-                            <span class="badge badge-pill badge-danger notify">{{ cart_count }}</span>
-                        </a>
-                    </div> <!-- widgets-wrap.// -->
-                </div> <!-- col.// -->
-            </div> <!-- row.// -->
-        </div> <!-- container.// -->
-    </section> <!-- header-main .// -->
+      <ul class="navbar-nav ml-auto">
+      <form class="form-inline my-2 my-lg-0" action="{% url 'search' %}" class="search" method="get">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="keyword">
+        <button class="btn btn-outline-primary text-white my-2 my-sm-0 border-dark" type="submit">Search</button>
+      </form>
+    </ul>
 
-</header> <!-- section-header.// -->
+  
+    </div>
+  </nav>
+
+</body>

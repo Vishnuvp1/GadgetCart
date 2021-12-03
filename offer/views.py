@@ -1,4 +1,7 @@
-from django.shortcuts import render
+from django.contrib import messages
+from django.core.exceptions import RequestAborted
+from django.http.response import HttpResponse
+from django.shortcuts import redirect, render
 from django.http import JsonResponse
 
 from offer.models import Coupon, RedeemedCoupon
@@ -9,50 +12,27 @@ from django.utils import timezone
 
 
 def apply_coupon(request):
-    # This function validate the entered coupon code is valid or not   
-
+    user=request.user
     if request.method == 'POST':
         coupon_code = request.POST.get('coupon-code')
-
-        try:
-            if coupon_code == request.session['coupon_code']:  # Checking the entered coupon code already in the session
-                return JsonResponse({'error': 'already applied'})
-        except KeyError:
-            pass
-
-        # Fetching the coupon code instance
         try:
             coupon = Coupon.objects.get(coupon_code=coupon_code)
-        except Coupon.DoesNotExist:
-            return JsonResponse({'error': 'invalid coupon'})
-
+        except:
+            messages.error(request, 'Invalid Coupon')
+            return redirect('checkout')
+            
         try:
-            if RedeemedCoupon.objects.get(user=request.user, coupon_id=coupon.id):
-                return JsonResponse({'error': 'This coupon code is already used'})
-        except RedeemedCoupon.DoesNotExist:
-            pass
+            redeemed_coupon = RedeemedCoupon.objects.get(user=user, coupon=coupon)
+        except:
+            redeemed_coupon=None
 
-        cart_summery(request)  # Update the cart summery with the coupon discount
-
-        # Checking current status of the entered coupon code
-        if coupon.is_active:
-            if coupon.limit > coupon.used and coupon.valid_to >= timezone.now().date():
-                """ Coupon code is valid, so the coupon code is saving to the  current user session """
-                request.session['coupon_code'] = coupon_code
-                discount = (request.session['total_price'] * coupon.discount) / 100
-                request.session['discount'] = discount
-                request.session['total_price'] -= discount
-                request.session['grand_total'] = request.session['total_price'] + request.session['tax']
-                context = {
-                    'message': 'success',
-                    'discount': discount,
-                    'total_price': intcomma(request.session['total_price']),
-                    'grand_total': intcomma(request.session['grand_total'])
-                }
-                return JsonResponse(context)
-            else:
-                return JsonResponse({'error': 'coupon code was expired'})
-
-        return JsonResponse({'error': 'coupon code was expired'})
-
-        
+        if redeemed_coupon is None:
+            discount = coupon.discount
+            request.session['coupon_id']= str(coupon.id)
+            request.session['coupon_discount']=discount
+            messages.success(request, 'Coupon Applied')
+            return redirect('checkout')
+        else:
+            messages.error(request, 'Already redeemed this coupon')
+    else:
+        return redirect('checkout')

@@ -225,6 +225,16 @@ def checkout(request, total=0, quantity=0, cart_items=None):
     except ObjectDoesNotExist:
         pass #just ignore
 
+    if request.session.has_key('coupon_discount'):
+        coupon_discount = request.session['coupon_discount']
+        # del request.session['coupon_discount']
+        coupon_discount_price = total*(coupon_discount)/100
+        request.session['coupon_discount_price'] = coupon_discount_price
+        grand_total=grand_total-coupon_discount_price
+        request.session['grand_total'] = grand_total
+    else:
+        coupon_discount_price=0
+
     addresses = Address.objects.filter(user=request.user)
     try:
         default_address = addresses.get(default=True)
@@ -249,9 +259,11 @@ def checkout(request, total=0, quantity=0, cart_items=None):
         'total' : total,
         'quantity' : quantity,
         'cart_items' : cart_items,
+        'total' : total,
         'tax' : tax,
         'grand_total' : grand_total,
-        'addresses' : addresses
+        'addresses' : addresses,
+        'coupon_discount_price' : coupon_discount_price
     }
 
     return render(request, 'user/checkout.html', context)

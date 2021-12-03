@@ -1,8 +1,9 @@
-from django.http.response import JsonResponse
+from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from accounts.models import Account
 from accounts.views import phone_number
 from carts.models import CartItem
+from offer.utils import use_coupon
 from store.models import Product
 from .models import Order, OrderProduct, Payment
 from .forms import OrderForm
@@ -17,6 +18,7 @@ import razorpay
 def payments(request):
     body = json.loads(request.body)
     order = Order.objects.get(user=request.user, is_ordered=False, order_number=body['orderID'])
+    use_coupon(request)
     print(order)
     
     # Store transaction details inside Payment model
@@ -98,7 +100,22 @@ def place_order(request, total=0, quantity=0):
         quantity += cart_item.quantity
     tax = (2 * total)/100
     g_total = total + tax
-    grand_total = round(g_total / 70) 
+    coupon_discount_price=0
+    coupon_discount=0
+    if request.session.has_key('grand_total'):
+        if request.session.has_key('coupon_discount'):
+            coupon_discount = request.session['coupon_discount']
+            del request.session['coupon_discount']
+            if request.session.has_key('coupon_discount_price'):
+                coupon_discount_price = request.session['coupon_discount_price']
+                del request.session['coupon_discount_price']
+            else:
+                coupon_discount_price=0
+        
+        g_total = total + tax - (coupon_discount_price)
+        grand_total = round(g_total / 70) 
+    else:
+        grand_total = round(g_total / 70) 
 
     if request.method == 'POST':
         form = OrderForm(request.POST)
@@ -127,16 +144,16 @@ def place_order(request, total=0, quantity=0):
             d = datetime.date(yr,mt,dt)
             current_date = d.strftime("%Y%m%d") #20210305
             order_number = current_date + str(data.id)
+            request.session['order_number'] = order_number
             data.order_number = order_number
             data.save()
 
-            
+            # Razorpay
             order_amount = g_total * 100
             order_currency = 'INR'
             payment_order = client.order.create(dict(amount=int(order_amount), currency=order_currency, payment_capture=1))
             payment_order_id = payment_order['id']
             
-
 
             order  = Order.objects.get(user=current_user, is_ordered=False, order_number=order_number)
             context = {
@@ -148,6 +165,8 @@ def place_order(request, total=0, quantity=0):
                 'g_total' : g_total,
                 'amount' : order_amount,
                 'order_id' : payment_order_id,
+                'coupon_discount_price' : coupon_discount_price,
+                'coupon_discount' : coupon_discount
             }
             return render(request, 'user/payments.html', context)
         else:
@@ -159,30 +178,87 @@ def place_order(request, total=0, quantity=0):
 
 
 def order_complete(request):
-    order_number = request.GET.get('order_number')
+    order_number = request.session['order_number']
     transID = request.GET.get('payment_id')
 
     try:
-        order = Order.objects.get(order_number=order_number, is_ordered=True)
+        order = Order.objects.get(order_number=order_number, is_ordered=False)
         ordered_products = OrderProduct.objects.filter(order_id=order.id)
-
+        order.is_ordered = True
+        order.save()
         subtotal = 0
         for i in ordered_products:
             offerprice = i.product.get_price()
             subtotal += offerprice['price'] * i.quantity
 
-        payment = Payment.objects.get(payment_id=transID)
-
         context = {
             'order' : order,
             'ordered_products' : ordered_products,
             'order_number' : order.order_number,
-            'transID' : payment.payment_id,
-            'payment' : payment,
             'subtotal' : subtotal
 
         }
         return render(request, 'user/order_complete.html',context)
 
-    except(Payment.DoesNotExist, Order.DoesNotExist):
-        return redirect('homepage')
+
+
+    except:
+
+        try:
+            order = Order.objects.get(order_number=order_number, is_ordered=True)
+            ordered_products = OrderProduct.objects.filter(order_id=order.id)
+
+            subtotal = 0
+            for i in ordered_products:
+                offerprice = i.product.get_price()
+                subtotal += offerprice['price'] * i.quantity
+
+            payment = Payment.objects.get(payment_id=transID)
+
+            context = {
+                'order' : order,
+                'ordered_products' : ordered_products,
+                'order_number' : order.order_number,
+                'transID' : payment.payment_id,
+                'payment' : payment,
+                'subtotal' : subtotal
+
+            }
+            return render(request, 'user/order_complete.html',context)
+
+        except(Payment.DoesNotExist, Order.DoesNotExist):
+            return redirect('homepage')
+
+
+def cash_on_delivery(request):
+    # Move the cart items to Order Product table
+    order_number = request.session['order_number']
+    order = Order.objects.get(user=request.user, is_ordered=False, order_number=order_number)
+    cart_items = CartItem.objects.filter(user=request.user)
+
+    for item in cart_items:
+        orderproduct = OrderProduct()
+        orderproduct.order_id = order.id
+        orderproduct.user_id = request.user.id
+        orderproduct.product_id = item.product_id
+        orderproduct.quantity = item.quantity
+        orderproduct.product_price = item.product.price
+        orderproduct.ordered = True
+        orderproduct.save()
+
+
+        cart_item = CartItem.objects.get(id=item.id)
+        product_variation = cart_item.variations.all()
+        orderproduct = OrderProduct.objects.get(id=orderproduct.id)
+        orderproduct.variations.set(product_variation)
+        orderproduct.save()
+
+
+    #   # Reduce the quantity of the sold products
+        product = Product.objects.get(id=item.product_id)
+        product.stock -= item.quantity
+        product.save()
+
+    # # Clear cart
+    CartItem.objects.filter(user=request.user).delete()
+    return redirect('order_complete')

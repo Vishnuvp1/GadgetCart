@@ -13,9 +13,9 @@
 
 
         <div class="row">
-            <aside class="col-lg-6">
+            <aside class="col-lg-8">
 
-              <div class="card shadow p-4 bg-white rounded mb-3">
+              <div class="card shadow p-4 bg-white rounded mb-2">
 
                 <div class="row row-cols-1 row-cols-md-2 g-4">
                     {% for address in addresses %}
@@ -58,7 +58,7 @@
 
           
         </div>
-                <div class="card shadow p-3 mb-5 bg-white rounded">
+                <div class="card shadow p-3 mb-2 bg-white rounded">
                     <div class="card-body">
                         <h4 class="card-title mb-4">Billing Address</h4>
                         <form action="{% url 'place_order' %}" method="POST" id="checkout_form">
@@ -120,70 +120,62 @@
                 </div> <!-- card.// -->
 
             </aside> <!-- col.// -->
-            <aside class="col-lg-6">
+            
+            <aside class="col-lg-4">
 
-                <div class="card shadow p-3 mb-5 bg-white rounded">
+              {% include 'user/includes/alerts.html' %}
+
+                <div class="card shadow p-3 mb-2 bg-white rounded">
 
                     <div class="card-body">
-
-                        <table class="table table-borderless table-shopping-cart">
-                            <thead class="text-muted">
-                                <tr class="small text-uppercase" style="color: black;">
-                                    <th scope="col">Product</th>
-                                    <th scope="col" width="120">Quantity</th>
-                                    <th scope="col" width="120">Price</th>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                                {% for cart_item in cart_items %}
-                                <tr>
-                                    <td>
-                                        <figure class="itemside align-items-center">
-                                            <a href="{{ cart_item.product.get_url }}">
-                                                <div class="aside"><img src="{{ cart_item.product.image1.url }}"
-                                                        class="img-sm"></div>
-                                            </a>
-                                            <figcaption class="info">
-                                                <a href="{{ cart_item.product.get_url }}" class="title text-dark">{{ cart_item.product.product_name }}</a>
-                                                <p class="text-muted small text-dark">
-                                                  {% if cart_item.variations.all %}
-                                                      {% for item in cart_item.variations.all %}
-                                                          {{ item.variation_category | capfirst }} : {{ item.variation_value | capfirst }} <br>
-                                                      {% endfor %}
-                                                  {% endif %}
-                                              </p>
-                                            </figcaption>
-                                        </figure>
-                                    </td>
-                                    <td>
-                                        <!-- col.// -->
-
-                                        <label for=""> {{ cart_item.quantity }}</label>
-
-                                    </td>
-                                    <td>
-                                        <div class="price-wrap">
-                                            <var class="price">₹{{ cart_item.sub_total | floatformat:"0" | intcomma  }}</var>
-                                            <small> ₹{{ cart_item.product.get_price.price | floatformat:"0" | intcomma  }} each</small>
-                                        </div> <!-- price-wrap .// -->
-                                    </td>
-
-                                </tr>
-
-                                {% endfor %}
-
-
-                            </tbody>
-                        </table>
-
+                      <dl class="dlist-align">
+                        <dt>Total price:</dt>
+                        <dd class="text-right">₹{{ total | floatformat:"0" | intcomma }}</dd>
+                    </dl>
+                    <dl class="dlist-align">
+                        <dt>Tax:</dt>
+                        <dd class="text-right"> ₹{{ tax | floatformat:"0" | intcomma }}</dd>
+                    </dl>
+                    <dl class="dlist-align">
+                      {% if coupon_discount_price %}
+                      <dt>Coupon Discount:</dt>
+                      <dd class="text-right text-success"> ₹ -{{ coupon_discount_price | floatformat:"0" | intcomma }}</dd>
+                      {% endif %}
+                  </dl>
+                    <dl class="dlist-align">
+                        <dt>Grand Total:</dt>
+                        <dd class="text-right text-dark b"><strong>₹{{ grand_total | floatformat:"0" | intcomma  }} </strong></dd>
+                    </dl>
+                    <hr>
+                    <p class="text-center mb-3">
+                        <img src="{% static './images/misc/payments.png' %}" height="26">
+                    </p>
 
                         <button type="submit" name="submit" class="btn btn-primary btn-block">Place Order</button>
                         <a href="{% url 'store' %}" class="btn btn-light btn-block">Continue Shopping</a>
                         </form>
                     </div> <!-- card-body.// -->
                 </div> <!-- card.// -->
+
+         
+         
+                <div class="card shadow bg-white rounded mb-2">
+                  <div class="card-body">
+                  <form action="{% url 'apply_coupon' %}" method="post">
+                    {% csrf_token %}
+                    <div class="form-group ml-3">
+                      <label>Have coupon?</label>
+                      <div class="row">
+                        <input type="text" class="form-control col-9" name="coupon-code" placeholder="Coupon code">
+                        <span > 
+                          <button class="btn btn-primary ml-2" type="submit" name="submit">Apply</button>
+                        </span>
+                      </div>
+                    </div>
+                  </form>
+                  </div> <!-- card-body.// -->
+                </div>  <!-- card .// -->
+          
             </aside> <!-- col.// -->
 
 

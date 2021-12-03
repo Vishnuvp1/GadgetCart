@@ -2,6 +2,8 @@
 
 {% load static %}
 
+{% load humanize %}
+
 {% block content %}
 
 <style>
@@ -128,15 +130,25 @@
                     <div class="card-body">
                         <dl class="dlist-align">
                             <dt>Total price:</dt>
-                            <dd class="text-right">₹{{ total }}</dd>
+                            <dd class="text-right">₹{{ total | floatformat:"0" | intcomma }}</dd>
                         </dl>
                         <dl class="dlist-align">
                             <dt>Tax:</dt>
-                            <dd class="text-right"> ₹{{ tax }}</dd>
+                            <dd class="text-right"> ₹{{ tax | floatformat:"0" | intcomma }}</dd>
                         </dl>
+                        
                         <dl class="dlist-align">
+                            {% if coupon_discount_price %}
+                            <dt>Coupon Discount:</dt>
+                            <dd class="text-right text-success"> ₹ -{{ coupon_discount_price | floatformat:"0" | intcomma }} <br> (-{{ coupon_discount | floatformat:"0" | intcomma }}%)</dd>
+                            
+                            {% endif %}
+                        </dl>
+                       
+                        
+                        <dl class="dlist-align"> 
                             <dt>Grand Total:</dt>
-                            <dd class="text-right text-dark b"><strong>₹{{ g_total }} </strong></dd>
+                            <dd class="text-right text-dark b"><strong>₹{{ g_total | floatformat:"0" | intcomma }} </strong></dd>
                         </dl>
                         <hr>
                         <p class="text-center mb-3">
@@ -148,6 +160,7 @@
                         </div>
 
                         <button type="submit" id="rzp-button1" class="btn btn-primary btn-block">Razorpay</button>
+                        <a type="submit" href="{% url 'cash_on_delivery' %}" id="rzp-button1" class="btn btn-primary btn-block">Cash on Delivery</a>
 
 
 
