@@ -9,7 +9,7 @@
     </button>
   
     <div class="collapse navbar-collapse Justify-content-between" id="navbarSupportedContent">
-      <ul class="navbar-nav m6-auto">
+      <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
           <a class="nav-link" href="{% url 'homepage' %}">Home</a>
         </li>
@@ -69,8 +69,16 @@
           </li>
           {% endif %}
 
-          
-        
+          {% if user.id is None %}
+        <li class="nav-item active">
+          <a class="nav-link" href="">Welcome Guest!</a>
+        </li>
+        {% else %}
+        <li class="nav-item active">
+          <a class="nav-link" href="">Welcome  {{user.first_name}}.</a>
+        </li>
+        {% endif %}
+
 
           <!-- <a href="{% url 'cart' %}" class="widget-header pl-3 ml-3">
             <div class="icon icon-sm rounded-circle border"><i
@@ -87,7 +95,7 @@
         <button class="btn btn-outline-primary text-white my-2 my-sm-0 border-dark" type="submit">Search</button>
       </form>
     </ul>
-
+ 
   
     </div>
   </nav>

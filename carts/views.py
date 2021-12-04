@@ -225,7 +225,10 @@ def checkout(request, total=0, quantity=0, cart_items=None):
     except ObjectDoesNotExist:
         pass #just ignore
 
-    if request.session.has_key('coupon_discount'):
+    if request.session.has_key('coupon_id'):
+        coupon_id = request.session['coupon_id']
+        request.session['couponid'] = coupon_id
+        del request.session['coupon_id']
         coupon_discount = request.session['coupon_discount']
         # del request.session['coupon_discount']
         coupon_discount_price = total*(coupon_discount)/100

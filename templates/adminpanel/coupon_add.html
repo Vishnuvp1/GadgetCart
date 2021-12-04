@@ -1,0 +1,61 @@
+{% extends 'adminpanel/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% load crispy_forms_filters %}
+
+{% load static %}
+
+{% block content %}
+<!-- Start Content-->
+
+
+
+
+<div class="card mx-auto mt-4" style="max-width:700px;">
+    <article class="card-body">
+        <div class="container col-10">
+            <div class="container-fluid text-center ">
+                <h4 class="ml-5 mt-3 mb-3 text-black">ADD VARIANT</h4>
+
+            </div>
+            {% include 'adminpanel/includes/alerts.html' %}
+            <form action="{% url 'coupon_add' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form | crispy }}
+                <div class="form-group">
+					<div id="image-box" class="image-container"></div>
+					
+					<button class="btn btn-outline-info" style="width: 100%; margin-top: 10px;" type="submit">Post</button>
+				</div>
+            </form>
+        </div>
+    </article>
+</div>
+
+
+<!-- Footer Start -->
+<footer class="footer">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-6">
+				<script>document.write(new Date().getFullYear())</script> © Hyper - Coderthemes.com
+			</div>
+			<div class="col-md-6">
+				<div class="text-md-end footer-links d-none d-md-block">
+					<a href="javascript: void(0);">About</a>
+					<a href="javascript: void(0);">Support</a>
+					<a href="javascript: void(0);">Contact Us</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<!-- end Footer -->
+
+
+
+
+
+{% endblock %}
+

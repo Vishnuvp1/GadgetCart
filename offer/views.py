@@ -16,7 +16,7 @@ def apply_coupon(request):
     if request.method == 'POST':
         coupon_code = request.POST.get('coupon-code')
         try:
-            coupon = Coupon.objects.get(coupon_code=coupon_code)
+            coupon = Coupon.objects.get(coupon_code=coupon_code, is_active=True)
         except:
             messages.error(request, 'Invalid Coupon')
             return redirect('checkout')
@@ -34,5 +34,6 @@ def apply_coupon(request):
             return redirect('checkout')
         else:
             messages.error(request, 'Already redeemed this coupon')
+            return redirect('checkout')
     else:
         return redirect('checkout')

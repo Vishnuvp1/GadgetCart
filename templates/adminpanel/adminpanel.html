@@ -108,7 +108,7 @@
                 <canvas id="chart3" width="300" height="300"></canvas>
             </div>
             <div class="col-12 col-lg-5 card mt-5">
-                <canvas id="chart4" width="300" height="300"></canvas>
+                <canvas id="leading-brands" width="300" height="300"></canvas>
             </div>
         </div>
     </div>
@@ -118,7 +118,7 @@
 
 
 <script>
-    //chart-1
+    // chart-1 Order status
     const ctx = document.getElementById('statusChart').getContext('2d');
     const myChart = new Chart(ctx, {
         type: 'bar',
@@ -156,7 +156,7 @@
     });
 
     
-    //chart2
+    // chart-2 Payments methods
     const transactionData = {
         labels: [
             'Paypal',
@@ -180,7 +180,7 @@
         data: transactionData,
     })
 
- //chart3
+ // chart-3 Weekly orders
  const ctx3 = document.getElementById('chart3').getContext('2d');
  const chart3 = new Chart(ctx3, {
      type: 'line',
@@ -204,41 +204,50 @@
      }
  });
 
-//chart4
- var ctx4 = document.getElementById('chart4').getContext('2d');
- var myChart4 = new Chart(ctx4, {
-     type: 'line',
-     data: {
-         labels: {{ labels}},
- datasets: [{
-     label: 'price',
-     data: {{ data}},
-     backgroundColor: [
-     'rgba(75, 192, 192, 1)',
- ],
-     borderColor: [
-     'rgba(54, 162, 235, 1)',
- ],
-     borderWidth: 1,
-     }]
- },
- options: {
-     scales: {
-         y: {
-             fontColor: "green",
-                 beginAtZero: true
-         }
-     },
-     plugins: {
-         title: {
-             display: true,
-                 text: 'Latest Orders'
-         }
-     }
- }
-});
-
-
+  //cahrt-4 Brands
+  const leadingBrandsLabel = [
+  {% for i in brands_list %}
+      '{{ i }}',
+  {% endfor %}
+];
+const leadingBrandsData = {
+  labels: leadingBrandsLabel,
+  datasets: [{
+      label: 'Total product',
+      data: {{ products_count }},
+      backgroundColor: [
+          'rgba(255, 99, 132, 0.7)',
+          'rgba(255, 159, 64, 0.7)',
+          'rgba(255, 205, 86, 0.7)',
+          'rgba(75, 192, 192, 0.7)',
+          'rgba(54, 162, 235, 0.7)',
+          'rgba(153, 102, 255, 0.7)',
+          'rgba(201, 203, 207, 0.7)'
+      ],
+      borderColor: [
+          'rgb(255, 99, 132)',
+          'rgb(255, 159, 64)',
+          'rgb(255, 205, 86)',
+          'rgb(75, 192, 192)',
+          'rgb(54, 162, 235)',
+          'rgb(153, 102, 255)',
+          'rgb(201, 203, 207)'
+      ],
+      borderWidth: 1
+  }]
+};
+const leadingBrand = document.getElementById('leading-brands').getContext('2d');
+const leadingBrandChart = new Chart(leadingBrand, {
+  type: 'bar',
+  data: leadingBrandsData,
+  options: {
+      scales: {
+          y: {
+              beginAtZero: true,
+          },
+      }
+  },
+})
 
 
 </script>

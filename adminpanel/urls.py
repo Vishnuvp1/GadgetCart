@@ -50,5 +50,10 @@ urlpatterns = [
     path('banner_delete/<int:banner_id>', views.banner_delete, name='banner_delete'),
 
     path('report/', views.report, name='report'),
+
+    path('coupon_list/', views.coupon_list, name='coupon_list'),
+    path('coupon_add/', views.coupon_add, name='coupon_add'),
+    path('coupon_delete/<int:coupon_id>/', views.coupon_delete, name='coupon_delete'),
+  
     
 ]

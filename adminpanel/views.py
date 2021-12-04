@@ -8,7 +8,7 @@ from django.shortcuts import redirect, render
 from accounts.models import Account
 from banners.forms import BannerForm
 from banners.models import Banner
-from offer.forms import BrandOfferForm, CategoryOfferForm, ProductOfferForm
+from offer.forms import BrandOfferForm, CategoryOfferForm, CouponForm, ProductOfferForm
 from orders.forms import OrderProductForm
 from orders.models import STATUS1, Order, OrderProduct, Payment
 from store.forms import ProductForm, VariantsForm
@@ -17,7 +17,7 @@ from category.forms import CategoryForm
 from category.models import Category
 from brand.forms import BrandForm
 from brand.models import Brand
-from offer.models import BrandOffer, CategoryOffer, ProductOffer
+from offer.models import BrandOffer, CategoryOffer, Coupon, ProductOffer
 from django.utils import timezone
 from datetime import date, timedelta
 
@@ -25,7 +25,7 @@ from datetime import date, timedelta
 @login_required(login_url='adminsignin') 
 def adminpanel(request):
     products = Product.objects.all().count()
-    brands = Brand.objects.all().count()
+    brands = Brand.objects.all()
     categories = Category.objects.all().count()
     users = Account.objects.all().count()
     current_year = timezone.now().year
@@ -35,12 +35,7 @@ def adminpanel(request):
     total_profit = float(total_revenue['order_total__sum'])
 
 
-    order_products = OrderProduct.objects.filter(created_at__lt=datetime.date(current_year, 12, 31), status='Delivered')
-    month_wise_order_count = list()
-    mount = timezone.now().month
-    for i in range(1, mount + 1):
-        month_wise_order = order_products.filter(created_at__month=i).count()
-        month_wise_order_count.append(month_wise_order)
+    
 
     paypal_count = Payment.objects.filter(payment_method="PayPal").count()
     razorpay_count = Payment.objects.filter(payment_method='razorpay').count()
@@ -92,6 +87,12 @@ def adminpanel(request):
         labels1.append(order.updated_at.day)
         data1.append(order.order_total)
 
+    brands_list = list()
+    products_count = list()
+    for i in brands:
+        brands_list.append(i.brand_name)
+        products_count.append(Product.objects.filter(brand__brand_name=i.brand_name).count())
+
    
 
     context = {
@@ -101,10 +102,9 @@ def adminpanel(request):
         'users' : users,
         'total_orders': total_orders,
         'total_revenue': total_revenue['order_total__sum'],
-        'order_products' : order_products,
         'total_profit' : total_profit,
 
-        'month_wise_order_count': month_wise_order_count,
+        
         'month_name': ['January', 'February', 'March', 'May', 'June', 'July', 'August', 'September', 'October',
                        'November', 'December'],
 
@@ -118,6 +118,9 @@ def adminpanel(request):
 
         'labels': labels1,
         'data': data1,
+
+        'brands_list': brands_list,
+        'products_count': products_count,
 
     }
 
@@ -534,10 +537,17 @@ def banner_delete(request, banner_id):
 
 
 def report(request):
-    brands = Brand.objects.all()
+    brands = Brand.objects.all().order_by('-id')
     categories = Category.objects.all()
-    products = Product.objects.all()
-    orders = Order.objects.filter(is_ordered=True).order_by('-created_at')
+    products = Product.objects.all().order_by('-id')
+    orders = OrderProduct.objects.all()
+
+    if request.GET.get('from'):
+        date_from = datetime.datetime.strptime(request.GET.get('from'), "%Y-%m-%d")
+        date_to = datetime.datetime.strptime(request.GET.get('to'), "%Y-%m-%d")
+        date_to += datetime.timedelta(days=1)
+        orders = orders.filter(created_at__range=[date_from, date_to])
+        print(orders)
 
     context = {
         'categories' : categories,
@@ -546,3 +556,33 @@ def report(request):
         'orders': orders,
     }
     return render(request, 'adminpanel/report.html', context)
+
+
+def coupon_list(request):
+    coupons = Coupon.objects.all()
+
+    context = {
+        'coupons' : coupons
+    }
+    return render(request, 'adminpanel/coupon_list.html', context)
+
+def coupon_add(request):
+    form = CouponForm
+
+    if request.method == 'POST':
+        form = CouponForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Coupon Added Successfully.')
+            return redirect('coupon_list')
+
+    context = {
+        'form' : form
+    }
+    return render(request, 'adminpanel/coupon_add.html', context)
+
+def coupon_delete(request, coupon_id):
+    Coupon.objects.get(id=coupon_id).delete()
+    return redirect('coupon_list')
+

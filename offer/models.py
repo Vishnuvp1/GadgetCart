@@ -36,7 +36,7 @@ class Coupon(models.Model):
     coupon_name = models.CharField(max_length=50)
     coupon_code = models.CharField(max_length=50, unique=True)
     discount = models.PositiveIntegerField(help_text="Offer in percentage", null=True)
-    limit = models.PositiveIntegerField()
+    limit = models.PositiveIntegerField(null=True)
     used = models.PositiveIntegerField(default=0)
     valid_from = models.DateField()
     valid_to = models.DateField()

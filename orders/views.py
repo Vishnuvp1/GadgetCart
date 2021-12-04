@@ -3,6 +3,7 @@ from django.shortcuts import redirect, render
 from accounts.models import Account
 from accounts.views import phone_number
 from carts.models import CartItem
+from offer.models import Coupon, RedeemedCoupon
 from offer.utils import use_coupon
 from store.models import Product
 from .models import Order, OrderProduct, Payment
@@ -46,6 +47,7 @@ def payments(request):
         orderproduct.product_id = item.product_id
         orderproduct.quantity = item.quantity
         orderproduct.product_price = item.product.price
+        orderproduct.discount=request.session['coupon_discount'],
         orderproduct.ordered = True
         orderproduct.save()
 
@@ -84,6 +86,15 @@ client = razorpay.Client(auth=("rzp_test_fPDgsUrJCo7Fzl", "jKBDrLJcPoER9WfGikLZw
 
 def place_order(request, total=0, quantity=0):
     current_user = request.user
+    
+    if request.session.has_key('couponid'):
+        coupon_redeem = RedeemedCoupon()
+        coupon_id = request.session['couponid']
+        coupon=Coupon.objects.get(id=coupon_id)
+        if coupon.is_active == True:
+            coupon_redeem.user=current_user
+            coupon_redeem.coupon = coupon
+            coupon_redeem.save()
 
     # if the cart is less than or equal to 0, then redirect back to shop
     cart_items = CartItem.objects.filter(user=current_user)
