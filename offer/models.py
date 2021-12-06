@@ -37,10 +37,9 @@ class Coupon(models.Model):
     coupon_code = models.CharField(max_length=50, unique=True)
     discount = models.PositiveIntegerField(help_text="Offer in percentage", null=True)
     limit = models.PositiveIntegerField(null=True)
-    used = models.PositiveIntegerField(default=0)
     valid_from = models.DateField()
     valid_to = models.DateField()
-    is_active = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.coupon_name

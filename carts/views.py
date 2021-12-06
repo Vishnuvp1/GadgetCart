@@ -239,26 +239,14 @@ def checkout(request, total=0, quantity=0, cart_items=None):
         coupon_discount_price=0
 
     addresses = Address.objects.filter(user=request.user)
+    
     try:
         default_address = addresses.get(default=True)
-        
-        form = OrderForm(
-            initial={
-                'first_name': default_address.first_name,
-                'last_name': default_address.last_name,
-                'email': default_address.email,
-                'phone_number': default_address.phone_number,
-                'address_line_1': default_address.address_line,
-                'city': default_address.city,
-                'state': default_address.state,
-                'country': default_address.country,
-            }
-        )
+    
     except ObjectDoesNotExist:
-        form = OrderForm()
+        default_address=0
 
     context = {
-        'form' : form,
         'total' : total,
         'quantity' : quantity,
         'cart_items' : cart_items,
@@ -266,7 +254,16 @@ def checkout(request, total=0, quantity=0, cart_items=None):
         'tax' : tax,
         'grand_total' : grand_total,
         'addresses' : addresses,
-        'coupon_discount_price' : coupon_discount_price
+        'coupon_discount_price' : coupon_discount_price,
+        'default_address' : default_address,
     }
 
     return render(request, 'user/checkout.html', context)
+
+def buy_now(request, product_id):
+    current_user = request.user
+    product = Product.objects.get(id=product_id) #get the product
+    print(current_user)
+    print(product)
+    return HttpResponse('hello')
+    

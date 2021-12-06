@@ -92,6 +92,7 @@
               <h5 class="text-danger">Out of stock</h5>
                 {% else %}
                 <button type="submit" class="btn  btn-primary"> <span class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i> </button>
+                <a href="{% url 'buy_now' single_product.id %}" class="btn btn-primary"> Checkout </a>
                 {% endif %}
             </article> <!-- product-info-aside .// -->
           </form>
