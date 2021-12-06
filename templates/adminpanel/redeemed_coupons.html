@@ -1,0 +1,80 @@
+{% extends 'adminpanel/base.html' %}
+
+{% load static %}
+
+{% block content %}
+<!-- Start Content-->
+
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h4 class="ml-3 mt-4 mb-4">COUPON LIST</h4>
+        </div>
+       
+    </div>
+
+    <div class="col-12" id="tables">
+        <table class="table table-striped table-bordered table-hover bg-white bg-body shadow" id="myTable">
+            <thead>
+                <tr>
+                    <th> <center> No.</th>
+                    <th> <center> User</th>
+                    <th> <center> Coupon Code</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                {% for coupon in redeemed_coupons %}
+                <tr>
+                    <th scope="row"> <center>{{forloop.counter}} </center></th>
+                    <td><center>{{coupon.user}}</center></td>
+                    <td><center>{{coupon.coupon}}</center></td>
+                   
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+<!-- Footer Start -->
+<footer class="footer">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <script>document.write(new Date().getFullYear())</script> © Hyper - Coderthemes.com
+            </div>
+            <div class="col-md-6">
+                <div class="text-md-end footer-links d-none d-md-block">
+                    <a href="javascript: void(0);">About</a>
+                    <a href="javascript: void(0);">Support</a>
+                    <a href="javascript: void(0);">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- end Footer -->
+
+
+
+
+
+<style>
+    .table .table-user img {
+        height: 100px;
+        width: 100px;
+    }
+</style>
+
+<script>
+    $(document).ready(function () {
+        $('#myTable').DataTable();
+    });
+</script>
+
+{% endblock %}

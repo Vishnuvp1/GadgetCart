@@ -2,6 +2,8 @@
 
 {% load static %}
 
+{% load humanize %}
+
 {% block content %}
 
 <!-- ========================= SECTION PAGETOP ========================= -->
@@ -133,13 +135,24 @@
 
                             </div> <!-- img-wrap.// -->
                             <figcaption class="info-wrap">
-                                <div class="fix-height">
-                                    <a href="{{ product.get_url }}" class="title">{{ product.product_name }}</a>
-                                    <div class="price-wrap mt-2">
-                                        <span class="price">₹ {{ product.price }}</span>
-                                        <del class="price-old">₹1980</del>
-                                    </div> <!-- price-wrap.// -->
-                                </div>
+                                <div class="row ml-1">
+
+                                    <div class="mb-3">
+                                      <var class="price h5">₹{{ product.get_price.price | floatformat:"0" | intcomma}}</var>
+                                    </div> 
+                                    <div class="ml-1 mt-1">
+                                      {% if not product.price == product.get_price.price %}
+                                      <var class="price h6 text-secondary"><del>₹{{ product.price | floatformat:"0" | intcomma }}</del></var>
+                                      {% endif %}
+                                    </div>
+                                    <div class="ml-1 mt-1">
+                                      {% if product.get_price.discount %}
+                                      <var class="price h6 text-success" style="font-weight: 800px;">{{product.get_price.discount}}%OFF </var>
+                                      {% endif %}
+                                    </div> 
+                      
+                                  </div>
+                                  
                                 <div class="row">
                                     <div class="col-12"><a href="{{ product.get_url }}"
                                             class="btn btn-block btn-primary">View Details </a></div>

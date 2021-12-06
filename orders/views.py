@@ -12,6 +12,7 @@ import datetime
 import json
 from .send_sms import send_sms
 import razorpay
+from django.conf import settings
 
 # Create your views here.
 
@@ -47,7 +48,7 @@ def payments(request):
         orderproduct.product_id = item.product_id
         orderproduct.quantity = item.quantity
         orderproduct.product_price = item.product.price
-        orderproduct.discount=request.session['coupon_discount'],
+        # orderproduct.discount=request.session['coupon_discount'],
         orderproduct.ordered = True
         orderproduct.save()
 
@@ -82,7 +83,7 @@ def payments(request):
     }
     return JsonResponse(data)
 
-client = razorpay.Client(auth=("rzp_test_fPDgsUrJCo7Fzl", "jKBDrLJcPoER9WfGikLZwNji"))
+
 
 def place_order(request, total=0, quantity=0):
     current_user = request.user
@@ -159,11 +160,15 @@ def place_order(request, total=0, quantity=0):
             data.order_number = order_number
             data.save()
 
-            # Razorpay
-            order_amount = g_total * 100
+
+            request.session['order_number']=order_number
+            request.session['grand_total']=grand_total
+            order_amount = (g_total*100)
+            razorpay_grand_total = round(order_amount)
             order_currency = 'INR'
-            payment_order = client.order.create(dict(amount=int(order_amount), currency=order_currency, payment_capture=1))
-            payment_order_id = payment_order['id']
+            razorpay_order = client.order.create(dict(amount=int(order_amount),currency=order_currency,payment_capture='0'))
+            payment_order_id = razorpay_order['id']
+            print(payment_order_id , '555555555555555555555')
             
 
             order  = Order.objects.get(user=current_user, is_ordered=False, order_number=order_number)
@@ -172,12 +177,16 @@ def place_order(request, total=0, quantity=0):
                 'cart_items' : cart_items,
                 'total' : total,
                 'tax' : tax,
+                'razorpay_grand_total' : razorpay_grand_total,
                 'grand_total' : grand_total,
                 'g_total' : g_total,
                 'amount' : order_amount,
-                'order_id' : payment_order_id,
+                'payment_order_id' : payment_order_id,
                 'coupon_discount_price' : coupon_discount_price,
-                'coupon_discount' : coupon_discount
+                'coupon_discount' : coupon_discount,
+                'razorpay_merchant_key':settings.RAZOR_KEY_ID,
+                'razorpay_amount':order_amount,
+                'currency': order_currency,
             }
             return render(request, 'user/payments.html', context)
         else:
@@ -211,8 +220,6 @@ def order_complete(request):
         }
         return render(request, 'user/order_complete.html',context)
 
-
-
     except:
 
         try:
@@ -237,8 +244,30 @@ def order_complete(request):
             }
             return render(request, 'user/order_complete.html',context)
 
-        except(Payment.DoesNotExist, Order.DoesNotExist):
-            return redirect('homepage')
+        except:
+            try:
+                print('razorpay')
+                order = Order.objects.get(order_number=order_number, is_ordered=True)
+                ordered_products = OrderProduct.objects.filter(order_id=order.id)
+
+                subtotal = 0
+                for i in ordered_products:
+                    subtotal += i.product_price
+                razorpay_order_id=request.session['razorpay_order_id']
+
+                payment = Payment.objects.get(payment_id=razorpay_order_id)
+
+                context = {
+                    'order': order,
+                    'ordered_products': ordered_products,
+                    'order_number': order.order_number,
+                    'order_id': payment.payment_id,
+                    'payment': payment,
+                    'subtotal': subtotal,
+                }
+                return render(request, 'user/order_complete.html', context)
+            except (Order.DoesNotExist):
+                return redirect('homepage')
 
 
 def cash_on_delivery(request):
@@ -273,3 +302,76 @@ def cash_on_delivery(request):
     # # Clear cart
     CartItem.objects.filter(user=request.user).delete()
     return redirect('order_complete')
+
+client = razorpay.Client(auth=(settings.RAZOR_KEY_ID, settings.RAZOR_KEY_SECRET))
+
+def razorpay_payment_verification(request):
+    order_number=request.session['order_number']
+    order = Order.objects.get(user=request.user, is_ordered=False, order_number=order_number)
+    if request.method == 'POST':
+       
+        razorpay_payment_id = request.POST.get('razorpay_payment_id')
+        razorpay_order_id = request.POST.get('razorpay_order_id')
+        razorpay_signature = request.POST.get('razorpay_signature')
+        print(razorpay_payment_id)
+        print(razorpay_order_id)
+        print(razorpay_signature)
+
+        params_dict = {
+
+            'razorpay_order_id': razorpay_order_id,
+            'razorpay_payment_id': razorpay_payment_id,
+            'razorpay_signature': razorpay_signature,
+        }
+        print(params_dict,'-----------')
+        request.session['razorpay_order_id']=razorpay_order_id
+        try:
+            client.utility.verify_payment_signature(params_dict)
+        except:
+            return JsonResponse({'messages': 'error'})
+    # Store transaction details inside Payment model
+        payment = Payment(
+            user = request.user,
+            payment_id = razorpay_order_id,
+            payment_method = 'razorpay',
+            amound_paid = order.order_total,
+            status ='Completed',
+        )
+        payment.save()
+
+        order.payment = payment
+        order.is_ordered = True
+        order.save()
+
+    # Move the cart items to Order Product table
+    cart_items = CartItem.objects.filter(user=request.user)
+
+    for item in cart_items:
+        orderproduct = OrderProduct()
+        orderproduct.order_id = order.id
+        orderproduct.payment = payment
+        orderproduct.user_id = request.user.id
+        orderproduct.product_id = item.product_id
+        orderproduct.quantity = item.quantity
+        orderproduct.product_price = item.product.price
+        orderproduct.ordered = True
+        orderproduct.save()
+
+        cart_item = CartItem.objects.get(id=item.id)
+        product_variation = cart_item.variations.all()
+        orderproduct = OrderProduct.objects.get(id=orderproduct.id)
+        orderproduct.variations.set(product_variation)
+        orderproduct.save()
+
+
+    #     # Reduce the quantity of the sold products
+        product = Product.objects.get(id=item.product_id)
+        product.stock -= item.quantity
+        product.save()
+
+    # # Clear cart
+    CartItem.objects.filter(user=request.user).delete()
+    return JsonResponse({'message': 'success'})
+
+def payment_failed(request):
+    return render(request, 'user/payment_failed.html')

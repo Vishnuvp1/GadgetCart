@@ -8,8 +8,19 @@
       <span class="navbar-toggler-icon"></span>
     </button>
   
-    <div class="collapse navbar-collapse Justify-content-between" id="navbarSupportedContent">
+    <div class="collapse navbar-collapse Justify-content-between" id="navbarSupportedContent" style=" margin-left: 18%;">
       <ul class="navbar-nav mr-auto">
+
+        {% if user.id is None %}
+        <li class="nav-item active">
+          <a class="nav-link" href="">Welcome Guest!</a>
+        </li>
+        {% else %}
+        <li class="nav-item active">
+          <a class="nav-link" href="">Welcome  {{user.first_name}}.</a>
+        </li>
+        {% endif %}
+        
         <li class="nav-item active">
           <a class="nav-link" href="{% url 'homepage' %}">Home</a>
         </li>
@@ -69,15 +80,7 @@
           </li>
           {% endif %}
 
-          {% if user.id is None %}
-        <li class="nav-item active">
-          <a class="nav-link" href="">Welcome Guest!</a>
-        </li>
-        {% else %}
-        <li class="nav-item active">
-          <a class="nav-link" href="">Welcome  {{user.first_name}}.</a>
-        </li>
-        {% endif %}
+         
 
 
           <!-- <a href="{% url 'cart' %}" class="widget-header pl-3 ml-3">

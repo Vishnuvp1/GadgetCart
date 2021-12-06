@@ -68,7 +68,7 @@
                         </div>
                         <!-- project number -->
                         <div>
-                            <h1 class="fw-bold">{{total_revenue | floatformat:"0" | intcomma}}</h1>
+                            <h1 class="fw-bold">₹{{ total_revenue | floatformat:"0" | intcomma }}</h1>
                         </div>
                     </div>
                 </div>
@@ -159,13 +159,14 @@
     // chart-2 Payments methods
     const transactionData = {
         labels: [
-            'Paypal',
-            'Cash on Delivary',
-            'Razorpay'
+            
+            {% for i in brands_list %}
+            '{{ i }}',
+            {% endfor %}
         ],
         datasets: [{
             label: 'My First Dataset',
-            data: {{ payment_method_status }},
+            data: {{ products_count }},
             backgroundColor: [
                 'rgb(255, 99, 132)',
                 'rgb(54, 162, 235)',
@@ -206,15 +207,15 @@
 
   //cahrt-4 Brands
   const leadingBrandsLabel = [
-  {% for i in brands_list %}
-      '{{ i }}',
-  {% endfor %}
+        'Paypal',
+        'Cash on Delivary',
+        'Razorpay'
 ];
 const leadingBrandsData = {
   labels: leadingBrandsLabel,
   datasets: [{
       label: 'Total product',
-      data: {{ products_count }},
+      data:  {{ payment_method_status }} ,
       backgroundColor: [
           'rgba(255, 99, 132, 0.7)',
           'rgba(255, 159, 64, 0.7)',

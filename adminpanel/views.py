@@ -17,7 +17,7 @@ from category.forms import CategoryForm
 from category.models import Category
 from brand.forms import BrandForm
 from brand.models import Brand
-from offer.models import BrandOffer, CategoryOffer, Coupon, ProductOffer
+from offer.models import BrandOffer, CategoryOffer, Coupon, ProductOffer, RedeemedCoupon
 from django.utils import timezone
 from datetime import date, timedelta
 
@@ -476,7 +476,7 @@ def brand_offer_delete(request, id):
 
 def active_orders(request):
     exclude_list = ['Delivered', 'Canceled']
-    active_orders = OrderProduct.objects.all().exclude(status__in=exclude_list)
+    active_orders = OrderProduct.objects.all().exclude(status__in=exclude_list).order_by('-id')
     status = STATUS1
     context = {
         'active_orders' : active_orders,
@@ -586,3 +586,11 @@ def coupon_delete(request, coupon_id):
     Coupon.objects.get(id=coupon_id).delete()
     return redirect('coupon_list')
 
+
+def redeemed_coupons(request):
+    redeemed_coupons = RedeemedCoupon.objects.all()
+    
+    context = {
+        'redeemed_coupons' : redeemed_coupons
+    }
+    return render(request, 'adminpanel/redeemed_coupons.html', context)
