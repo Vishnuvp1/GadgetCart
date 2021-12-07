@@ -135,9 +135,9 @@
                                 <a href="{{ product.get_url }}"> <img src="{{ product.image1.url }}"></a>
 
                             </div> 
-                            <figcaption class="info-wrap">
+                            <figcaption class="info-wrap text-center">
                                 <a href="{{ product.get_url  }}" class="title"><h5>{{ product.product_name }}</h5></a>
-                                <div class="row ml-0">
+                                <div class="row ml-0 justify-content-center">
 
                                     <div class="mb-2">
                                       <var class="price">₹{{ product.get_price.price | floatformat:"0" | intcomma}}</var>
@@ -154,18 +154,37 @@
                                     </div> 
                       
                                   </div>
-                                  
-                                <div class="row">
-                                    <form action="{% url 'add_cart' product.id %}" method="post">
-                                        {% csrf_token %}
-                                        <input type="hidden" value="gray" name="key" id="">
-                                    <div class=""><button type="submit"
-                                            class="btn btn-block btn-primary">Add to cart </button></div>
-                                        </form>
-                                            <div class=""><a href="{{ product.get_url }}"
-                                                class="btn btn-block btn-primary">Buy Now </a></div>
-                                    
-                                </div>
+
+                                  <form action="{% url 'add_cart' product.id %}" method="post">
+                                      {% csrf_token %}
+                                  <div class="row ml-0 justify-content-center">
+                                    <div class="item-option-select">
+                                        <div class="row">
+                                      <p class="col-6 mt-2">Choose Color</p>
+                                      <select name="color" class="form-control col-6" required>
+                                        <option value="" disabled selected>Select Color </option>
+                                        {% for i in product.variation_set.colors %}
+                                        <option selected value="{{ i.variation_value | lower }}">{{ i.variation_value | capfirst }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    </div>
+                                  </div> <!-- row.// -->
+                                 
+                                  {% if product.stock <= 0 %} 
+                                  <h5 class="text-danger">Out of stock</h5>
+                                    {% else %}
+                                    <div class="row">
+                                    <div class="col p-0"  #onclick="addItems(event)">
+                                    <button type="submit" class="btn btn-primary"> <span class="text">Add to cart</span><i class="fas fa-shopping-cart"></i></button>
+                                     </div>
+                                    <a href="{% url 'buy_now' product.id %}" class="btn btn-danger"> Buy Now <i class="fas fa-bolt ml-3"></i> 
+                                       </a>
+                                    </div>
+                                    </div>
+                    
+                                    {% endif %}
+                                </form>
+
                             </figcaption>
                         </figure>
                     </div> <!-- col.// -->
@@ -216,4 +235,45 @@
 
 
 
+<script>
+    function addItems(event){
+      event.preventDefault();
+      var link = event.currentTarget.href;
+      var name = event.currentTarget.name;
+      
+        
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+          })
+          
+          Toast.fire({
+            icon: 'success',
+            title: 'Successfully Added to Cart'
+          })
+      
+    }
+  </script>
+
+  <style>
+    .btn-danger{
+        background-color: #fd6b22;
+        color: white;
+      }
+      
+      .btn-danger:hover{
+        background-color: #fd7a22;
+      }
+  </style>
+
+
 {% endblock %}
+
+

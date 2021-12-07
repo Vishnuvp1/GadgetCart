@@ -20,6 +20,7 @@ def _cart_id(request):
 
 
 def add_cart(request, product_id):
+    url = request.META.get('HTTP_REFERER')
     current_user = request.user
     product = Product.objects.get(id=product_id) #get the product
 
@@ -27,7 +28,6 @@ def add_cart(request, product_id):
     if current_user.is_authenticated:
         product_variation = []
         if request.method == 'POST':
-            print(request.POST)
             for item in request.POST:
                 key = item
                 value = request.POST[key]
@@ -38,8 +38,7 @@ def add_cart(request, product_id):
                 except:
                     pass
         else:
-            variation = Variation.objects.get(product=product)
-            print(variation)
+            print('----else----')
 
             
 

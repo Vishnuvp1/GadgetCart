@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.messages.api import success
 from django.db.models.aggregates import Sum
 from django.shortcuts import redirect, render
+from weasyprint.css.computed_values import content
 from accounts.models import Account
 from banners.forms import BannerForm
 from banners.models import Banner
@@ -24,6 +25,7 @@ from datetime import date, timedelta
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 import weasyprint
+import csv
 
 
 @login_required(login_url='adminsignin') 
@@ -510,6 +512,10 @@ def active_orders_edit(request, order_id):
     }
     return render(request, 'adminpanel/active_orders_edit.html',context)
 
+def order_details(request, id):
+    
+    return render(request, 'adminpanel/order_details.html')
+
 
 def banner_list(request):
     banners = Banner.objects.all()
@@ -607,3 +613,62 @@ def brands_pdf(request):
     response['Content-Disposition'] = 'filename=brands.pdf'
     weasyprint.HTML(string=html, base_url=request.build_absolute_uri()).write_pdf(response)
     return response
+
+def orders_pdf(request):
+    orders = OrderProduct.objects.all().order_by('-id')
+    html = render_to_string('adminpanel/orders_pdf.html', {'orders': orders})
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'filename=brands.pdf'
+    weasyprint.HTML(string=html, base_url=request.build_absolute_uri()).write_pdf(response)
+    return response
+
+def products_pdf(request):
+    products = Product.objects.all().order_by('-id')
+    html = render_to_string('adminpanel/products_pdf.html', {'products': products})
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'filename=brands.pdf'
+    weasyprint.HTML(string=html, base_url=request.build_absolute_uri()).write_pdf(response)
+    return response
+
+def orders_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=orders.csv'
+
+    writer = csv.writer(response)
+    order_products = OrderProduct.objects.all().order_by('-updated_at')
+
+    writer.writerow(
+        ['Customer', 'product', 'Quantity', 'Amount paid', 'Discount', 'Date', 'status'])
+
+    for order_product in order_products:
+        writer.writerow([order_product.user.first_name, order_product.product.product_name, order_product.quantity, order_product.product_price,
+                         order_product.discount, order_product.created_at, order_product.status])
+    return response
+
+def brands_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=brands.csv'
+    writer = csv.writer(response)
+    writer.writerow(['Brand name'])
+    brands = Brand.objects.all().order_by('-created_at')
+
+    for i in brands:
+        writer.writerow([i.brand_name])
+
+    return response
+
+def products_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=products.csv'
+
+    writer = csv.writer(response)
+    products = Product.objects.all().order_by('-id')
+
+    writer.writerow(
+        ['Product Name', 'Category', 'Brand', 'Product Price', 'Stock', 'Uppload date'])
+
+    for product in products:
+        writer.writerow([product.product_name, product.category.category_name, product.brand.brand_name, product.price,
+                         product.stock, product.created_date])
+    return response
+

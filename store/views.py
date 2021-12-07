@@ -5,7 +5,7 @@ from django.shortcuts import redirect, render, get_object_or_404
 from brand.models import Brand
 from carts.models import CartItem
 from category.models import Category
-from .models import Product, ReviewRating
+from .models import Product, ReviewRating, Variation
 from carts.views import _cart_id
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db.models import Q
@@ -20,6 +20,7 @@ def store(request, category_slug=None, brand_slug=None):
     categories = None
     products = None
     brands = None
+    variations = Variation.objects.all()
 
     if category_slug != None:
         categories = get_object_or_404(Category, slug=category_slug)
@@ -49,6 +50,7 @@ def store(request, category_slug=None, brand_slug=None):
     context = {
         'products' : paged_product,
         'product_count' : product_count,
+        'variations' : variations
     }
     return render(request, 'user/store.html',context)
 

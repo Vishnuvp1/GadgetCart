@@ -44,6 +44,7 @@ urlpatterns = [
     path('active_orders/', views.active_orders, name='active_orders'),
     path('active_orders_edit/<int:order_id>/', views.active_orders_edit, name='active_orders_edit'),
     path('order_history/', views.order_history, name='order_history'),
+    path('order_details/<int:id>/', views.order_details, name='order_details'),
 
     path('banner_list/', views.banner_list, name='banner_list'),
     path('banner_add/', views.banner_add, name='banner_add'),
@@ -56,7 +57,13 @@ urlpatterns = [
     path('coupon_delete/<int:coupon_id>/', views.coupon_delete, name='coupon_delete'),
     path('redeemed_coupons/', views.redeemed_coupons, name='redeemed_coupons'),
 
-    path('brands_pdf/', views.brands_pdf, name='brands_pdf')
+    path('brands_pdf/', views.brands_pdf, name='brands_pdf'),
+    path('orders_pdf/', views.orders_pdf, name='orders_pdf'),
+    path('products_pdf/', views.products_pdf, name='products_pdf'),
+
+    path('orders_csv/', views.orders_csv , name='orders_csv'),
+    path('brands_csv/', views.brands_csv , name='brands_csv'),
+    path('products_csv/', views.products_csv, name='products_csv'),
   
     
 ]
