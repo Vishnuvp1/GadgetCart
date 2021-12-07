@@ -48,7 +48,6 @@ class Product(models.Model):
     def get_price(self):
         try:
             if self.productoffer.is_active:
-                print('--------product----------')
                 offer_price = (self.price / 100) * self.productoffer.discount_offer
                 price = self.price - offer_price
                 return {'price': price, 'discount': self.productoffer.discount_offer}
@@ -56,7 +55,6 @@ class Product(models.Model):
         except:
             try:
                 if self.category.categoryoffer.is_active:
-                    print('------category--------')
                     offer_price = (self.price / 100) * self.category.categoryoffer.discount_offer
                     price = self.price - offer_price
                     return {'price': price, 'discount': self.category.categoryoffer.discount_offer}
@@ -64,7 +62,6 @@ class Product(models.Model):
             except:
                 try:
                     if self.brand.brandoffer.is_active:
-                        print('------brand-------')
                         offer_price = (self.price / 100) * self.brand.brandoffer.discount_offer
                         price = self.price - offer_price
                         return {'price': price, 'discount': self.brand.brandoffer.discount_offer}

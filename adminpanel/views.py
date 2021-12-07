@@ -21,6 +21,10 @@ from offer.models import BrandOffer, CategoryOffer, Coupon, ProductOffer, Redeem
 from django.utils import timezone
 from datetime import date, timedelta
 
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+import weasyprint
+
 
 @login_required(login_url='adminsignin') 
 def adminpanel(request):
@@ -540,7 +544,7 @@ def report(request):
     brands = Brand.objects.all().order_by('-id')
     categories = Category.objects.all()
     products = Product.objects.all().order_by('-id')
-    orders = OrderProduct.objects.all()
+    orders = OrderProduct.objects.all().order_by('-id')
 
     if request.GET.get('from'):
         date_from = datetime.datetime.strptime(request.GET.get('from'), "%Y-%m-%d")
@@ -594,3 +598,12 @@ def redeemed_coupons(request):
         'redeemed_coupons' : redeemed_coupons
     }
     return render(request, 'adminpanel/redeemed_coupons.html', context)
+
+
+def brands_pdf(request):
+    brands = Brand.objects.all().order_by('-id')
+    html = render_to_string('adminpanel/brands_pdf.html', {'brands': brands})
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'filename=brands.pdf'
+    weasyprint.HTML(string=html, base_url=request.build_absolute_uri()).write_pdf(response)
+    return response

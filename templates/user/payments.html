@@ -54,7 +54,7 @@
                     </h5>
                     <div class="card-body">
 
-                        <p class="card-text">Paypal, Razorpay</p>
+                        <p class="card-text">Paypal, Razorpay, Cash on Delivary</p>
 
                     </div>
                 </div>
@@ -76,7 +76,40 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                {% if product %}
+                                <tr>
+                                <td>
+                                    <figure class="itemside align-items-center">
+                                        <a href="{{product.get_url }}">
+                                            <div class="aside border"><img src="{{ product.image1.url }}"
+                                                    class="img-sm"></div>
+                                        </a>
+                                        <figcaption class="info">
+                                            <a href="{{ product.get_url }}" class="title text-dark">{{ product.product_name }}</a>
+                                            <p class="text-muted small text-dark">
+                                                {% if cart_item.variations.all %}
+                                                {% for item in cart_item.variations.all %}
+                                                {{ item.variation_category | capfirst }} : {{ item.variation_value | capfirst }} <br>
+                                                {% endfor %}
+                                                {% endif %}
+                                            </p>
+                                        </figcaption>
+                                    </figure>
+                                </td>
+                                <td>
+                                    <!-- col.// -->
 
+                                    <label for=""> 1 </label>
+
+                                </td>
+                                <td>
+                                    <div class="price-wrap">
+                                        <var class="price">₹{{ product.get_price.price }}</var>
+                                        <small><del> ₹{{ product.price }} </del></small>
+                                    </div> <!-- price-wrap .// -->
+                                </td>
+                            </tr>
+                                {% else %}
                                 {% for cart_item in cart_items %}
                                 <tr>
                                     <td>
@@ -113,7 +146,7 @@
                                 </tr>
 
                                 {% endfor %}
-
+                                {% endif %}
 
                             </tbody>
                         </table>

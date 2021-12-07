@@ -3,6 +3,12 @@
 {% load static %}
 
 {% block content %}
+<style>
+    .table td{
+        text-align: center;
+    }
+</style>
+
 <!-- Start Content-->
 
 
@@ -43,11 +49,9 @@
                     <td class="align-middle">{{ banner.product }}</td>
                     <td class="align-middle">{{ banner.brand }}</td>
                     <td class="table-action align-middle">
-                        <center>
 
                             <a href="{% url 'banner_delete' banner.id %}" onclick="deleteItems(event)"><span
                                     class="material-icons">delete</span></a>
-                        </center>
                     </td>
                 </tr>
                 {% endfor %}

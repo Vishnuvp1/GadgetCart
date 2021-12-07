@@ -1,4 +1,5 @@
 from django import http
+from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponse
@@ -26,6 +27,7 @@ def add_cart(request, product_id):
     if current_user.is_authenticated:
         product_variation = []
         if request.method == 'POST':
+            print(request.POST)
             for item in request.POST:
                 key = item
                 value = request.POST[key]
@@ -35,6 +37,9 @@ def add_cart(request, product_id):
                     product_variation.append(variation)
                 except:
                     pass
+        else:
+            variation = Variation.objects.get(product=product)
+            print(variation)
 
             
 
@@ -176,20 +181,23 @@ def remove_cart_item(request, product_id, cart_item_id):
     
 
 def cart(request, total=0, quantity=0, cart_items=None):
+    tax = 0
+    grand_total = 0
     try:
-        tax = 0
-        grand_total = 0
-        if request.user.is_authenticated:
-            cart_items = CartItem.objects.filter(user=request.user, is_active=True)
-        else:
-            cart = Cart.objects.get(cart_id=_cart_id(request))
-            cart_items = CartItem.objects.filter(cart=cart, is_active=True)
-        for cart_item in cart_items:
-            offerprice = cart_item.product.get_price()
-            total += (offerprice['price'] * cart_item.quantity)
-            quantity += cart_item.quantity
-        tax = (2 * total)/100
-        grand_total = total + tax
+        if 'product_id' in request.session:
+            del request.session['product_id']
+        else: 
+            if request.user.is_authenticated:
+                cart_items = CartItem.objects.filter(user=request.user, is_active=True)
+            else:
+                cart = Cart.objects.get(cart_id=_cart_id(request))
+                cart_items = CartItem.objects.filter(cart=cart, is_active=True)
+            for cart_item in cart_items:
+                offerprice = cart_item.product.get_price()
+                total += (offerprice['price'] * cart_item.quantity)
+                quantity += cart_item.quantity
+            tax = (2 * total)/100
+            grand_total = total + tax
     except ObjectDoesNotExist:
         pass #just ignore
 
@@ -212,14 +220,25 @@ def checkout(request, total=0, quantity=0, cart_items=None):
         tax = 0
         grand_total = 0
         if request.user.is_authenticated:
-            cart_items = CartItem.objects.filter(user=request.user, is_active=True)
+            if 'product_id' in request.session:
+                product_id = request.session['product_id']
+                product = Product.objects.get(id=product_id)
+            else:
+                cart_items = CartItem.objects.filter(user=request.user, is_active=True)
         else:
             cart = Cart.objects.get(cart_id=_cart_id(request))
             cart_items = CartItem.objects.filter(cart=cart, is_active=True)
-        for cart_item in cart_items:
-            offerprice = cart_item.product.get_price()
-            total += (offerprice['price'] * cart_item.quantity)
-            quantity += cart_item.quantity
+        if 'product_id' in request.session:
+            offerprice = product.get_price()
+            quantity = 1
+            total += (offerprice['price'] * quantity)
+
+        else:
+
+            for cart_item in cart_items:
+                offerprice = cart_item.product.get_price()
+                total += (offerprice['price'] * cart_item.quantity)
+                quantity += cart_item.quantity
         tax = (2 * total)/100
         grand_total = total + tax
     except ObjectDoesNotExist:
@@ -262,8 +281,29 @@ def checkout(request, total=0, quantity=0, cart_items=None):
 
 def buy_now(request, product_id):
     current_user = request.user
-    product = Product.objects.get(id=product_id) #get the product
-    print(current_user)
-    print(product)
-    return HttpResponse('hello')
+    if current_user.is_authenticated:
+        product = Product.objects.get(id=product_id) #get the product
+        print(product)
+        product_variation = []
+        if request.method == 'POST':
+            for item in request.POST:
+                key = item
+                print(key, '}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}')
+                value = request.POST[key]
+
+                try:
+                    variation = Variation.objects.get(product=product, variation_category__iexact=key, variation_value__iexact=value)
+                    product_variation.append(variation)
+                    print(product_variation,'\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\')
+                except Exception as e:
+                    print(e, '/////////////////////////////////')
+                    pass
+    if request.user.is_authenticated:
+        product = Product.objects.get(id=product_id)
+        request.session['product_id']=product.id
+        return redirect('checkout')
+    else:
+        messages.error(request, 'Please Login')
+        return redirect('signin')
+    
     

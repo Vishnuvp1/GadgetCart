@@ -5,59 +5,62 @@
 {% load humanize %}
 
 {% block content %}
+
+<style>
+    .table td {
+        text-align: center;
+    }
+</style>
+
 <!-- Start Content-->
-
-
-
 
 <div class="container">
     <div class="row">
         <div class="col">
-            <h4 class="ml-3 mt-4 mb-4"><u>  ALL PRODUCTS </u></h4>
-            
+            <h4 class="ml-3 mt-4 mb-4"><u> ALL PRODUCTS </u></h4>
+
         </div>
     </div>
 
     <div class="col-12" id="tables">
         <table class="table table-striped table-bordered table-hover bg-white bg-body shadow" id="myTable1">
-            <thead>
-                <tr>
-                    <th>No.</th>
-                    <th>Pruduct Image</th>
-                    <th>Product Name</th>
-                    <th>Category</th>
-                    <th>Brand</th>
-                    <th>Price</th>
-                    <th>Stock</th>
+            <thead <tr>
+                <th>No.</th>
+                <th>Pruduct Image</th>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Brand</th>
+                <th>Price</th>
+                <th>Stock</th>
                 </tr>
             </thead>
             <tbody>
                 {% for product in products %}
                 <tr>
                     <td class="align-middle">
-                        <center>{{forloop.counter}}</center>
+                        {{forloop.counter}}
                     </td>
 
-                    <td class="table-user"><center>
+                    <td class="table-user">
                         <img src="{{ product.image1.url }}" alt="table-user"
                             style="height: 100px; width:100px; border:1px solid rgb(201, 201, 201)" />
-                    
-                        </center>
+
+
                     </td>
                     <td class="align-middle">
-                        <center> {{ product.product_name }}</center>
+                        {{ product.product_name }}
                     </td>
                     <td class="align-middle">
-                        <center> {{ product.category.category_name }}</center>
+                        {{ product.category.category_name }}
                     </td>
                     <td class="align-middle">
-                        <center> {{ product.brand.brand_name }}</center>
+                        {{ product.brand.brand_name }}
                     </td>
                     <td class="align-middle">
-                        <center> ₹{{ product.price | intcomma }}</center>
+                        ₹{{ product.price | intcomma }}
                     </td>
                     <td class="align-middle">
-                        <center> {{ product.stock }}</center>
+                        {{ product.stock }}
                     </td>
                 </tr>
                 {% endfor %}
@@ -106,32 +109,30 @@
                     <td>{{order.user.full_name}}</td>
                     <td>{{ order.product }}</td>
                     <td>
-                        <center>
-                            {{ order.product_price }}</center>
+
+                        {{ order.product_price }}
                     </td>
                     <td>
-                        <center>
-                        
-                                {% if order.discount %}
-                                    <span class="offer"> {{ order.discount }}</span>
-                                {% else %}
-                                    ---
-                                {% endif %}
-                         
-                        </center>
+
+
+                        {% if order.discount %}
+                        <span class="offer"> {{ order.discount_price }}</span>
+                        {% else %}
+                        ---
+                        {% endif %}
                     </td>
                     <td>
-                        <center>{{order.quantity}}</center>
+                        {{order.quantity}}
                     </td>
                     <td>
-                        <center>
-                            {{order.status}}
-                        </center>
+
+                        {{order.status}}
+
                     </td>
                     <td>
                         {{order.updated_at | naturaltime}}
                     </td>
-                  
+
                 </tr>
                 {% endfor %}
 
@@ -140,12 +141,18 @@
     </div>
 </div>
 
-<div class="container">
-    <div class="row">
+<div class="container mt-5">
+    <div class="row mb-4">
         <div class="col">
-            <h4 class="ml-3 mt-4 mb-4"><u>ALL BRANDS</u></h4>
+            <h4 class="ml-3"><u>ALL BRANDS</u></h4>
+        </div>
+        <div class="col">
+            <a href="{% url 'brands_pdf' %}" class="btn btn-sm btn-outline-danger float-right mr-3">Export
+                as PDF</a>
         </div>
     </div>
+
+    
 
     {% include 'adminpanel/includes/alerts.html' %}
 
@@ -156,25 +163,31 @@
                     <th>No.</th>
                     <th>Brand Image</th>
                     <th>Brand Name</th>
+                    <th>Products</th>
+                    <th>Created Date</th>
                 </tr>
             </thead>
             <tbody>
                 {% for brand in brands %}
                 <tr>
                     <td class="align-middle">
-                        <center>{{forloop.counter}}</center>
+                        {{forloop.counter}}
                     </td>
 
-                    <td class="table-user"><center>
+                    <td class="table-user">
                         <img src="{{ brand.brand_image.url }}" alt="table-user"
                             style="height: 100px; width:100px; border:1px solid rgb(201, 201, 201)" />
-                    
-                        </center>
+
                     </td>
                     <td class="align-middle">
-                        <center> {{ brand.brand_name }}</center>
+                        {{ brand.brand_name }}
                     </td>
-                    
+                    <td class="align-middle">
+                        {{ brand.get_products_count }}
+                    </td>
+                    <td class="align-middle">
+                        {{ brand.created_at | date:"d/n/Y" }}
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>

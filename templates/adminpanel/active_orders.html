@@ -3,6 +3,13 @@
 {% load static %}
 
 {% block content %}
+
+<style>
+    .table td{
+        text-align: center;
+    }
+</style>
+
 <!-- Start Content-->
 
 
@@ -36,12 +43,10 @@
                         {{ order.product.get_price.price }}
                     </td>
                     <td>
-                        <center>{{order.quantity}}</center>
+                        {{order.quantity}}
                     </td>
                     <td>
-                        <center>
-                            {{order.status}}
-                        </center>
+                        {{order.status}}
                     </td>
                     <td>
                         {{order.updated_at}}

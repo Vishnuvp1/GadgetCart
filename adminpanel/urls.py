@@ -54,7 +54,9 @@ urlpatterns = [
     path('coupon_list/', views.coupon_list, name='coupon_list'),
     path('coupon_add/', views.coupon_add, name='coupon_add'),
     path('coupon_delete/<int:coupon_id>/', views.coupon_delete, name='coupon_delete'),
-    path('redeemed_coupons/', views.redeemed_coupons, name='redeemed_coupons')
+    path('redeemed_coupons/', views.redeemed_coupons, name='redeemed_coupons'),
+
+    path('brands_pdf/', views.brands_pdf, name='brands_pdf')
   
     
 ]

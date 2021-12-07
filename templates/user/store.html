@@ -123,6 +123,7 @@
 
                     </div>
                 </header><!-- sect-heading -->
+                
 
                 <div class="row">
                     {% if products %}
@@ -133,19 +134,20 @@
 
                                 <a href="{{ product.get_url }}"> <img src="{{ product.image1.url }}"></a>
 
-                            </div> <!-- img-wrap.// -->
+                            </div> 
                             <figcaption class="info-wrap">
-                                <div class="row ml-1">
+                                <a href="{{ product.get_url  }}" class="title"><h5>{{ product.product_name }}</h5></a>
+                                <div class="row ml-0">
 
-                                    <div class="mb-3">
-                                      <var class="price h5">₹{{ product.get_price.price | floatformat:"0" | intcomma}}</var>
+                                    <div class="mb-2">
+                                      <var class="price">₹{{ product.get_price.price | floatformat:"0" | intcomma}}</var>
                                     </div> 
-                                    <div class="ml-1 mt-1">
+                                    <div class="ml-2">
                                       {% if not product.price == product.get_price.price %}
                                       <var class="price h6 text-secondary"><del>₹{{ product.price | floatformat:"0" | intcomma }}</del></var>
                                       {% endif %}
                                     </div>
-                                    <div class="ml-1 mt-1">
+                                    <div class="ml-2">
                                       {% if product.get_price.discount %}
                                       <var class="price h6 text-success" style="font-weight: 800px;">{{product.get_price.discount}}%OFF </var>
                                       {% endif %}
@@ -154,8 +156,14 @@
                                   </div>
                                   
                                 <div class="row">
-                                    <div class="col-12"><a href="{{ product.get_url }}"
-                                            class="btn btn-block btn-primary">View Details </a></div>
+                                    <form action="{% url 'add_cart' product.id %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" value="gray" name="key" id="">
+                                    <div class=""><button type="submit"
+                                            class="btn btn-block btn-primary">Add to cart </button></div>
+                                        </form>
+                                            <div class=""><a href="{{ product.get_url }}"
+                                                class="btn btn-block btn-primary">Buy Now </a></div>
                                     
                                 </div>
                             </figcaption>

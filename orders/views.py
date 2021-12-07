@@ -22,6 +22,7 @@ def payments(request):
     order = Order.objects.get(user=request.user, is_ordered=False, order_number=body['orderID'])
     use_coupon(request)
     print(order)
+    total = 0
     
     # Store transaction details inside Payment model
     payment = Payment(
@@ -37,36 +38,65 @@ def payments(request):
     order.is_ordered = True
     order.save()
 
-    # Move to the cart items to Order Product table
-    cart_items = CartItem.objects.filter(user=request.user)
-
-    for item in cart_items:
+    if 'product_id' in request.session:
+        product_id = request.session['product_id']
+        product = Product.objects.get(id=product_id)
+        
         orderproduct = OrderProduct()
         orderproduct.order_id = order.id
         orderproduct.payment = payment
         orderproduct.user_id = request.user.id
-        orderproduct.product_id = item.product_id
-        orderproduct.quantity = item.quantity
-        orderproduct.product_price = item.product.price
+        orderproduct.product_id = product_id
+        orderproduct.quantity = 1
+        orderproduct.product_price = product.price
         # orderproduct.discount=request.session['coupon_discount'],
         orderproduct.ordered = True
         orderproduct.save()
 
-        cart_item = CartItem.objects.get(id=item.id)
-        product_variation = cart_item.variations.all()
+        product_variation = product.variations.all()
         orderproduct = OrderProduct.objects.get(id=orderproduct.id)
         orderproduct.variations.set(product_variation)
         orderproduct.save()
 
 
         # Reduce the quality of the sold products
-        product = Product.objects.get(id=item.product_id)
-        product.stock -= item.quantity
+        product = Product.objects.get(id=product_id)
+        product.stock -= 1
         product.save()
+    else:
+
+        # Move to the cart items to Order Product table
+        cart_items = CartItem.objects.filter(user=request.user)
+
+        for item in cart_items:
+            orderproduct = OrderProduct()
+            orderproduct.order_id = order.id
+            orderproduct.payment = payment
+            orderproduct.user_id = request.user.id
+            orderproduct.product_id = item.product_id
+            orderproduct.quantity = item.quantity
+            orderproduct.product_price = item.product.price
+            # orderproduct.discount=request.session['coupon_discount'],
+            orderproduct.ordered = True
+            orderproduct.save()
+
+            cart_item = CartItem.objects.get(id=item.id)
+            product_variation = cart_item.variations.all()
+            orderproduct = OrderProduct.objects.get(id=orderproduct.id)
+            orderproduct.variations.set(product_variation)
+            orderproduct.save()
 
 
-    # Clear cart
-    CartItem.objects.filter(user=request.user).delete()
+            # Reduce the quality of the sold products
+            product = Product.objects.get(id=item.product_id)
+            product.stock -= item.quantity
+            product.save()
+
+    if 'product_id' in request.session:
+        del request.session['product_id']
+    else:
+        # Clear cart
+        CartItem.objects.filter(user=request.user).delete()
 
 
     # Send order recieved sms to customer
@@ -96,20 +126,29 @@ def place_order(request, total=0, quantity=0):
             coupon_redeem.user=current_user
             coupon_redeem.coupon = coupon
             coupon_redeem.save()
-
-    # if the cart is less than or equal to 0, then redirect back to shop
-    cart_items = CartItem.objects.filter(user=current_user)
-    cart_count = cart_items.count()
-    if cart_count <= 0:
-        return redirect('store')
-
     grand_total = 0
     tax = 0
     g_total = 0
-    for cart_item in cart_items:
-        offerprice = cart_item.product.get_price()
-        total += (offerprice['price'] * cart_item.quantity)
-        quantity += cart_item.quantity
+    product = None
+    cart_items = None
+    if 'product_id' in request.session:
+        product_id = request.session['product_id']
+        product = Product.objects.get(id=product_id)
+        offerprice = product.get_price()
+        quantity = 1
+        total += (offerprice['price'] * quantity)
+    
+    else:
+        # if the cart is less than or equal to 0, then redirect back to shop
+        cart_items = CartItem.objects.filter(user=current_user)
+        cart_count = cart_items.count()
+        if cart_count <= 0:
+            return redirect('store')
+
+        for cart_item in cart_items:
+            offerprice = cart_item.product.get_price()
+            total += (offerprice['price'] * cart_item.quantity)
+            quantity += cart_item.quantity
     tax = (2 * total)/100
     g_total = total + tax
     coupon_discount_price=0
@@ -168,7 +207,6 @@ def place_order(request, total=0, quantity=0):
             order_currency = 'INR'
             razorpay_order = client.order.create(dict(amount=int(order_amount),currency=order_currency,payment_capture='0'))
             payment_order_id = razorpay_order['id']
-            print(payment_order_id , '555555555555555555555')
             
 
             order  = Order.objects.get(user=current_user, is_ordered=False, order_number=order_number)
@@ -187,6 +225,8 @@ def place_order(request, total=0, quantity=0):
                 'razorpay_merchant_key':settings.RAZOR_KEY_ID,
                 'razorpay_amount':order_amount,
                 'currency': order_currency,
+                'product' : product,
+                
             }
             return render(request, 'user/payments.html', context)
         else:
@@ -267,6 +307,7 @@ def order_complete(request):
                 }
                 return render(request, 'user/order_complete.html', context)
             except (Order.DoesNotExist):
+                print('-----+++++++++++')
                 return redirect('homepage')
 
 
@@ -274,33 +315,61 @@ def cash_on_delivery(request):
     # Move the cart items to Order Product table
     order_number = request.session['order_number']
     order = Order.objects.get(user=request.user, is_ordered=False, order_number=order_number)
-    cart_items = CartItem.objects.filter(user=request.user)
 
-    for item in cart_items:
+
+    if 'product_id' in request.session:
+        product_id = request.session['product_id']
+        product = Product.objects.get(id=product_id)
+        
         orderproduct = OrderProduct()
         orderproduct.order_id = order.id
         orderproduct.user_id = request.user.id
-        orderproduct.product_id = item.product_id
-        orderproduct.quantity = item.quantity
-        orderproduct.product_price = item.product.price
+        orderproduct.product_id = product_id
+        orderproduct.quantity = 1
+        orderproduct.product_price = product.price
         orderproduct.ordered = True
         orderproduct.save()
 
-
-        cart_item = CartItem.objects.get(id=item.id)
-        product_variation = cart_item.variations.all()
-        orderproduct = OrderProduct.objects.get(id=orderproduct.id)
-        orderproduct.variations.set(product_variation)
-        orderproduct.save()
+        # product_variation = product.variations.all()
+        # orderproduct = OrderProduct.objects.get(id=orderproduct.id)
+        # orderproduct.variations.set(product_variation)
+        # orderproduct.save()
 
 
-    #   # Reduce the quantity of the sold products
-        product = Product.objects.get(id=item.product_id)
-        product.stock -= item.quantity
+        # Reduce the quality of the sold products
+        product = Product.objects.get(id=product_id)
+        product.stock -= 1
         product.save()
+    else:
+        cart_items = CartItem.objects.filter(user=request.user)
+        for item in cart_items:
+            orderproduct = OrderProduct()
+            orderproduct.order_id = order.id
+            orderproduct.user_id = request.user.id
+            orderproduct.product_id = item.product_id
+            orderproduct.quantity = item.quantity
+            orderproduct.product_price = item.product.price
+            orderproduct.ordered = True
+            orderproduct.save()
 
-    # # Clear cart
-    CartItem.objects.filter(user=request.user).delete()
+
+            cart_item = CartItem.objects.get(id=item.id)
+            product_variation = cart_item.variations.all()
+            orderproduct = OrderProduct.objects.get(id=orderproduct.id)
+            orderproduct.variations.set(product_variation)
+            orderproduct.save()
+
+
+        #   # Reduce the quantity of the sold products
+            product = Product.objects.get(id=item.product_id)
+            product.stock -= item.quantity
+            product.save()
+
+    if 'product_id' in request.session:
+        del request.session['product_id']
+    else:
+        # Clear cart
+        CartItem.objects.filter(user=request.user).delete()
     return redirect('order_complete')
 
 client = razorpay.Client(auth=(settings.RAZOR_KEY_ID, settings.RAZOR_KEY_SECRET))
@@ -343,34 +412,64 @@ def razorpay_payment_verification(request):
         order.is_ordered = True
         order.save()
 
-    # Move the cart items to Order Product table
-    cart_items = CartItem.objects.filter(user=request.user)
-
-    for item in cart_items:
+    if 'product_id' in request.session:
+        print('sesion%%%%%%%%%%%%%%%%%%')
+        product_id = request.session['product_id']
+        product = Product.objects.get(id=product_id)
+        
         orderproduct = OrderProduct()
         orderproduct.order_id = order.id
         orderproduct.payment = payment
         orderproduct.user_id = request.user.id
-        orderproduct.product_id = item.product_id
-        orderproduct.quantity = item.quantity
-        orderproduct.product_price = item.product.price
+        orderproduct.product_id = product_id
+        orderproduct.quantity = 1
+        orderproduct.product_price = product.price
         orderproduct.ordered = True
         orderproduct.save()
 
-        cart_item = CartItem.objects.get(id=item.id)
-        product_variation = cart_item.variations.all()
-        orderproduct = OrderProduct.objects.get(id=orderproduct.id)
-        orderproduct.variations.set(product_variation)
-        orderproduct.save()
+        # product_variation = product.variations.all()
+        # orderproduct = OrderProduct.objects.get(id=orderproduct.id)
+        # orderproduct.variations.set(product_variation)
+        # orderproduct.save()
 
 
-    #     # Reduce the quantity of the sold products
-        product = Product.objects.get(id=item.product_id)
-        product.stock -= item.quantity
+        # Reduce the quality of the sold products
+        product = Product.objects.get(id=product_id)
+        product.stock -= 1
         product.save()
+    else:
 
-    # # Clear cart
-    CartItem.objects.filter(user=request.user).delete()
+        # Move the cart items to Order Product table
+        cart_items = CartItem.objects.filter(user=request.user)
+
+        for item in cart_items:
+            orderproduct = OrderProduct()
+            orderproduct.order_id = order.id
+            orderproduct.payment = payment
+            orderproduct.user_id = request.user.id
+            orderproduct.product_id = item.product_id
+            orderproduct.quantity = item.quantity
+            orderproduct.product_price = item.product.price
+            orderproduct.ordered = True
+            orderproduct.save()
+
+            cart_item = CartItem.objects.get(id=item.id)
+            product_variation = cart_item.variations.all()
+            orderproduct = OrderProduct.objects.get(id=orderproduct.id)
+            orderproduct.variations.set(product_variation)
+            orderproduct.save()
+
+
+            # Reduce the quantity of the sold products
+            product = Product.objects.get(id=item.product_id)
+            product.stock -= item.quantity
+            product.save()
+
+    if 'product_id' in request.session:
+        del request.session['product_id']
+    else:
+        # Clear cart
+        CartItem.objects.filter(user=request.user).delete()
     return JsonResponse({'message': 'success'})
 
 def payment_failed(request):
