@@ -174,12 +174,13 @@
                                   <h5 class="text-danger">Out of stock</h5>
                                     {% else %}
                                     <div class="row">
-                                    <div class="col p-0"  #onclick="addItems(event)">
-                                    <button type="submit" class="btn btn-primary"> <span class="text">Add to cart</span><i class="fas fa-shopping-cart"></i></button>
+                                    <div class="col p-0 mr-2"  #onclick="addItems(event)">
+                                    <button type="submit" class="btn btn-primary">Add to cart<i class="fas fa-shopping-cart ml-2"></i></button>
                                      </div>
-                                    <a href="{% url 'buy_now' product.id %}" class="btn btn-danger"> Buy Now <i class="fas fa-bolt ml-3"></i> 
+                                    <a href="{% url 'buy_now' product.id %}" class="btn btn-outline-danger mr-1 mb-2"> Buy Now <i class="fas fa-bolt ml-3"></i> 
                                        </a>
                                     </div>
+
                                     </div>
                     
                                     {% endif %}

@@ -1,7 +1,7 @@
 {% load static %}
 
 <body>
-
+<!-- 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand p-4" href="{% url 'homepage' %}"><h4>Gadgetcart</h4></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,79 +78,144 @@
                 <a class="nav-link" href="{% url 'signout' %}">Logout</a>
               </li>
           </li>
-          {% endif %}
-
-         
-
-
-          <!-- <a href="{% url 'cart' %}" class="widget-header pl-3 ml-3">
-            <div class="icon icon-sm rounded-circle border"><i
-                    class="fa fa-shopping-cart" style="color: white;"></i></div>
-            <span class="badge badge-pill badge-danger notify">{{ cart_count }}</span>
-        </a> -->
-          
+          {% endif %}          
       </ul>
-
-
       <ul class="navbar-nav ml-auto">
       <form class="form-inline my-2 my-lg-0" action="{% url 'search' %}" class="search" method="get">
         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="keyword">
-        <button class="btn btn-outline-primary text-white border-dark" type="submit">Search</button>
+        <button class="btn btn-primary text-white border-dark" type="submit">Search</button>
       </form>
     </ul>
  
   
     </div>
-  </nav>
+  </nav> -->
 
-<!-- 
- 
-	<section class="ftco-section">
-		<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-light ftco-navbar-light" id="ftco-navbar">
-	    <div class="container">
-	    	<a class="navbar-brand p-4 text-dark" href="index.html" >Magz.</a>
-	    	<form action="#" class="searchform order-sm-start order-lg-last">
-          <div class="form-group d-flex mt-3 mr-auto">
-            <form class="form-inline my-2 my-lg-0" action="{% url 'search' %}" class="search" method="get">
-              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="keyword">
-              <button class="btn btn-outline-primary text-dark border-muted bg-white" type="submit"><span class="fa fa-search"></span></button>
-            </form>
-          </div>
-        </form>
-	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-	        <span class="fa fa-bars"></span>
-	      </button>
-	      <div class="collapse navbar-collapse" id="ftco-nav">
-	        <ul class="navbar-nav m-auto">
-            <li class="nav-item active"><a href="#" class="nav-link text-dark">Home</a></li>
-	        	<li class="nav-item active"><a href="#" class="nav-link text-dark">Home</a></li>
-            <li class="nav-item"><a href="#" class="nav-link text-dark">Catalog</a></li>
-	        	<li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle text-dark" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Page</a>
-              <div class="dropdown-menu" aria-labelledby="dropdown04">
-              	<a class="dropdown-item text-dark" href="#">Page 1</a>
-                <a class="dropdown-item text-dark" href="#">Page 2</a>
-                <a class="dropdown-item text-dark" href="#">Page 3</a>
-                <a class="dropdown-item text-dark" href="#">Page 4</a>
-              </div>
-            </li>
-	        	<li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle text-dark" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Page</a>
-              <div class="dropdown-menu" aria-labelledby="dropdown04">
-              	<a class="dropdown-item text-dark" href="#">Page 1</a>
-                <a class="dropdown-item text-dark" href="#">Page 2</a>
-                <a class="dropdown-item text-dark" href="#">Page 3</a>
-                <a class="dropdown-item text-dark" href="#">Page 4</a>
-              </div>
-            </li>
-	        	
-	        	<li class="nav-item"><a href="#" class="nav-link text-dark">Work</a></li>
-	        	<li class="nav-item"><a href="#" class="nav-link text-dark">Blog</a></li>
-	          <li class="nav-item"><a href="#" class="nav-link text-dark">Contact</a></li>
-	        </ul>
-	      </div>
-	    </div>
-	  </nav>
-	</section> -->
+
+  <!-- Navbar -->
+<nav class="navbar navbar-expand-md navbar-light">
+
+  <a class="navbar-brand p-4" href="{% url 'homepage' %}">
+   <h4>Gadgetcart</h4>
+  </a>
+
+  <!-- Collapse button -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav13"
+    aria-controls="basicExampleNav13" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <!-- Breadcrumbs -->
+  <ol class="breadcrumb d-xl-flex">
+    <li class="nav-item active">
+      <a class="nav-link" href="{% url 'homepage' %}">Home</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'store' %}">Store</a>
+      </li>
+   
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        All Category
+      </a>
+      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item" href="{% url 'store' %}">All Products</a>
+        {% for category in links %}
+        <a class="dropdown-item" href="{{ category.get_url }}">{{ category.category_name }}</a>
+        {% endfor %}
+        
+      </div>
+    </li>
+
+  </ol>
+  <!-- Breadcrumbs -->
+
+  <!-- Links -->
+  <div class="collapse navbar-collapse" id="basicExampleNav13">
+
+    <form class="navbar-search pl-0 ml-auto mt-3 mb-2 mt-md-0 mb-md-0 mr-3 border" action="{% url 'search' %}" class="search" method="get">
+      <div class="input-group d-block d-md-flex mb-0 border">
+        <div class="input-group-prepend border">
+          <button class="bg-white border-white btn input-icon d-flex align-items-center" type="submit"><i
+              class="fas fa-search text-dark mx-3"></i></button>
+          <input class="form-control white-text rgba-black-light border-0 z-depth-0 pl-5" action="{% url 'search' %}" type="text"
+            placeholder="Search" aria-label="Search" name="keyword">
+        </div>
+      </div>
+    </form>
+
+
+    <!-- Right -->
+    <ul class="navbar-nav">
+      
+     
+      {% if user.id is None %}
+     
+      <li class="nav-item pl-2 mt-1 mb-md-0 d-md-none d-xl-inline-block">
+        <a href="{% url 'signin' %}" type="button"
+          class="btn btn-outline-info btn-md btn-rounded btn-navbar waves-effect waves-light">Sign
+          in</a>
+      </li>
+      <li class="nav-item pl-2 mt-1 mb-md-0 d-md-none d-xl-inline-block">
+        <a href="{% url 'register' %}" type="button"
+          class="btn btn-outline-info btn-md btn-rounded btn-navbar waves-effect waves-light">Sign
+          up</a>
+      </li>
+      {% else %}
+     
+      <li class="nav-item pl-2 mt-1 mb-md-0 d-md-none d-xl-inline-block">
+        <a href="{% url 'dashboard' %}" type="button"
+          class="btn btn-outline-info btn-md btn-rounded btn-navbar waves-effect waves-light">Dashboard</a>
+      </li>
+      <li class="nav-item pl-2 mt-1 mb-md-0 d-md-none d-xl-inline-block">
+        <a href="{% url 'signout' %}" type="button"
+          class="btn btn-outline-info btn-md btn-rounded btn-navbar waves-effect waves-light">sign out</a>
+      </li>
+      {% endif %}
+      <!-- <li>
+      <a href="{% url 'cart' %}" class="widget-header pl-3">
+        <span class="badge badge-pill badge-danger notify">{{ cart_count }}</span>
+            <div class="icon icon-sm rounded-circle border"><i
+                    class="fa fa-shopping-cart"></i></div>
+            
+        </a>
+      </li> -->
+
+        <li class="nav-item px-3 text-uppercase mb-0 position-relative d-lg-flex mt-3">
+
+          <a href="{% url 'cart' %}" class="cart position-relative d-inline-flex" aria-label="View your shopping cart">
+            <i class="fas fa fa-shopping-cart fa-lg"></i>
+            <span class="cart-basket d-flex align-items-center justify-content-center">
+              {{ cart_count }}
+            </span>
+          </a>
+        </li>
+    </ul>
+     
+
+  </div>
+  <!-- Links -->
+
+</nav>
+<!-- Navbar -->
 
 </body>
+
+<style>
+  ul li a.cart:hover {
+    text-decoration: none;
+    color: #d60e96;
+  }
+  
+  ul li a.cart .cart-basket {
+    font-size: .6rem;
+    position: absolute;
+    top: -6px;
+    right: -5px;
+    width: 15px;
+    height: 15px;
+    color: #fff;
+    background-color: #418deb;
+    border-radius: 50%;
+  }
+</style>

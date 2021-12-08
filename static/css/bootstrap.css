@@ -10206,3 +10206,7 @@ a {
 a:hover{
   color: #0a547d;
 }
+
+.btn-outlined-primary{
+  color: #000;
+}

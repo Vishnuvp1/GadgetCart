@@ -92,7 +92,7 @@
               <h5 class="text-danger">Out of stock</h5>
                 {% else %}
                 <button type="submit" class="btn btn-primary"> <span class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i> </button>
-                <a href="{% url 'buy_now' single_product.id %}" class="btn btn-danger"> Buy Now <i class="fas fa-bolt ml-3"></i> 
+                <a href="{% url 'buy_now' single_product.id %}" class="btn btn-outline-danger"> Buy Now <i class="fas fa-bolt ml-3"></i> 
                    </a>
 
                 {% endif %}
@@ -142,7 +142,7 @@
             <br>
             {% if user.is_authenticated %}
               {% if orderproduct %}
-                <input type="submit" value="Submit Review" class="btn text-white">
+                <input type="submit" value="Submit Review" class="btn btn-primary text-white">
               {% else %}
                 <p>You must purchase this product to post a review.</p>
               {% endif %}
