@@ -53,10 +53,10 @@ def payments(request):
         orderproduct.ordered = True
         orderproduct.save()
 
-        product_variation = product.variations.all()
-        orderproduct = OrderProduct.objects.get(id=orderproduct.id)
-        orderproduct.variations.set(product_variation)
-        orderproduct.save()
+        # product_variation = product.variations.all()
+        # orderproduct = OrderProduct.objects.get(id=orderproduct.id)
+        # orderproduct.variations.set(product_variation)
+        # orderproduct.save()
 
 
         # Reduce the quality of the sold products
@@ -360,7 +360,7 @@ def cash_on_delivery(request):
             orderproduct.save()
 
 
-        #   # Reduce the quantity of the sold products
+            # Reduce the quantity of the sold products
             product = Product.objects.get(id=item.product_id)
             product.stock -= item.quantity
             product.save()
@@ -413,7 +413,6 @@ def razorpay_payment_verification(request):
         order.save()
 
     if 'product_id' in request.session:
-        print('sesion%%%%%%%%%%%%%%%%%%')
         product_id = request.session['product_id']
         product = Product.objects.get(id=product_id)
         

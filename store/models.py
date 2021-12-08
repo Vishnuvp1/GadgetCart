@@ -5,6 +5,8 @@ from brand.models import Brand
 from django.urls import reverse
 from accounts.models import Account
 from django.db.models import Avg, Count
+from django.db.models.aggregates import Sum
+from django.utils import timezone
 
 # Create your models here.
 
@@ -69,7 +71,14 @@ class Product(models.Model):
                 except:
                     print('----else----')
                 return {'price': self.price}
+                
 
+    def get_profit(self):
+        quantity = self.orderproduct_set.filter(variant=self, status='Delivered').aggregate(Sum('quantity'))
+        paid = self.orderproduct_set.filter(variant=self, status='Delivered').aggregate(Sum('paid'))
+        profit = float(str(paid['paid__sum'])) - self.landing_price * float(str(quantity['quantity__sum']))
+        return profit
+   
 
 class VariationManager(models.Manager):
     def colors(self):

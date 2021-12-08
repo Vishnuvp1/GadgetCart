@@ -93,7 +93,7 @@
 
 
   <!-- Navbar -->
-<nav class="navbar navbar-expand-md navbar-light">
+<nav class="navbar navbar-expand-md navbar-light border-bottom">
 
   <a class="navbar-brand p-4" href="{% url 'homepage' %}">
    <h4>Gadgetcart</h4>
@@ -181,10 +181,10 @@
         </a>
       </li> -->
 
-        <li class="nav-item px-3 text-uppercase mb-0 position-relative d-lg-flex mt-3">
+        <li class="nav-item px-3 text-uppercase mb-0 position-relative d-lg-flex mt-2">
 
           <a href="{% url 'cart' %}" class="cart position-relative d-inline-flex" aria-label="View your shopping cart">
-            <i class="fas fa fa-shopping-cart fa-lg"></i>
+            <i class="fas fa fa-shopping-cart fa-2x"></i>
             <span class="cart-basket d-flex align-items-center justify-content-center">
               {{ cart_count }}
             </span>
@@ -212,9 +212,9 @@
     position: absolute;
     top: -6px;
     right: -5px;
-    width: 15px;
-    height: 15px;
-    color: #fff;
+    width: 18px;
+    height: 18px;
+    color: rgb(255, 255, 255);
     background-color: #418deb;
     border-radius: 50%;
   }

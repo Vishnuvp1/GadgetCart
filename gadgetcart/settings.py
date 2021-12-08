@@ -162,5 +162,5 @@ MESSAGE_TAGS = {
 }
 
 
-RAZOR_KEY_ID = 'rzp_test_ee07sAIo3HUZ7M'
-RAZOR_KEY_SECRET = 'KJTJvtd7M6ZtgDO81wQxKm9H'
+RAZOR_KEY_ID = config('razor_key_id')
+RAZOR_KEY_SECRET = config('razor_key_secret')
