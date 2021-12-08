@@ -6,16 +6,16 @@
 <!-- Start Content-->
 
 <div class="container-fluid ">
-    <h4 class="mb-5 mt-5 ml-3">CATEGORY LIST</h4>
+    <h4 class="mt-5 ml-3">CATEGORY LIST</h4>
 
 </div>
 
 {% include 'adminpanel/includes/alerts.html' %}
 
 
-<div class="card-deck col-lg-9">
+<div class="row">
     {% for category in categories %}
-    <div class="card">
+    <div class="card ml-5 mt-4" style="width: 18rem;">
         <img class="card-img-top" src="{{ category.cat_image.url }}" alt="Card image cap">
         <div class="card-body">
             <h4 class="card-title">
@@ -33,10 +33,9 @@
                     </a>
                 </div>
             </div>
-            <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
         </div>
-    </div>
-    {% endfor %}
+      </div>
+      {% endfor %}
 </div>
 
 

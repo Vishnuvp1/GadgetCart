@@ -125,7 +125,17 @@
         {% endfor %}
         
       </div>
+
     </li>
+    <li class="nav-item active">
+      {% if request.user.is_authenticated %}
+      <a class="nav-link" href="">Welcome {{ request.user.first_name }}.</a>
+      {% else %}
+      <a href="">Welcome Guest!</a>
+      {% endif %}
+    </li>
+   
+ 
 
   </ol>
   <!-- Breadcrumbs -->

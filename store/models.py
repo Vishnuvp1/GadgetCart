@@ -7,6 +7,7 @@ from accounts.models import Account
 from django.db.models import Avg, Count
 from django.db.models.aggregates import Sum
 from django.utils import timezone
+from django.apps import apps
 
 # Create your models here.
 
@@ -73,12 +74,22 @@ class Product(models.Model):
                 return {'price': self.price}
                 
 
-    def get_profit(self):
-        quantity = self.orderproduct_set.filter(variant=self, status='Delivered').aggregate(Sum('quantity'))
-        paid = self.orderproduct_set.filter(variant=self, status='Delivered').aggregate(Sum('paid'))
-        profit = float(str(paid['paid__sum'])) - self.landing_price * float(str(quantity['quantity__sum']))
-        return profit
-   
+    def get_revenue(self,month=timezone.now().month):
+        
+        orderproduct = apps.get_model('orders', 'OrderProduct')
+        orders=orderproduct.objects.filter(product=self,created_at__month=month,status=4)
+        return orders.values('product').annotate(revenue=Sum('product_price'))
+    def get_profit(self,month=timezone.now().month):
+        
+        orderproduct = apps.get_model('orders', 'OrderProduct')
+        orders=orderproduct.objects.filter(product=self,created_at__month=month,status=4)
+        profit_calculted=orders.values('product').annotate(profit=Sum('product_price'))
+        profit_calculated=profit_calculted[0]['profit']*0.23
+        return profit_calculated
+    def get_count(self,month=timezone.now().month):
+        orderproduct = apps.get_model('orders', 'OrderProduct')
+        orders=orderproduct.objects.filter(product=self,created_at__month=month,status=4)
+        return orders.values('product').annotate(quantity=Sum('quantity'))
 
 class VariationManager(models.Manager):
     def colors(self):

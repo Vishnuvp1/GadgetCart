@@ -38,7 +38,6 @@ def adminpanel(request):
 
     total_orders = Order.objects.filter(is_ordered=True).count()
     total_revenue = Order.objects.aggregate(Sum('order_total'))
-    total_profit = float(total_revenue['order_total__sum'])
 
 
     
@@ -108,7 +107,7 @@ def adminpanel(request):
         'users' : users,
         'total_orders': total_orders,
         'total_revenue': total_revenue['order_total__sum'],
-        'total_profit' : total_profit,
+        
 
         
         'month_name': ['January', 'February', 'March', 'May', 'June', 'July', 'August', 'September', 'October',
@@ -558,6 +557,22 @@ def report(request):
         date_to += datetime.timedelta(days=1)
         orders = orders.filter(created_at__range=[date_from, date_to])
         print(orders)
+
+    # total_revenue=0
+    # total_profit=0
+    # for product in products:
+    #     print(product.get_revenue())
+    #     try:
+    #         total_revenue+=product.get_revenue()[0]['revenue']
+    #     except:
+    #         pass
+    #     try:
+    #         print(product.get_profit())
+    #         total_profit+=product.get_profit()
+    #     except:
+    #         pass    
+    # request.session['total_revenue']=total_revenue
+    # request.session['total_profit']=total_profit  
 
     context = {
         'categories' : categories,

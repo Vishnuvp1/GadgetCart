@@ -13,7 +13,7 @@
 <!-- Start Content-->
 
 <div class="container-fluid ">
-    <h4 class="ml-5 mt-3">BRAND LIST</h4>
+    <h4 class="ml-4 mt-3">BRAND LIST</h4>
 
 </div>
 
@@ -21,9 +21,9 @@
 
 
 
-<div class="card-deck col-lg-10">
+<div class="row">
     {% for brand in brands %}
-    <div class="card">
+    <div class="card ml-5 mt-4" style="width: 18rem;">
         <img class="card-img-top" src="{{ brand.brand_image.url }}" alt="Card image cap">
         <div class="card-body">
             <h4 class="card-title">
@@ -41,10 +41,9 @@
                     </a>
                 </div>
             </div>
-            <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
         </div>
-    </div>
-    {% endfor %}
+      </div>
+      {% endfor %}
 </div>
 
 

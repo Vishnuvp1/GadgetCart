@@ -23,13 +23,14 @@ class MyAccountManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, first_name, last_name, email, username, password):
+    def create_superuser(self, first_name, last_name, email, username, password, phone_number):
         user = self.create_user(
             email = self.normalize_email(email),
             username = username,
             password = password,
             first_name = first_name,
-            last_name = last_name
+            last_name = last_name,
+            phone_number= phone_number
         )
 
         user.is_admin = True
@@ -57,7 +58,7 @@ class Account(AbstractBaseUser,PermissionsMixin):
     is_verified = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
+    REQUIRED_FIELDS = ['username', 'first_name', 'last_name', 'phone_number']
 
     objects = MyAccountManager()
 
