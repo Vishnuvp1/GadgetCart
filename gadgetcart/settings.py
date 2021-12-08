@@ -30,7 +30,7 @@ VERIFICATION_KEY = config('verification_sid')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast=bool, default=True)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['139.59.32.61', '127.0.0.1']
 
 
 # Application definition
