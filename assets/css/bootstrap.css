@@ -10017,7 +10017,7 @@ a.text-gray-light:hover, a.text-gray-light:focus {
 }
 
 .text-muted {
-  color: #969696 !important;
+  color: white;
 }
 
 .text-black-50 {
@@ -10153,3 +10153,60 @@ h3 {
 }
 
 /*# sourceMappingURL=bootstrap.css.map */
+
+ul.sub-image{
+  margin: 0 auto;
+  padding: 0;
+  float: left;
+}
+
+ul.sub-image li{
+  list-style: none;
+  margin: 10px;
+}
+
+ul.sub-image li img{
+  width: 80px;
+  height: 80px;
+  border: 1px solid gray;
+}
+
+.error {
+  color : red;
+}
+
+.errorlist{
+  color: red;
+}
+
+.btn-primary{
+  background-color: #0E3951;
+  border-color: white;
+}
+
+.btn-primary:hover{
+  background-color: #0a547d;
+}
+
+.list-group-item.active {
+  z-index: 2;
+  color: #fff;
+  background-color: #0E3951;
+  border-color: #0E3951;
+}
+
+.list-group-item.active:hover{
+  background-color: #0a547d ;
+}
+
+a {
+  color: #0E3951;
+}
+
+a:hover{
+  color: #0a547d;
+}
+
+.btn-outlined-primary{
+  color: #000;
+}
