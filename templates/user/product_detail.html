@@ -12,22 +12,19 @@
       <div class="row no-gutters">
         <aside class="col-md-6">
 
-          <div class="card shadow-sm p-3 bg-white rounded">
+          <div class="card">
  
             <article class="gallery-wrap"> 
-              <div class="img-big-wrap">
-                <div class="img-big-wrap">
+                <div class="img-big-wrap align-center">
                   <a href="#"><img class="big_img" src="{{ single_product.image1.url }}"></a>
                 </div>
-              </div> 
               <div class="thumbs-wrap">
-                <a href="#" class="item-thumb card shadow-sm bg-white rounded"> <img class="small_img" src="{{ single_product.image1.url }}"
+                <a href="#" class="item-thumb"> <img class="small_img" src="{{ single_product.image1.url }}"
                   height="100px"></a>
-                <a href="#" class="item-thumb card shadow-sm bg-white rounded"> <img class="small_img" src="{{ single_product.image2.url }}"
+                <a href="#" class="item-thumb"> <img class="small_img" src="{{ single_product.image2.url }}"
                   height="100px"></a>
-                <a href="#" class="item-thumb card shadow-sm bg-white rounded"> <img class="small_img" src="{{ single_product.image2.url }}"
+                <a href="#" class="item-thumb"> <img class="small_img" src="{{ single_product.image2.url }}"
                   height="100px"></a>
-            
               </div> 
             </article>
             </div> 
@@ -35,6 +32,9 @@
         </article> 
           
         </aside>
+
+
+
         <main class="col-md-6">
 
           <form action="{% url 'add_cart' single_product.id %}" method="post" id="product_form">
