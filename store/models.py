@@ -75,20 +75,20 @@ class Product(models.Model):
                 
 
     def get_revenue(self,month=timezone.now().month):
-        
         orderproduct = apps.get_model('orders', 'OrderProduct')
-        orders=orderproduct.objects.filter(product=self,created_at__month=month,status=4)
+        orders=orderproduct.objects.filter(product=self,created_at__month=month,status='Delivered')
         return orders.values('product').annotate(revenue=Sum('product_price'))
+
     def get_profit(self,month=timezone.now().month):
-        
         orderproduct = apps.get_model('orders', 'OrderProduct')
-        orders=orderproduct.objects.filter(product=self,created_at__month=month,status=4)
+        orders=orderproduct.objects.filter(product=self,created_at__month=month,status='Delivered')
         profit_calculted=orders.values('product').annotate(profit=Sum('product_price'))
         profit_calculated=profit_calculted[0]['profit']*0.23
         return profit_calculated
+
     def get_count(self,month=timezone.now().month):
         orderproduct = apps.get_model('orders', 'OrderProduct')
-        orders=orderproduct.objects.filter(product=self,created_at__month=month,status=4)
+        orders=orderproduct.objects.filter(product=self,created_at__month=month,status='Delivered')
         return orders.values('product').annotate(quantity=Sum('quantity'))
 
 class VariationManager(models.Manager):

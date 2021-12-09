@@ -93,7 +93,7 @@
               <h5 class="text-danger">Out of stock</h5>
                 {% else %}
                 <button type="submit" class="btn btn-primary" name="add_to_cart_button"> <span class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i> </button>
-                <button type="submit" class="btn btn-outline-danger" name="buy_now_button"> <span class="text">Buy Now</span> <i class="fas fa-bolt ml-3"></i> </button>
+                <a href="{% url 'buy_now' single_product.id %}" class="btn btn-outline-danger" name="buy_now_button"> <span class="text">Buy Now</span> <i class="fas fa-bolt ml-3"></i> </a>
                    </a>
 
                 {% endif %}

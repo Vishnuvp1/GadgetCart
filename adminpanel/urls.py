@@ -1,3 +1,4 @@
+from os import name
 from django.urls import path 
 
 from . import views
@@ -60,10 +61,12 @@ urlpatterns = [
     path('brands_pdf/', views.brands_pdf, name='brands_pdf'),
     path('orders_pdf/', views.orders_pdf, name='orders_pdf'),
     path('products_pdf/', views.products_pdf, name='products_pdf'),
+    path('sales_pdf/', views.sales_pdf, name='sales_pdf'),
 
     path('orders_csv/', views.orders_csv , name='orders_csv'),
     path('brands_csv/', views.brands_csv , name='brands_csv'),
     path('products_csv/', views.products_csv, name='products_csv'),
+    path('sales_csv/', views.sales_csv , name='sales_csv'),
   
     
 ]

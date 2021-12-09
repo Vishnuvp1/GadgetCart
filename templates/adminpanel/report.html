@@ -27,9 +27,9 @@
                         <h4 class="ml-3"><u>SALES REPORT</u></h4>
                     </div>
                     <div class="col">
-                        <a href="{% url 'orders_pdf' %}" class="btn btn-sm btn-outline-danger float-right mr-3">Export
+                        <a href="{% url 'sales_pdf' %}" class="btn btn-sm btn-outline-danger float-right mr-3">Export
                             as PDF</a>
-                        <a href="{% url 'orders_csv' %}" class="btn btn-sm btn-outline-info float-right mr-3">Export
+                        <a href="{% url 'sales_csv' %}" class="btn btn-sm btn-outline-info float-right mr-3">Export
                             as CSV</a>
                     </div>
                 </div>
@@ -43,8 +43,8 @@
                                 <th>Brand</th>
                                 <th>Product</th>
                                 <th>Category</th>
-                                <th>Sold</th>
                                 <th>Revenue</th>
+                                <th>Sold</th>
                                 <th>Profit</th>
                             </tr>
                         </thead>
@@ -59,14 +59,25 @@
                                     {{ product.category.category_name }}
                                 </td>
                                 <td>
-                                    {{ product.get_profit }}
+                                {% if product.get_revenue %}
+                                 {{product.get_revenue.0.revenue}}
+                                {% else %}
+                                Order not Completed
+                                {% endif %}
                                 </td>
                                 <td>
-                                   
+                                    {% if product.get_revenue %}
+                                    {{product.get_count.0.quantity}}
+                                    {% else %}
+                                    Order not Completed
+                                    {% endif %}
                                 </td>
                                 <td>
-
-                                    
+                                    {% if product.get_revenue %}
+                                    {{product.get_profit}}
+                                    {% else %}
+                                    none
+                                    {% endif %}
 
                                 </td>
                                

@@ -143,9 +143,9 @@
   <!-- Links -->
   <div class="collapse navbar-collapse" id="basicExampleNav13">
 
-    <form class="navbar-search pl-0 ml-auto mt-3 mb-2 mt-md-0 mb-md-0 mr-3 border" action="{% url 'search' %}" class="search" method="get">
-      <div class="input-group d-block d-md-flex mb-0 border">
-        <div class="input-group-prepend border">
+    <form class="navbar-search pl-0 ml-auto mt-3 mb-2 mt-md-0 mb-md-0 mr-3" action="{% url 'search' %}" class="search" method="get">
+      <div class="input-group d-block d-md-flex mb-0">
+        <div class="input-group-prepend border border-info">
           <button class="bg-white border-white btn input-icon d-flex align-items-center" type="submit"><i
               class="fas fa-search text-dark mx-3"></i></button>
           <input class="form-control white-text rgba-black-light border-0 z-depth-0 pl-5" action="{% url 'search' %}" type="text"
@@ -157,29 +157,30 @@
 
     <!-- Right -->
     <ul class="navbar-nav">
+      <div class="row">
       
      
       {% if user.id is None %}
      
       <li class="nav-item pl-2 mt-1 mb-md-0 d-md-none d-xl-inline-block">
         <a href="{% url 'signin' %}" type="button"
-          class="btn btn-outline-info btn-md btn-rounded btn-navbar waves-effect waves-light">Sign
+          class="btn btn-outline-info btn-md rounded-0">Sign
           in</a>
       </li>
       <li class="nav-item pl-2 mt-1 mb-md-0 d-md-none d-xl-inline-block">
         <a href="{% url 'register' %}" type="button"
-          class="btn btn-outline-info btn-md btn-rounded btn-navbar waves-effect waves-light">Sign
+          class="btn btn-outline-info btn-md rounded-0">Sign
           up</a>
       </li>
       {% else %}
      
       <li class="nav-item pl-2 mt-1 mb-md-0 d-md-none d-xl-inline-block">
         <a href="{% url 'dashboard' %}" type="button"
-          class="btn btn-outline-info btn-md btn-rounded btn-navbar waves-effect waves-light">Dashboard</a>
+          class="btn btn-outline-info btn-md rounded-0">Dashboard</a>
       </li>
       <li class="nav-item pl-2 mt-1 mb-md-0 d-md-none d-xl-inline-block">
         <a href="{% url 'signout' %}" type="button"
-          class="btn btn-outline-info btn-md btn-rounded btn-navbar waves-effect waves-light">sign out</a>
+          class="btn btn-outline-info btn-md rounded-0">sign out</a>
       </li>
       {% endif %}
       <!-- <li>
@@ -190,7 +191,7 @@
             
         </a>
       </li> -->
-
+      <div class="ml-auto">
         <li class="nav-item px-3 text-uppercase mb-0 position-relative d-lg-flex mt-2">
 
           <a href="{% url 'cart' %}" class="cart position-relative d-inline-flex" aria-label="View your shopping cart">
@@ -200,6 +201,9 @@
             </span>
           </a>
         </li>
+      </div>
+
+      </div>
     </ul>
      
 
@@ -228,4 +232,5 @@
     background-color: #418deb;
     border-radius: 50%;
   }
+
 </style>

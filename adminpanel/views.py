@@ -34,7 +34,6 @@ def adminpanel(request):
     brands = Brand.objects.all()
     categories = Category.objects.all().count()
     users = Account.objects.all().count()
-    current_year = timezone.now().year
 
     total_orders = Order.objects.filter(is_ordered=True).count()
     total_revenue = Order.objects.aggregate(Sum('order_total'))
@@ -645,6 +644,14 @@ def products_pdf(request):
     weasyprint.HTML(string=html, base_url=request.build_absolute_uri()).write_pdf(response)
     return response
 
+def sales_pdf(request):
+    products = Product.objects.all().order_by('-id')
+    html = render_to_string('adminpanel/sales_pdf.html', {'products': products})
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'filename=sales.pdf'
+    weasyprint.HTML(string=html, base_url=request.build_absolute_uri()).write_pdf(response)
+    return response
+
 def orders_csv(request):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename=orders.csv'
@@ -680,10 +687,25 @@ def products_csv(request):
     products = Product.objects.all().order_by('-id')
 
     writer.writerow(
-        ['Product Name', 'Category', 'Brand', 'Product Price', 'Stock', 'Uppload date'])
+        ['Product Name', 'Category', 'Brand', 'Product Price', 'Stock', 'Upload date'])
 
     for product in products:
         writer.writerow([product.product_name, product.category.category_name, product.brand.brand_name, product.price,
                          product.stock, product.created_date])
+    return response
+
+def sales_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=products.csv'
+
+    writer = csv.writer(response)
+    products = Product.objects.all().order_by('-id')
+
+    writer.writerow(
+        ['Brand', 'Product', 'Category', 'Revenue', 'Sold', 'Profit'])
+
+    for product in products:
+        writer.writerow([product.brand.brand_name, product.product_name, product.category.category_name, product.get_revenue()[0]['revenue'],
+                         product.get_count()[0]['quantity'], product.get_profit()])
     return response
 

@@ -279,29 +279,15 @@ def checkout(request, total=0, quantity=0, cart_items=None):
     return render(request, 'user/checkout.html', context)
 
 def buy_now(request, product_id):
-    print(product_id)
-    product = Product.objects.get(id=product_id) #get the product
-    product_variation = []
-    request.POST=request.session['POST'] 
-    print(request.POST)
-
-    for item in request.POST:
-        key = item
-        value = request.POST[key]
-        try:
-            variation = Variation.objects.get(product=product, variation_category__iexact=key, variation_value__iexact=value)
-            product_variation.append(variation)
-            print(product_variation, '>>>>>>>>>>>>>>>>>>.')
-            
-            if request.user.is_authenticated:
-                product = Product.objects.get(id=product_id)
-                request.session['product_id']=product.id
-                return redirect('checkout')
-            else:
-                messages.error(request, 'Please Login')
-                return redirect('signin')
-        except:
-            pass
+    
+    if request.user.is_authenticated:
+        product = Product.objects.get(id=product_id)
+        request.session['product_id']=product.id
+        return redirect('checkout')
+    else:
+        messages.error(request, 'Please Login')
+        return redirect('signin')
+       
     
     
     
