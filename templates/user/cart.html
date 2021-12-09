@@ -21,11 +21,14 @@
         {% else %}
 
         <div class="row">
+            
+
             <aside class="col-lg-9">
+            
                 <div class="card shadow p-3 mb-5 bg-white rounded">
-                    <table class="table table-borderless table-shopping-cart">
-                        <thead class="text-muted">
-                            <tr class="small text-uppercase text-dark">
+                    <table class="table table-borderless table-shopping-cart table-responsive">
+                        <thead class="text-dark">
+                            <tr class="small text-uppercase">
                                 <th scope="col">Product</th>
                                 <th scope="col" width="120">Quantity</th>
                                 <th scope="col" width="120">Price</th>
@@ -33,7 +36,6 @@
                             </tr>
                         </thead>
                         <tbody>
-
                             {% for cart_item in cart_items %}
                             <tr>
                                 <td>
@@ -55,6 +57,7 @@
                                         </figcaption>
                                     </figure>
                                 </td>
+                        
                                 <td>
                                     <!-- col.// -->
                                     <div class="col">
@@ -93,10 +96,7 @@
                                         Remove</a>
                                 </td>
                             </tr>
-
                             {% endfor %}
-
-
                         </tbody>
                     </table>
                 </div> <!-- card.// -->
