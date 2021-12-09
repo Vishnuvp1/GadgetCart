@@ -178,6 +178,7 @@ def productlist(request):
     return render(request, 'adminpanel/productlist.html',context)
 
 
+@login_required(login_url = 'adminsignin')
 def productadd(request):
 
     form = ProductForm()
@@ -201,13 +202,13 @@ def productadd(request):
 
 
 
-
+@login_required(login_url = 'adminsignin')
 def productdelete(request,product_id):
     dlt = Product.objects.get(id=product_id)
     dlt.delete()
     return redirect('productlist')
 
-
+@login_required(login_url = 'adminsignin')
 def productedit(request, product_id):
     product = Product.objects.get(pk=product_id)
     form = ProductForm(instance=product)
@@ -227,7 +228,7 @@ def productedit(request, product_id):
 
 
 
-
+@login_required(login_url = 'adminsignin')
 def categorylist(request):
 
     categories = Category.objects.all()
@@ -239,6 +240,7 @@ def categorylist(request):
     return render(request, 'adminpanel/categorylist.html', context)
 
 
+@login_required(login_url = 'adminsignin')
 def categoryadd(request):
 
     form = CategoryForm()
@@ -261,12 +263,14 @@ def categoryadd(request):
     return render(request, 'adminpanel/categoryadd.html', context)
 
 
+@login_required(login_url = 'adminsignin')
 def categorydelete(request,category_id):
     dlt = Category.objects.get(id=category_id)
     dlt.delete()
     return redirect('categorylist')
     
 
+@login_required(login_url = 'adminsignin')
 def categoryedit(request, category_id):
     category = Category.objects.get(pk=category_id)
     form = CategoryForm(instance=category)
@@ -285,6 +289,7 @@ def categoryedit(request, category_id):
 
 
 
+@login_required(login_url = 'adminsignin')
 def brandlist(request):
     brands = Brand.objects.all()
 
@@ -295,6 +300,7 @@ def brandlist(request):
     return render(request, 'adminpanel/brandlist.html', context)
 
 
+@login_required(login_url = 'adminsignin')
 def brandadd(request):
 
     form = BrandForm()
@@ -316,12 +322,14 @@ def brandadd(request):
 
     return render(request, 'adminpanel/brandadd.html', context)
 
+@login_required(login_url = 'adminsignin')
 def branddelete(request,brand_id):
     dlt = Brand.objects.get(id=brand_id)
     dlt.delete()
     return redirect('brandlist')
 
 
+@login_required(login_url = 'adminsignin')
 def brandedit(request, brand_id):
     product = Brand.objects.get(pk=brand_id)
     form = BrandForm(instance=product)
@@ -338,6 +346,7 @@ def brandedit(request, brand_id):
     }
     return render(request, 'adminpanel/brandedit.html', context)
 
+@login_required(login_url = 'adminsignin')
 def variantadd(request):
     form = VariantsForm()
 
@@ -357,6 +366,7 @@ def variantadd(request):
     return render(request, 'adminpanel/variantadd.html', context)
 
 
+@login_required(login_url = 'adminsignin')
 def userdetails(request):
     users = Account.objects.all().order_by('id')
 
@@ -365,12 +375,14 @@ def userdetails(request):
     }
     return render(request, 'adminpanel/userdetails.html',context )
 
+@login_required(login_url = 'adminsignin')
 def userdelete(request, account_id):
     user = Account.objects.get(id=account_id)
     user.delete()
     return redirect('userdetails')
 
 
+@login_required(login_url = 'adminsignin')
 def block_user(request, account_id):
     user = Account.objects.get(id=account_id)
     user.is_active = False
@@ -378,6 +390,7 @@ def block_user(request, account_id):
     return redirect('userdetails')
 
 
+@login_required(login_url = 'adminsignin')
 def unblock_user(request, account_id):
     user = Account.objects.get(id=account_id)
     user.is_active = True
@@ -385,6 +398,7 @@ def unblock_user(request, account_id):
     return redirect('userdetails')
 
 
+@login_required(login_url = 'adminsignin')
 def product_offer_add(request):
     form = ProductOfferForm()
 
@@ -404,6 +418,7 @@ def product_offer_add(request):
     
 
 
+@login_required(login_url = 'adminsignin')
 def category_offer_add(request):
     form = CategoryOfferForm()
 
@@ -423,6 +438,7 @@ def category_offer_add(request):
 
 
 
+@login_required(login_url = 'adminsignin')
 def brand_offer_add(request):
     form = BrandOfferForm()
 
@@ -441,6 +457,7 @@ def brand_offer_add(request):
     return render(request, 'adminpanel/brand_offer_add.html', context)
 
 
+@login_required(login_url = 'adminsignin')
 def product_offer_list(request):
     productoffers = ProductOffer.objects.all()
 
@@ -449,10 +466,12 @@ def product_offer_list(request):
     }
     return render(request, 'adminpanel/product_offer_list.html', context)
 
+@login_required(login_url = 'adminsignin')
 def product_offer_delete(request, id):
     ProductOffer.objects.get(id=id).delete()
     return redirect('product_offer_list')
 
+@login_required(login_url = 'adminsignin')
 def category_offer_list(request):
     categoryoffers = CategoryOffer.objects.all()
 
@@ -461,10 +480,12 @@ def category_offer_list(request):
     }
     return render(request, 'adminpanel/category_offer_list.html', context)
 
+@login_required(login_url = 'adminsignin')
 def category_offer_delete(request, id):
     CategoryOffer.objects.get(id=id).delete()
     return redirect('category_offer_list')
 
+@login_required(login_url = 'adminsignin')
 def brand_offer_list(request):
     brandoffers = BrandOffer.objects.all()
 
@@ -473,11 +494,13 @@ def brand_offer_list(request):
     }
     return render(request, 'adminpanel/brand_offer_list.html', context)
 
+@login_required(login_url = 'adminsignin')
 def brand_offer_delete(request, id):
     BrandOffer.objects.get(id=id).delete()
     return redirect('brand_offer_list')
 
 
+@login_required(login_url = 'adminsignin')
 def active_orders(request):
     exclude_list = ['Delivered', 'Canceled']
     active_orders = OrderProduct.objects.all().exclude(status__in=exclude_list).order_by('-id')
@@ -488,6 +511,7 @@ def active_orders(request):
     }
     return render(request, 'adminpanel/active_orders.html', context)
 
+@login_required(login_url = 'adminsignin')
 def order_history(request):
     orders = OrderProduct.objects.filter(status__in=['Delivered','Canceled'])
     context  = {
@@ -495,6 +519,7 @@ def order_history(request):
     }
     return render(request, 'adminpanel/order_history.html', context)
 
+@login_required(login_url = 'adminsignin')
 def active_orders_edit(request, order_id):
     order = OrderProduct.objects.get(id=order_id)
     form = OrderProductForm(instance=order)
@@ -510,11 +535,13 @@ def active_orders_edit(request, order_id):
     }
     return render(request, 'adminpanel/active_orders_edit.html',context)
 
+@login_required(login_url = 'adminsignin')
 def order_details(request, id):
     
     return render(request, 'adminpanel/order_details.html')
 
 
+@login_required(login_url = 'adminsignin')
 def banner_list(request):
     banners = Banner.objects.all()
     context = {
@@ -522,6 +549,7 @@ def banner_list(request):
     }
     return render(request, 'adminpanel/banner_list.html', context)
 
+@login_required(login_url = 'adminsignin')
 def banner_add(request):
     form = BannerForm()
 
@@ -539,11 +567,13 @@ def banner_add(request):
     return render(request, 'adminpanel/banner_add.html', context)
 
 
+@login_required(login_url = 'adminsignin')
 def banner_delete(request, banner_id):
     Banner.objects.get(id=banner_id).delete()
     return redirect('banner_list')
 
 
+@login_required(login_url = 'adminsignin')
 def report(request):
     brands = Brand.objects.all().order_by('-id')
     categories = Category.objects.all()
@@ -582,6 +612,7 @@ def report(request):
     return render(request, 'adminpanel/report.html', context)
 
 
+@login_required(login_url = 'adminsignin')
 def coupon_list(request):
     coupons = Coupon.objects.all()
 
@@ -590,6 +621,7 @@ def coupon_list(request):
     }
     return render(request, 'adminpanel/coupon_list.html', context)
 
+@login_required(login_url = 'adminsignin')
 def coupon_add(request):
     form = CouponForm
 
@@ -606,11 +638,13 @@ def coupon_add(request):
     }
     return render(request, 'adminpanel/coupon_add.html', context)
 
+@login_required(login_url = 'adminsignin')
 def coupon_delete(request, coupon_id):
     Coupon.objects.get(id=coupon_id).delete()
     return redirect('coupon_list')
 
 
+@login_required(login_url = 'adminsignin')
 def redeemed_coupons(request):
     redeemed_coupons = RedeemedCoupon.objects.all()
     
@@ -620,6 +654,7 @@ def redeemed_coupons(request):
     return render(request, 'adminpanel/redeemed_coupons.html', context)
 
 
+@login_required(login_url = 'adminsignin')
 def brands_pdf(request):
     brands = Brand.objects.all().order_by('-id')
     html = render_to_string('adminpanel/brands_pdf.html', {'brands': brands})
@@ -628,6 +663,7 @@ def brands_pdf(request):
     weasyprint.HTML(string=html, base_url=request.build_absolute_uri()).write_pdf(response)
     return response
 
+@login_required(login_url = 'adminsignin')
 def orders_pdf(request):
     orders = OrderProduct.objects.all().order_by('-id')
     html = render_to_string('adminpanel/orders_pdf.html', {'orders': orders})
@@ -636,6 +672,7 @@ def orders_pdf(request):
     weasyprint.HTML(string=html, base_url=request.build_absolute_uri()).write_pdf(response)
     return response
 
+@login_required(login_url = 'adminsignin')
 def products_pdf(request):
     products = Product.objects.all().order_by('-id')
     html = render_to_string('adminpanel/products_pdf.html', {'products': products})
@@ -644,6 +681,7 @@ def products_pdf(request):
     weasyprint.HTML(string=html, base_url=request.build_absolute_uri()).write_pdf(response)
     return response
 
+@login_required(login_url = 'adminsignin')
 def sales_pdf(request):
     products = Product.objects.all().order_by('-id')
     html = render_to_string('adminpanel/sales_pdf.html', {'products': products})
@@ -652,6 +690,7 @@ def sales_pdf(request):
     weasyprint.HTML(string=html, base_url=request.build_absolute_uri()).write_pdf(response)
     return response
 
+@login_required(login_url = 'adminsignin')
 def orders_csv(request):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename=orders.csv'
@@ -667,6 +706,7 @@ def orders_csv(request):
                          order_product.discount, order_product.created_at, order_product.status])
     return response
 
+@login_required(login_url = 'adminsignin')
 def brands_csv(request):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename=brands.csv'
@@ -679,6 +719,7 @@ def brands_csv(request):
 
     return response
 
+@login_required(login_url = 'adminsignin')
 def products_csv(request):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename=products.csv'
@@ -694,6 +735,7 @@ def products_csv(request):
                          product.stock, product.created_date])
     return response
 
+@login_required(login_url = 'adminsignin')
 def sales_csv(request):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename=products.csv'
