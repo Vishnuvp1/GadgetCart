@@ -408,6 +408,7 @@ def my_address(request):
     return render(request, 'user/my_address.html', context)
 
 
+@login_required(login_url='signin')
 def edit_address(request, pk):
     address = Address.objects.get(pk=pk)
     form = AddressForm(instance=address)
@@ -426,11 +427,13 @@ def edit_address(request, pk):
     return render(request, 'user/edit_address.html', context)
 
 
+@login_required(login_url='signin')
 def delete_address(request, pk):
     Address.objects.get(id=pk).delete()
     return redirect('my_address')
 
 
+@login_required(login_url='signin')
 def default_address(request, pk):
     Address.objects.filter(user=request.user, default=True).update(default=False)
     address = Address.objects.get(pk=pk)
@@ -440,6 +443,7 @@ def default_address(request, pk):
     return redirect('my_address')
 
 
+@login_required(login_url='signin')
 def cancel_order(request, pk):
     product = OrderProduct.objects.get(pk=pk)
     print(product)
