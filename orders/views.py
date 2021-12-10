@@ -21,7 +21,6 @@ def payments(request):
     body = json.loads(request.body)
     order = Order.objects.get(user=request.user, is_ordered=False, order_number=body['orderID'])
     use_coupon(request)
-    print(order)
     total = 0
     
     # Store transaction details inside Payment model
@@ -102,7 +101,6 @@ def payments(request):
     # Send order recieved sms to customer
     
     phone = request.user.phone_number
-    print("--------PHONE NUMBER---------")
     print(phone)
     
 
@@ -286,7 +284,7 @@ def order_complete(request):
 
         except:
             try:
-                print('razorpay')
+               
                 order = Order.objects.get(order_number=order_number, is_ordered=True)
                 ordered_products = OrderProduct.objects.filter(order_id=order.id)
 
@@ -307,7 +305,6 @@ def order_complete(request):
                 }
                 return render(request, 'user/order_complete.html', context)
             except (Order.DoesNotExist):
-                print('-----+++++++++++')
                 return redirect('homepage')
 
 
@@ -392,7 +389,7 @@ def razorpay_payment_verification(request):
             'razorpay_payment_id': razorpay_payment_id,
             'razorpay_signature': razorpay_signature,
         }
-        print(params_dict,'-----------')
+        
         request.session['razorpay_order_id']=razorpay_order_id
         try:
             client.utility.verify_payment_signature(params_dict)

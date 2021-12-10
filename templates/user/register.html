@@ -55,6 +55,7 @@
                         <button type="submit" class="btn btn-primary btn-block"> Register  </button>
                     </div> <!-- form-group// -->      
                       {{ form.email.errors }}  
+                      {{ form.phone_number.errors}}
                       {{ form.non_field_errors }}
                 </form>
             </article><!-- card-body.// -->
@@ -71,7 +72,25 @@
     <script>
         $(document).ready(function () {
             $("#register_form").validate({
-                
+                rules: {
+                    phone_number: {
+                          required: true,
+                          digits: true,
+                          minlength: 10,
+                          maxlength: 10, 
+                          
+                      },
+                    email: {
+                        required: true,
+                        email: true,
+                    },
+
+                    password: {
+                          required: true,
+                          minlength : 5,
+                      }
+                       
+                  }  
             })
         })
     
