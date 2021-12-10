@@ -43,7 +43,7 @@
                                   {% elif order.status == 'Delivered' %}
                                    <p>Order Delivered</p>
                                    {% else %}
-                                   <a class="btn text-white" href="{% url 'cancel_order' order.id %}">Cancel</a>
+                                   <a class="btn btn-danger text-white" href="{% url 'cancel_order' order.id %}" onclick="deleteItems(event)">Cancel</a>
                                    
                                   {% endif %}
                                 </td>

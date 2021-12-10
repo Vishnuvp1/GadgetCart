@@ -60,7 +60,14 @@
         </div>
                 <div class="card shadow p-3 mb-2 bg-white rounded">
                     <div class="card-body">
+                      <div class="row">
+                        <div class="col">
                         <h4 class="card-title mb-4">Billing Address</h4>
+                      </div>
+                        <div class="mr-auto">
+                          <a href="{% url 'my_address' %}" class="btn btn-outline-info">Manage Address</a>
+                        </div>
+                        </div>
                         <form action="{% url 'place_order' %}" method="POST" id="checkout_form">
                             {% csrf_token %}
                             <div class="form-row">
