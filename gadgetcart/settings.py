@@ -30,7 +30,7 @@ VERIFICATION_KEY = config('verification_sid')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast=bool, default=True)
 
-ALLOWED_HOSTS = [ '127.0.0.1', 'gadgetcart.ga']
+ALLOWED_HOSTS = [ '127.0.0.1', 'gadgetcart.cf']
 
 
 # Application definition
