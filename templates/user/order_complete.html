@@ -2,6 +2,8 @@
 
 {% load static %}
 
+{% load humanize %}
+
 {% block content %}
 
 
@@ -78,24 +80,24 @@
                                                         {% endif %}
                                                     </p>
                                                 </td>
-                                                <td class="text-center">{{item.quantity}}</td>
-                                                <td class="text-center">{{item.product.get_price.price}} x {{item.quantity}}</td>
+                                                <td class="text-center">{{ item.quantity }}</td>
+                                                <td class="text-center">₹{{ item.product.get_price.price | floatformat:"0" | intcomma}} x {{item.quantity}}</td>
                                             </tr>
                                             {% endfor %}
                                         </tbody>
                                         <tfoot>
                                             <tr>
                                                 <th colspan="2" class="text-right">Sub Total:</th>
-                                                <th class="text-center">Rs.{{subtotal}} ₹</th>
+                                                <th class="text-center">₹{{ subtotal | floatformat:"0" | intcomma}} Rs.</th>
                                             </tr>
                                             <tr>
                                                 <th colspan="2" class="text-right">Tax:</th>
-                                                <th class="text-center">Rs.{{order.tax}} ₹</th>
+                                                <th class="text-center">₹{{ order.tax | floatformat:"0" | intcomma}} Rs.</th>
                                             </tr>
                                             
                                             <tr>
                                                 <th colspan="2" class="text-right">Grand Total:</th>
-                                                <th class="text-center">Rs.{{order.order_total}} ₹</th>
+                                                <th class="text-center">₹{{ order.order_total | floatformat:"0" | intcomma}} Rs.</th>
                                             </tr>
                                         </tfoot>
                                     </table>

@@ -135,6 +135,7 @@
                 <div class="card shadow p-3 mb-2 bg-white rounded">
 
                     <div class="card-body">
+                      <h4 class="mb-4">Order Summery</h4>
                       <dl class="dlist-align">
                         <dt>Total price:</dt>
                         <dd class="text-right">₹{{ total | floatformat:"0" | intcomma }}</dd>
@@ -146,6 +147,12 @@
                     <dl class="dlist-align">
                       {% if coupon_discount_price %}
                       <dt>Coupon Discount:</dt>
+                      <dd class="text-right text-success">  {{ coupon_discount | floatformat:"0" | intcomma }}% OFF</dd>
+                      {% endif %}
+                  </dl>
+                    <dl class="dlist-align">
+                      {% if coupon_discount_price %}
+                      <dt>Coupon Price:</dt>
                       <dd class="text-right text-success"> ₹ -{{ coupon_discount_price | floatformat:"0" | intcomma }}</dd>
                       {% endif %}
                   </dl>

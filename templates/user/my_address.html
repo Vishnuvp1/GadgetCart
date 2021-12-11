@@ -44,7 +44,7 @@
                           </div>
                           <div class="card-footer">
                             {% if not address.default %}
-                            <a href="{% url 'default_address' address.id %}" class="text-dark">Set As Default</a>
+                            <a href="{% url 'default_address' address.id %}" class="btn btn-outline-info btn-sm">Set As Default</a>
                             {% else %}
                             <a>Default</a>
                             {% endif %}
@@ -76,7 +76,7 @@
                 <div class="row"> 
                     
                     <div class="col-md-12">
-                      <form action="" method="post">
+                      <form action="" method="post" id="myaddressform">
                         {% csrf_token %}
                         
                         
@@ -182,6 +182,40 @@
     
     </section>
     <!-- ========================= SECTION CONTENT END// ========================= -->
+
+    <script>
+      $(document).ready(function () {
+          $("#myaddressform").validate({
+              rules: {
+                address_line: {
+                        required: true,   
+                    },
+                    city: {
+                      required: true,
+                    },
+                    state: {
+                      required: true,
+                    
+                    },
+                    country: {
+                      required: true, 
+                    },
+                    phone_number: {
+                      required: true, 
+                      digits:true,
+                    },
+                    pin: {
+                      required: true, 
+                      digits:true,
+                      maxlength: 6,
+                      minlength: 6,
+                    },
+                 
+                }  
+          })
+      })
+  
+  </script>
 
 {% endblock %}
 

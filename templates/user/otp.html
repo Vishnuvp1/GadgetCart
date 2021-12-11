@@ -21,9 +21,13 @@
    
               
               <div class="form-group">
-                  <button type="submit" class="btn btn-primary btn-block"> Submit </button>
+                  <button type="submit" class="btn btn-primary btn-block p-2"> Submit </button>
+                  <button onclick="window.location.href = '{% url 'resent_otp' %}'; " id="resend" type="button" class="btn btn-outline-info btn-block">Resend</button>
               </div> <!-- form-group// -->    
           </form>
+          <div class="text-center mt-5">
+            <p style="color: red;">Resend OTP in <span class="js-timeout">2:00</span>.</p>
+          </div>
           </div> <!-- card-body.// -->
         </div> <!-- card .// -->
     
@@ -51,6 +55,45 @@
             }
         })
     })
+    </script>
+
+    <script>
+      var interval;
+    
+    function countdown() {
+      clearInterval(interval);
+      interval = setInterval( function() {
+          var timer = $('.js-timeout').html();
+          timer = timer.split(':');
+          var minutes = timer[0];
+          var seconds = timer[1];
+          seconds -= 1;
+          if (minutes < 0) return;
+          else if (seconds < 0 && minutes != 0) {
+              minutes -= 1;
+              seconds = 59;
+          }
+          else if (seconds < 10 && length.seconds != 2) seconds = '0' + seconds;
+    
+          $('.js-timeout').html(minutes + ':' + seconds);
+    
+          if (minutes == 0 && seconds == 0) clearInterval(interval);
+      }, 1000);
+    }
+    
+    $(document).ready(function () {
+      $('.js-timeout').text("1:00");
+      countdown();
+      $("#resend").attr("disabled", "disabled");
+      setTimeout(function() {
+          $("#resend").removeAttr("disabled");      
+      }, 60000);
+    });
+    
+    $('#js-resetTimer').click(function () {
+      $('.js-timeout').text("1:00");
+      clearInterval(interval);
+    });
     </script>
     
   

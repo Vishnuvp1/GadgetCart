@@ -3,6 +3,8 @@
 
 {% load static %}
 
+{% load humanize %}
+
 {% block content %}
 
 
@@ -74,11 +76,11 @@
       </div>
       <div class="row ml-1">
       <div>
-        <var class="price h6">₹{{ product.get_price.price }}</var>
+        <var class="price h6">₹{{ product.get_price.price | floatformat:"0" | intcomma  }}</var>
       </div> 
       <div class="ml-2">
         {% if not product.price == product.get_price.price %}
-        <var class="price text-secondary"><del>₹{{ product.price }}</del></var>
+        <var class="price text-secondary"><del>₹{{ product.price | floatformat:"0" | intcomma }}</del></var>
         {% endif %}
       </div>
       <div class="ml-2">

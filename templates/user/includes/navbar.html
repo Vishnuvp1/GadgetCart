@@ -1,102 +1,11 @@
 {% load static %}
 
 <body>
-<!-- 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand p-4" href="{% url 'homepage' %}"><h4>Gadgetcart</h4></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-  
-    <div class="collapse navbar-collapse Justify-content-between" id="navbarSupportedContent" style=" margin-left: 18%;">
-      <ul class="navbar-nav mr-auto">
-
-        {% if user.id is None %}
-        <li class="nav-item active">
-          <a class="nav-link" href="">Welcome Guest!</a>
-        </li>
-        {% else %}
-        <li class="nav-item active">
-          <a class="nav-link" href="">Welcome  {{user.first_name}}.</a>
-        </li>
-        {% endif %}
-        
-        <li class="nav-item active">
-          <a class="nav-link" href="{% url 'homepage' %}">Home</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'store' %}">Store</a>
-          </li>
-          
-        
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            All Category
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="{% url 'store' %}">All Products</a>
-            {% for category in links %}
-            <a class="dropdown-item" href="{{ category.get_url }}">{{ category.category_name }}</a>
-            {% endfor %}
-            
-          </div>
-        </li>
-        
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              All Brands
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="{% url 'store' %}">All Products</a>
-              {% for brand in link %}
-              <a class="dropdown-item" href="{{ brand.get_url }}">{{ brand.brand_name}}</a>
-              {% endfor %}
-             
-            </div>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'cart' %}">Cart ({{ cart_count }})</a>
-            </li>
-
-
-            {% if user.id is None %}
-            <li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'signin' %}">Sign In</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'register' %}">Register</a>
-              </li>
-          </li>
-            {% else %}
-            <li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'signout' %}">Logout</a>
-              </li>
-          </li>
-          {% endif %}          
-      </ul>
-      <ul class="navbar-nav ml-auto">
-      <form class="form-inline my-2 my-lg-0" action="{% url 'search' %}" class="search" method="get">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="keyword">
-        <button class="btn btn-primary text-white border-dark" type="submit">Search</button>
-      </form>
-    </ul>
- 
-  
-    </div>
-  </nav> -->
-
-
   <!-- Navbar -->
 <nav class="navbar navbar-expand-md navbar-light border-bottom">
 
   <a class="navbar-brand p-4" href="{% url 'homepage' %}">
-   <h4>Gadgetcart</h4>
+   <h3>Gadgetcart</h3>
   </a>
 
   <!-- Collapse button -->
@@ -131,7 +40,7 @@
       {% if request.user.is_authenticated %}
       <a class="nav-link" href="">Welcome {{ request.user.first_name }}.</a>
       {% else %}
-      <a href="">Welcome Guest!</a>
+      <a class="nav-link" href="">Welcome Guest!</a>
       {% endif %}
     </li>
    
@@ -143,8 +52,8 @@
   <!-- Links -->
   <div class="collapse navbar-collapse" id="basicExampleNav13">
 
-    <form class="navbar-search pl-0 ml-auto mt-3 mb-2 mt-md-0 mb-md-0 mr-3" action="{% url 'search' %}" class="search" method="get">
-      <div class="input-group d-block d-md-flex mb-0">
+    <form class="navbar-search pl-0 ml-auto mt-3 mb-2 mt-md-0 mb-md-0 mr-2" action="{% url 'search' %}" class="search" method="get">
+      <div class="input-group d-block d-md-flex mb-0 mt-1">
         <div class="input-group-prepend border border-info">
           <button class="bg-white border-white btn input-icon d-flex align-items-center" type="submit"><i
               class="fas fa-search text-dark mx-3"></i></button>
@@ -164,23 +73,23 @@
      
       <li class="nav-item pl-2 mt-1 mb-md-0 d-md-none d-xl-inline-block">
         <a href="{% url 'signin' %}" type="button"
-          class="btn btn-outline-info btn-md rounded-0">Sign
+          class="btn btn-outline-info btn-md rounded-0 p-2 ml-1">Sign
           in</a>
       </li>
       <li class="nav-item pl-2 mt-1 mb-md-0 d-md-none d-xl-inline-block">
         <a href="{% url 'register' %}" type="button"
-          class="btn btn-outline-info btn-md rounded-0">Sign
+          class="btn btn-outline-info btn-md rounded-0 p-2">Sign
           up</a>
       </li>
       {% else %}
      
       <li class="nav-item pl-2 mt-1 mb-md-0 d-md-none d-xl-inline-block">
         <a href="{% url 'dashboard' %}" type="button"
-          class="btn btn-outline-info btn-md rounded-0">Dashboard</a>
+          class="btn btn-outline-info btn-md rounded-0 p-2 ml-1">Dashboard</a>
       </li>
       <li class="nav-item pl-2 mt-1 mb-md-0 d-md-none d-xl-inline-block">
         <a href="{% url 'signout' %}" type="button"
-          class="btn btn-outline-info btn-md rounded-0">sign out</a>
+          class="btn btn-outline-info btn-md rounded-0 p-2">sign out</a>
       </li>
       {% endif %}
       <!-- <li>

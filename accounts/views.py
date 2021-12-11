@@ -48,7 +48,7 @@ def register(request):
             
             # Send otp
             send_otp(phone_number)
-            # messages.success(request, 'Registration Successful.')
+            messages.info(request, 'Enter Your Phone Number.')
             return redirect('verifyaccount')
     else:
         form = RegistrationForm()
@@ -175,6 +175,11 @@ def verifyaccount(request):
             return redirect('verifyaccount')
 
     return render(request, 'user/otp.html')
+
+def resent_otp(request):
+    phone_number = request.session['mobile']
+    send_otp(phone_number)
+    return redirect('verifyaccount')
 
 
 def mobile_login(request):

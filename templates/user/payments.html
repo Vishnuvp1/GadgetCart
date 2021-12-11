@@ -104,8 +104,8 @@
                                 </td>
                                 <td>
                                     <div class="price-wrap">
-                                        <var class="price">₹{{ product.get_price.price }}</var>
-                                        <small><del> ₹{{ product.price }} </del></small>
+                                        <var class="price">₹{{ product.get_price.price | floatformat:"0" | intcomma}}</var>
+                                        <small>₹{{ product.price | floatformat:"0" | intcomma}} Each</small>
                                     </div> <!-- price-wrap .// -->
                                 </td>
                             </tr>
@@ -138,8 +138,8 @@
                                     </td>
                                     <td>
                                         <div class="price-wrap">
-                                            <var class="price">₹{{ cart_item.sub_total }}</var>
-                                            <small> ₹{{ cart_item.product.get_price.price }} each</small>
+                                            <var class="price">₹{{ cart_item.sub_total | floatformat:"0" | intcomma}}</var>
+                                            <small> ₹{{ cart_item.product.get_price.price | floatformat:"0" | intcomma }} each</small>
                                         </div> <!-- price-wrap .// -->
                                     </td>
 
@@ -163,6 +163,7 @@
 
                 <div class="card shadow p-3 mb-5 bg-white rounded">
                     <div class="card-body">
+                        <h4 class="mb-4">Order Summery</h4>
                         <dl class="dlist-align">
                             <dt>Total price:</dt>
                             <dd class="text-right">₹{{ total | floatformat:"0" | intcomma }}</dd>
@@ -171,11 +172,18 @@
                             <dt>Tax:</dt>
                             <dd class="text-right"> ₹{{ tax | floatformat:"0" | intcomma }}</dd>
                         </dl>
+
+                        <dl class="dlist-align">
+                            {% if coupon_discount_price %}
+                            <dt>Coupon Discount:</dt>
+                            <dd class="text-right text-success">  {{ coupon_discount | floatformat:"0" | intcomma }}% OFF</dd>
+                            {% endif %}
+                        </dl>
                         
                         <dl class="dlist-align">
                             {% if coupon_discount_price %}
                             <dt>Coupon Discount:</dt>
-                            <dd class="text-right text-success"> ₹ -{{ coupon_discount_price | floatformat:"0" | intcomma }} <br> (-{{ coupon_discount | floatformat:"0" | intcomma }}%)</dd>
+                            <dd class="text-right text-success"> ₹ -{{ coupon_discount_price | floatformat:"0" | intcomma }}</dd>
                             
                             {% endif %}
                         </dl>
