@@ -25,31 +25,29 @@
 <body>
 <div class="container">
     <div class="text-center">
-        <h1>Brands Report</h1>
+        <h1>Products Report</h1>
     </div>
 </div>
 <table class="table table-bordered table-striped">
     <thead>
     <tr class="align-middle">
-        <th scope="col">SL. no</th>
-        <th scope="col">Customer Name</th>
-        <th scope="col">Product</th>
+        <th scope="col">No.</th>
+        <th scope="col">Product Name</th>
+        <th scope="col">Category</th>
+        <th scope="col">Brand</th>
         <th scope="col">Price</th>
-        <th scope="col">Quantity</th>
-        <th scope="col">Order Status</th>
-        <th scope="col">Update date</th>
+        <th scope="col">Stock</th>
     </tr>
     </thead>
     <tbody>
     {% for product in products %}
         <tr>
             <td>{{ forloop.counter }}</td>
-            <td>{{ product.product_name}}</td>
+            <td>{{ product.product_name }}</td>
             <td>{{ product.category.category_name }}</td>
             <td>{{ product.brand.brand_name }}</td>
             <td>₹{{ product.price | intcomma }}</td>
             <td>{{ product.stock }}</td>
-            <td>{{ product.updated_at | naturaltime}}</td>
         </tr>
     {% endfor %}
 
