@@ -380,12 +380,19 @@ def order_detail(request, order_id):
     order_detail = OrderProduct.objects.filter(order__order_number=order_id)
     order = Order.objects.get(order_number=order_id)
     subtotal = 0
+    tax = 0
+    g_total = 0
     for i in order_detail:
-        subtotal += i.product_price * i.quantity
+            offerprice = i.product.get_price()
+            subtotal += offerprice['price'] * i.quantity
+    tax = (2*subtotal)/100
+    g_total = subtotal + tax
     context = {
         'order_detail' : order_detail,
         'order' : order,
-        'subtotal' : subtotal
+        'subtotal' : subtotal,
+        'tax' : tax,
+        'g_total' : g_total
     }
     return render(request, 'user/order_detail.html', context)
 

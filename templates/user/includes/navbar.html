@@ -52,7 +52,7 @@
   <!-- Links -->
   <div class="collapse navbar-collapse" id="basicExampleNav13">
 
-    <form class="navbar-search pl-0 ml-auto mt-3 mb-2 mt-md-0 mb-md-0 mr-2" action="{% url 'search' %}" class="search" method="get">
+    <form class="navbar-search pl-0 ml-auto mt-3 mb-2 mt-md-0 mb-md-0 mr-4" action="{% url 'search' %}" class="search" method="get">
       <div class="input-group d-block d-md-flex mb-0 mt-1">
         <div class="input-group-prepend border border-info">
           <button class="bg-white border-white btn input-icon d-flex align-items-center" type="submit"><i
@@ -71,36 +71,29 @@
      
       {% if user.id is None %}
      
-      <li class="nav-item pl-2 mt-1 mb-md-0 d-md-none d-xl-inline-block">
+      <li class="nav-item nav1 pl-2 mt-1 mb-md-0 d-md-none d-xl-inline-block">
         <a href="{% url 'signin' %}" type="button"
-          class="btn btn-outline-info btn-md rounded-0 p-2 ml-1">Sign
+          class="p-2 ml-1">Sign
           in</a>
       </li>
-      <li class="nav-item pl-2 mt-1 mb-md-0 d-md-none d-xl-inline-block">
+      <li class="nav-item mt-1 mb-md-0 mr-2 d-md-none d-xl-inline-block">
         <a href="{% url 'register' %}" type="button"
-          class="btn btn-outline-info btn-md rounded-0 p-2">Sign
+          class="p-2">Sign
           up</a>
       </li>
       {% else %}
      
-      <li class="nav-item pl-2 mt-1 mb-md-0 d-md-none d-xl-inline-block">
+      <li class="nav-item nav2 pl-2 mt-1 mb-md-0 d-md-none d-xl-inline-block">
         <a href="{% url 'dashboard' %}" type="button"
-          class="btn btn-outline-info btn-md rounded-0 p-2 ml-1">Dashboard</a>
+          class="p-2 ml-1">Dashboard</a>
       </li>
-      <li class="nav-item pl-2 mt-1 mb-md-0 d-md-none d-xl-inline-block">
+      <li class="nav-item mt-1 mb-md-0 mr-2 d-md-none d-xl-inline-block">
         <a href="{% url 'signout' %}" type="button"
-          class="btn btn-outline-info btn-md rounded-0 p-2">sign out</a>
+          class="p-2">sign out</a>
       </li>
       {% endif %}
-      <!-- <li>
-      <a href="{% url 'cart' %}" class="widget-header pl-3">
-        <span class="badge badge-pill badge-danger notify">{{ cart_count }}</span>
-            <div class="icon icon-sm rounded-circle border"><i
-                    class="fa fa-shopping-cart"></i></div>
-            
-        </a>
-      </li> -->
-      <div class="ml-auto">
+    
+      <div class="ml-auto carticon mr-4">
         <li class="nav-item px-3 text-uppercase mb-0 position-relative d-lg-flex mt-2">
 
           <a href="{% url 'cart' %}" class="cart position-relative d-inline-flex" aria-label="View your shopping cart">
@@ -141,5 +134,32 @@
     background-color: #418deb;
     border-radius: 50%;
   }
+  .fa-shopping-cart{
+    color: #113951;
+  }
 
+  .fa-shopping-cart:hover{
+    color: #4ea3b8;
+  }
+
+</style>
+
+<style>
+  @media only screen and (max-width: 600px) {
+    .navbar-brand{
+      margin-top: 5px !important;
+      margin-left: 20px !important;
+    }
+    .navbar-toggler{
+      margin-right: 45px !important;
+    }
+    .breadcrumb{
+      justify-content: center;
+      margin-top: -10px;
+    }
+   
+    .carticon{
+      margin-right: 15px;
+    }
+  }
 </style>
