@@ -244,16 +244,22 @@ def order_complete(request):
         ordered_products = OrderProduct.objects.filter(order_id=order.id)
         order.is_ordered = True
         order.save()
+        tax = 0
+        g_total = 0
         subtotal = 0
         for i in ordered_products:
             offerprice = i.product.get_price()
             subtotal += offerprice['price'] * i.quantity
+        tax = (2*subtotal)/100
+        g_total = subtotal + tax
 
         context = {
             'order' : order,
             'ordered_products' : ordered_products,
             'order_number' : order.order_number,
-            'subtotal' : subtotal
+            'subtotal' : subtotal,
+            'tax' : tax,
+            'g_total' : g_total,
 
         }
         return render(request, 'user/order_complete.html',context)
@@ -263,11 +269,14 @@ def order_complete(request):
         try:
             order = Order.objects.get(order_number=order_number, is_ordered=True)
             ordered_products = OrderProduct.objects.filter(order_id=order.id)
-
+            tax = 0
+            g_total = 0
             subtotal = 0
             for i in ordered_products:
                 offerprice = i.product.get_price()
                 subtotal += offerprice['price'] * i.quantity
+            tax = (2*subtotal)/100
+            g_total = subtotal + tax
 
             payment = Payment.objects.get(payment_id=transID)
 
@@ -277,20 +286,24 @@ def order_complete(request):
                 'order_number' : order.order_number,
                 'transID' : payment.payment_id,
                 'payment' : payment,
-                'subtotal' : subtotal
+                'subtotal' : subtotal,
+                'tax' : tax,
+                'g_total' : g_total,
 
             }
             return render(request, 'user/order_complete.html',context)
 
         except:
             try:
-               
                 order = Order.objects.get(order_number=order_number, is_ordered=True)
                 ordered_products = OrderProduct.objects.filter(order_id=order.id)
-
+                tax = 0
+                g_total = 0
                 subtotal = 0
                 for i in ordered_products:
                     subtotal += i.product_price
+                tax = (2*subtotal)/100
+                g_total = subtotal + tax
                 razorpay_order_id=request.session['razorpay_order_id']
 
                 payment = Payment.objects.get(payment_id=razorpay_order_id)
@@ -302,6 +315,8 @@ def order_complete(request):
                     'order_id': payment.payment_id,
                     'payment': payment,
                     'subtotal': subtotal,
+                    'tax' : tax,
+                    'g_total' : g_total,
                 }
                 return render(request, 'user/order_complete.html', context)
             except (Order.DoesNotExist):

@@ -92,12 +92,12 @@
                                             </tr>
                                             <tr>
                                                 <th colspan="2" class="text-right">Tax:</th>
-                                                <th class="text-center">₹{{ order.tax | floatformat:"0" | intcomma}} Rs.</th>
+                                                <th class="text-center">₹{{ tax | floatformat:"0" | intcomma}} Rs.</th>
                                             </tr>
                                             
                                             <tr>
                                                 <th colspan="2" class="text-right">Grand Total:</th>
-                                                <th class="text-center">₹{{ order.order_total | floatformat:"0" | intcomma}} Rs.</th>
+                                                <th class="text-center">₹{{ g_total | floatformat:"0" | intcomma}} Rs.</th>
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -119,5 +119,7 @@
     </div>
 </div>
 </div>
+
+<a href="btn btn-outline-info"></a>
 
 {% endblock %}

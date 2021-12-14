@@ -97,7 +97,7 @@
               {% if single_product.stock <= 0 %} 
               <h5 class="text-danger">Out of stock</h5>
                 {% else %}
-                <button type="submit" class="btn btn-primary m-2" name="add_to_cart_button"> <span class="text">Add to cart</span> <i class="fas fa-shopping-cart text-white"></i> </button>
+                <button type="submit" class="btn btn-primary m-2 border-dark" name="add_to_cart_button"> <span class="text">Add to cart</span> <i class="fas fa-shopping-cart text-white"></i> </button>
                 <a href="{% url 'buy_now' single_product.id %}" class="btn btn-outline-danger m-2 pl-4" name="buy_now_button"> <span class="text">Buy Now</span> <i class="fas fa-bolt ml-3"></i> </a>
                    </a>
 
