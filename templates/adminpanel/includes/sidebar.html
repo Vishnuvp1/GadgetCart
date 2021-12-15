@@ -1,6 +1,18 @@
 {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 
-<!-- Begin page -->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    
+</head>
+<body>
+
+    <!-- Begin page -->
 <div class="wrapper">
     <!-- ========== Left Sidebar Start ========== -->
     <div class="leftside-menu" style="    width: 260
@@ -41,8 +53,8 @@
                  <!-- <li class="side-nav-title side-nav-item">Navigation</li>  -->
 
                 <li class="side-nav-item">
-                    <a href="{% url 'adminpanel' %}" class="side-nav-link">
-                        <i class="uil-home-alt"></i>
+                    <a href="{% url 'adminpanel' %}" class="side-nav-link"> 
+                        <i class="far fa-home"></i>
                         <span> Dashboards </span>
                     </a>
                 </li>
@@ -52,7 +64,7 @@
                 <li class="side-nav-item">
                     <a data-bs-toggle="collapse" href="#sidebarEcommerce" aria-expanded="false"
                         aria-controls="sidebarEcommerce" class="side-nav-link">
-                        <i class="uil-store"></i>
+                        <i class="far fa-store"></i>
                         <span> Products</span>
                         <span class="menu-arrow"></span>
                     </a>
@@ -74,7 +86,7 @@
                 <li class="side-nav-item">
                     <a data-bs-toggle="collapse" href="#sidebarEmail" aria-expanded="false" aria-controls="sidebarEmail"
                         class="side-nav-link">
-                        <i class="uil-envelope"></i>
+                      <i class="far fa-phone-laptop"></i>
                         <span> Category </span>
                         <span class="menu-arrow"></span>
                     </a>
@@ -93,7 +105,7 @@
                 <li class="side-nav-item">
                     <a data-bs-toggle="collapse" href="#sidebarMaps" aria-expanded="false" aria-controls="sidebarMaps"
                         class="side-nav-link">
-                        <i class="uil-location-point"></i>
+                        <i class="far fa-search-dollar"></i>
                         <span> Brands </span>
                         <span class="menu-arrow"></span>
                     </a>
@@ -112,7 +124,7 @@
                 <li class="side-nav-item">
                     <a data-bs-toggle="collapse" href="#sidebarProjects" aria-expanded="false"
                         aria-controls="sidebarProjects" class="side-nav-link">
-                        <i class="uil-briefcase"></i>
+                        <i class="far fa-shopping-cart"></i>
                         <span> Orders </span>
                         <span class="menu-arrow"></span>
                     </a>
@@ -131,7 +143,7 @@
 
                 <li class="side-nav-item">
                     <a data-bs-toggle="collapse" href="#sidebarTables" aria-expanded="false" aria-controls="sidebarTables" class="side-nav-link">
-                        <i class="uil-table"></i>
+                        <i class="far fa-tags"></i>
                         <span> Offers </span>
                         <span class="menu-arrow"></span>
                     </a>
@@ -156,7 +168,7 @@
                 <li class="side-nav-item">
                     <a data-bs-toggle="collapse" href="#sidebarPages" aria-expanded="false" aria-controls="sidebarPages"
                         class="side-nav-link">
-                        <i class="uil-copy-alt"></i>
+                        <i class="far fa-ad"></i>
                         <span> Banners </span>
                         <span class="menu-arrow"></span>
                     </a>
@@ -178,7 +190,7 @@
                 <li class="side-nav-item">
                     <a data-bs-toggle="collapse" href="#sidebarLayouts" aria-expanded="false"
                         aria-controls="sidebarLayouts" class="side-nav-link">
-                        <i class="uil-window"></i>
+                        <i class="far fa-gift-card"></i>
                         <span> Coupons </span>
                         <span class="menu-arrow"></span>
                     </a>
@@ -200,7 +212,7 @@
 
                 <li class="side-nav-item">
                     <a href="{% url 'userdetails' %}" class="side-nav-link">
-                        <i class="uil-user"></i>
+                        <i class="far fa-users"></i>
                         <span> Users </span>
                     </a>
                 </li>
@@ -208,7 +220,7 @@
 
                 <li class="side-nav-item">
                     <a href="{% url 'report' %}" class="side-nav-link">
-                        <i class="uil-layer-group"></i>
+                        <i class="far fa-chart-bar"></i>
                         <span> Report </span>
                     </a>
                 </li>
@@ -225,3 +237,6 @@
 
     </div>
     <!-- Left Sidebar End -->
+    
+</body>
+</html>
