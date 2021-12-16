@@ -1,5 +1,7 @@
 from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
+from django.template.loader import render_to_string
+import weasyprint
 from accounts.models import Account
 from accounts.views import phone_number
 from carts.models import CartItem
@@ -13,6 +15,7 @@ import json
 from .send_sms import send_sms
 import razorpay
 from django.conf import settings
+from django.views.decorators.cache import never_cache
 
 # Create your views here.
 
@@ -112,7 +115,7 @@ def payments(request):
     return JsonResponse(data)
 
 
-
+@never_cache
 def place_order(request, total=0, quantity=0):
     current_user = request.user
     
@@ -485,3 +488,24 @@ def razorpay_payment_verification(request):
 
 def payment_failed(request):
     return render(request, 'user/payment_failed.html')
+
+
+def order_pdf(request):
+    order_number = request.session['order_number']
+    print(order_number)
+    order = Order.objects.get(order_number=order_number, is_ordered=True)
+    ordered_products = OrderProduct.objects.filter(order_id=order.id)
+    tax = 0
+    g_total = 0
+    subtotal = 0
+    for i in ordered_products:
+        offerprice = i.product.get_price()
+        subtotal += offerprice['price'] * i.quantity
+    tax = (2*subtotal)/100
+    g_total = subtotal + tax
+    
+    html = render_to_string('user/order_pdf.html', {'ordered_products': ordered_products , 'tax' : tax , 'g_total' : g_total, 'subtotal' : subtotal})
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'filename=order.pdf'
+    weasyprint.HTML(string=html, base_url=request.build_absolute_uri()).write_pdf(response)
+    return response
