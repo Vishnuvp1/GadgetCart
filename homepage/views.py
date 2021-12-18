@@ -7,14 +7,10 @@ from store.models import Product
 
 def homepage(request):
     
-    products = Product.objects.all().filter(is_available=True)
+    products = Product.objects.all().filter(is_available=True, )
     banners = Banner.objects.all()
-
-
     context = {
         'products' : products,
         'banners': banners
-
     }
-
     return render(request,'user/home.html',context)

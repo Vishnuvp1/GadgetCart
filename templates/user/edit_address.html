@@ -24,7 +24,7 @@
                 <div class="row"> 
                     
                     <div class="col-md-12">
-                      <form action="" method="post">
+                      <form action="" method="post" id="editaddressform">
                         {% csrf_token %}
                         
                         
@@ -129,6 +129,40 @@
     
     </section>
     <!-- ========================= SECTION CONTENT END// ========================= -->
+
+    <script>
+      $(document).ready(function () {
+          $("#editaddressform").validate({
+              rules: {
+                    address_line: {
+                        required: true,   
+                    },
+                    city: {
+                      required: true,
+                    },
+                    state: {
+                      required: true,
+                    
+                    },
+                    country: {
+                      required: true, 
+                    },
+                    phone_number: {
+                      required: true, 
+                      digits:true,
+                    },
+                    pin: {
+                      required: true, 
+                      digits:true,
+                      maxlength: 6,
+                      minlength: 6,
+                    },
+                 
+                }  
+          })
+      })
+  
+  </script>
 
 {% endblock %}
 

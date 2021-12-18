@@ -506,6 +506,6 @@ def order_pdf(request):
     
     html = render_to_string('user/order_pdf.html', {'ordered_products': ordered_products , 'tax' : tax , 'g_total' : g_total, 'subtotal' : subtotal})
     response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'filename=order.pdf'
+    response['Content-Disposition'] = 'filename=Invoice.pdf'
     weasyprint.HTML(string=html, base_url=request.build_absolute_uri()).write_pdf(response)
     return response
