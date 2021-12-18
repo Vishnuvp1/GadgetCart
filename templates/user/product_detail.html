@@ -94,14 +94,16 @@
               </div> <!-- row.// -->
              
               <hr>
+              <div class="ml-2">
               {% if single_product.stock <= 0 %} 
               <h5 class="text-danger">Out of stock</h5>
                 {% else %}
-                <button type="submit" class="btn btn-primary m-2 border-dark" name="add_to_cart_button"> <span class="text">Add to cart</span>  <i class="fas fa fa-shopping-cart text-white"></i></button>
-                <a href="{% url 'buy_now' single_product.id %}" class="btn btn-outline-danger m-2 pl-4" name="buy_now_button"> <span class="text">Buy Now</span> <i class="fas fa fa-bolt ml-3"></i></a>
+                <button type="submit" class="btn btn-primary border-dark" name="add_to_cart_button"> <span class="text">Add to cart</span>  <i class="fas fa fa-shopping-cart text-white"></i></button>
+                <a href="{% url 'buy_now' single_product.id %}" class="btn btn-outline-danger pl-4" name="buy_now_button"> <span class="text">Buy Now</span> <i class="fas fa fa-bolt ml-4"></i></a>
                    </a>
 
                 {% endif %}
+              </div>
                 
             </article> <!-- product-info-aside .// -->
           </form>
@@ -254,6 +256,15 @@
 .btn-danger:hover{
   background-color: #fd7a22;
 }
+</style>
+
+<style>
+  @media only screen and (max-width: 600px) {
+    
+    .btn-primary{
+      margin-bottom: 8px;
+    }
+  }
 </style>
 
 

@@ -20,9 +20,10 @@
                 <div class="row row-cols-1 row-cols-md-2 g-4">
                     {% for address in addresses %}
                     <div class="col">
-                      <div class="card" onclick="billingAddress('{{ address.id }}')">
+                      <div class="card" >
                         <div class="card-header">
                             <div class="row">
+                              <input type="radio" onclick="billingAddress('{{ address.id }}')" name="address">
                             <h5 class="mt-3 ml-3">Address {{forloop.counter}}</h5>
                             <h6 class="mt-3 ml-auto mr-3" style="border: 1px solid gray; padding: 6px;">{{address.type}}</h6>
                         </div>  
@@ -105,6 +106,10 @@
 
 
                               <div class="form-row">
+                                <div class="col form-group">
+                                  <label for="">Pin</label>
+                                  <input type="text" name="city" class="form-control" required id="pin" value="{{default_address.pin}}"> 
+                                </div>
                                 <div class="col form-group">
                                   <label for="">City</label>
                                   <input type="text" name="city" class="form-control" required id="city" value="{{default_address.city}}"> 
@@ -228,6 +233,7 @@
       let email = document.getElementById("email-" + id).textContent;
       let phone_number = document.getElementById("phone_number-" + id).textContent;
       let address_line = document.getElementById("address_line-" + id).textContent;
+      let pin = document.getElementById("pin-" + id).textContent;
       let city = document.getElementById("city-" + id).textContent;
       let state = document.getElementById("state-" + id).textContent;
       let country = document.getElementById("country-" + id).textContent;
@@ -237,6 +243,7 @@
       document.getElementById("email").value = email;
       document.getElementById("phone").value = phone_number;
       document.getElementById("address_line_1").value = address_line;
+      document.getElementById("pin").value = pin;
       document.getElementById("city").value = city;
       document.getElementById("state").value = state;
       document.getElementById("country").value = country;
