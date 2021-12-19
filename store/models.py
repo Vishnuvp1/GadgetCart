@@ -14,7 +14,7 @@ from django.apps import apps
 class Product(models.Model):
     product_name  = models.CharField(max_length=200, unique=True)
     slug          = models.SlugField(max_length=200, unique=True)
-    description   = models.TextField(max_length=500, blank=True)
+    description   = models.TextField(max_length=900, blank=True)
     price         = models.IntegerField()
     image1        = models.ImageField(upload_to='photos/products')
     image2        = models.ImageField(upload_to='photos/products')
