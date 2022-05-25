@@ -5,18 +5,13 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('offer', '0003_auto_20211204_0706'),
-    ]
+    dependencies = [("offer", "0003_auto_20211204_0706")]
 
     operations = [
-        migrations.RemoveField(
-            model_name='coupon',
-            name='used',
-        ),
+        migrations.RemoveField(model_name="coupon", name="used"),
         migrations.AlterField(
-            model_name='coupon',
-            name='is_active',
+            model_name="coupon",
+            name="is_active",
             field=models.BooleanField(default=True),
         ),
     ]

@@ -5,15 +5,13 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('brand', '0001_initial'),
-    ]
+    dependencies = [("brand", "0001_initial")]
 
     operations = [
         migrations.AddField(
-            model_name='brand',
-            name='stock',
+            model_name="brand",
+            name="stock",
             field=models.IntegerField(default=1),
             preserve_default=False,
-        ),
+        )
     ]

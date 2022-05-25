@@ -6,14 +6,9 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('brand', '0003_remove_brand_stock'),
-        ('store', '0010_reviewrating'),
-        ('banners', '0001_initial'),
+        ("brand", "0003_remove_brand_stock"),
+        ("store", "0010_reviewrating"),
+        ("banners", "0001_initial"),
     ]
 
-    operations = [
-        migrations.RenameModel(
-            old_name='Banners',
-            new_name='Banner',
-        ),
-    ]
+    operations = [migrations.RenameModel(old_name="Banners", new_name="Banner")]

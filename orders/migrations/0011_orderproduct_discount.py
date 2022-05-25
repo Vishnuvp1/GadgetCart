@@ -5,14 +5,12 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('orders', '0010_orderproduct_status'),
-    ]
+    dependencies = [("orders", "0010_orderproduct_status")]
 
     operations = [
         migrations.AddField(
-            model_name='orderproduct',
-            name='discount',
+            model_name="orderproduct",
+            name="discount",
             field=models.FloatField(default=0),
-        ),
+        )
     ]

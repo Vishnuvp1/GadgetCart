@@ -1,9 +1,10 @@
 from django.db import models
-from store.models import Product, Variation    
+from store.models import Product, Variation
 from accounts.models import Account
 
 
 # Create your models here.
+
 
 class Cart(models.Model):
     cart_id = models.CharField(max_length=250, blank=True)
@@ -21,11 +22,9 @@ class CartItem(models.Model):
     quantity = models.IntegerField()
     is_active = models.BooleanField(default=True)
 
-
     def sub_total(self):
         offerprice = self.product.get_price()
-        return offerprice['price'] * self.quantity
-
+        return offerprice["price"] * self.quantity
 
     def __unicode__(self):
         return self.product

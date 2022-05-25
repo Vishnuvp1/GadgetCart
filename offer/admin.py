@@ -4,14 +4,17 @@ from offer.models import BrandOffer, CategoryOffer, Coupon, ProductOffer, Redeem
 
 # Register your models here.
 
+
 class BrandOfferAdmin(admin.ModelAdmin):
-    list_display = ('brand', 'discount_offer', 'is_active')
+    list_display = ("brand", "discount_offer", "is_active")
+
 
 class CategoryOfferAdmin(admin.ModelAdmin):
-    list_display = ('category', 'discount_offer', 'is_active')
+    list_display = ("category", "discount_offer", "is_active")
+
 
 class ProductOfferAdmin(admin.ModelAdmin):
-    list_display = ('product', 'discount_offer', 'is_active')
+    list_display = ("product", "discount_offer", "is_active")
 
 
 admin.site.register(BrandOffer, BrandOfferAdmin)

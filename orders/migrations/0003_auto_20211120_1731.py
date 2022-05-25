@@ -5,14 +5,12 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('orders', '0002_order_city'),
-    ]
+    dependencies = [("orders", "0002_order_city")]
 
     operations = [
         migrations.AlterField(
-            model_name='order',
-            name='order_note',
+            model_name="order",
+            name="order_note",
             field=models.CharField(blank=True, max_length=100),
-        ),
+        )
     ]

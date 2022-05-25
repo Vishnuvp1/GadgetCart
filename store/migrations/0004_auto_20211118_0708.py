@@ -5,14 +5,14 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('store', '0003_variation'),
-    ]
+    dependencies = [("store", "0003_variation")]
 
     operations = [
         migrations.AlterField(
-            model_name='variation',
-            name='variation_category',
-            field=models.CharField(choices=[('color', 'color'), ('memory', 'memory')], max_length=100),
-        ),
+            model_name="variation",
+            name="variation_category",
+            field=models.CharField(
+                choices=[("color", "color"), ("memory", "memory")], max_length=100
+            ),
+        )
     ]

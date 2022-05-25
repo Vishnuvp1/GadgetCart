@@ -5,17 +5,9 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('orders', '0007_auto_20211122_1403'),
-    ]
+    dependencies = [("orders", "0007_auto_20211122_1403")]
 
     operations = [
-        migrations.RemoveField(
-            model_name='orderproduct',
-            name='color',
-        ),
-        migrations.RemoveField(
-            model_name='orderproduct',
-            name='memory',
-        ),
+        migrations.RemoveField(model_name="orderproduct", name="color"),
+        migrations.RemoveField(model_name="orderproduct", name="memory"),
     ]

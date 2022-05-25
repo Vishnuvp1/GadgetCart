@@ -9,19 +9,43 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('brand', '0003_remove_brand_stock'),
-        ('store', '0010_reviewrating'),
+        ("brand", "0003_remove_brand_stock"),
+        ("store", "0010_reviewrating"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Banners',
+            name="Banners",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('banner_name', models.CharField(max_length=100, unique=True)),
-                ('banner_img', models.ImageField(upload_to='photos/banners')),
-                ('brand', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='brand.brand')),
-                ('product', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='store.product')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("banner_name", models.CharField(max_length=100, unique=True)),
+                ("banner_img", models.ImageField(upload_to="photos/banners")),
+                (
+                    "brand",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="brand.brand",
+                    ),
+                ),
+                (
+                    "product",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="store.product",
+                    ),
+                ),
             ],
-        ),
+        )
     ]

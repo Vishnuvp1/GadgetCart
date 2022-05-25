@@ -5,14 +5,12 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('category', '0005_auto_20211112_1354'),
-    ]
+    dependencies = [("category", "0005_auto_20211112_1354")]
 
     operations = [
         migrations.AlterField(
-            model_name='category',
-            name='slug',
+            model_name="category",
+            name="slug",
             field=models.SlugField(max_length=100, unique=True),
-        ),
+        )
     ]

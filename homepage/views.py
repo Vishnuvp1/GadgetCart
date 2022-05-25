@@ -5,12 +5,10 @@ from store.models import Product
 
 # Create your views here.
 
+
 def homepage(request):
-    
-    products = Product.objects.all().filter(is_available=True, )
+
+    products = Product.objects.all().filter(is_available=True)
     banners = Banner.objects.all()
-    context = {
-        'products' : products,
-        'banners': banners
-    }
-    return render(request,'user/home.html',context)
+    context = {"products": products, "banners": banners}
+    return render(request, "user/home.html", context)

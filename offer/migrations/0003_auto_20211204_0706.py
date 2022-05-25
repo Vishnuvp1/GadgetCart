@@ -5,14 +5,12 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('offer', '0002_coupon_redeemedcoupon'),
-    ]
+    dependencies = [("offer", "0002_coupon_redeemedcoupon")]
 
     operations = [
         migrations.AlterField(
-            model_name='coupon',
-            name='limit',
+            model_name="coupon",
+            name="limit",
             field=models.PositiveIntegerField(null=True),
-        ),
+        )
     ]

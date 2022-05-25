@@ -21,14 +21,13 @@ from django.conf import settings
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('homepage.urls')),
-    path('adminpanel/',include('adminpanel.urls')),
-    path('accounts/',include('accounts.urls')),
-    path('store/',include('store.urls')),
-    path('carts/',include('carts.urls')),
-    path('offer/', include('offer.urls')),
-    
+    path("admin/", admin.site.urls),
+    path("", include("homepage.urls")),
+    path("adminpanel/", include("adminpanel.urls")),
+    path("accounts/", include("accounts.urls")),
+    path("store/", include("store.urls")),
+    path("carts/", include("carts.urls")),
+    path("offer/", include("offer.urls")),
     # Orders
-    path('orders/', include('orders.urls')),
+    path("orders/", include("orders.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

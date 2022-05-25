@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class OfferConfig(AppConfig):
-    name = 'offer'
+    name = "offer"

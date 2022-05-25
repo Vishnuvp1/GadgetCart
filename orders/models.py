@@ -7,20 +7,20 @@ from store.models import Product, Variation
 
 
 STATUS1 = (
-        ('New', 'New'),
-        ('Placed', 'Placed'),
-        ('Shipped', 'Shipped'),
-        ('Accepted', 'Accepted'),
-        ('Delivered', 'Delivered'),
-        ('Canceled', 'Canceled'),
-    )
+    ("New", "New"),
+    ("Placed", "Placed"),
+    ("Shipped", "Shipped"),
+    ("Accepted", "Accepted"),
+    ("Delivered", "Delivered"),
+    ("Canceled", "Canceled"),
+)
 
 
 class Payment(models.Model):
     user = models.ForeignKey(Account, on_delete=models.CASCADE)
     payment_id = models.CharField(max_length=100)
     payment_method = models.CharField(max_length=100)
-    amound_paid = models.CharField(max_length=100) # This is the total amount paid
+    amound_paid = models.CharField(max_length=100)  # This is the total amount paid
     status = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -30,14 +30,16 @@ class Payment(models.Model):
 
 class Order(models.Model):
     STATUS = (
-        ('New', 'New'),
-        ('Accepted', 'Accepted'),
-        ('Completed', 'Complated'),
-        ('Cancelled', 'Cancelled'),
+        ("New", "New"),
+        ("Accepted", "Accepted"),
+        ("Completed", "Complated"),
+        ("Cancelled", "Cancelled"),
     )
 
     user = models.ForeignKey(Account, on_delete=SET_NULL, null=True)
-    payment = models.ForeignKey(Payment, on_delete=models.SET_NULL, blank=True, null=True)
+    payment = models.ForeignKey(
+        Payment, on_delete=models.SET_NULL, blank=True, null=True
+    )
     order_number = models.CharField(max_length=20)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
@@ -51,27 +53,27 @@ class Order(models.Model):
     order_note = models.CharField(max_length=100, blank=True)
     order_total = models.FloatField()
     tax = models.FloatField()
-    status = models.CharField(max_length=10, choices=STATUS, default='New')
+    status = models.CharField(max_length=10, choices=STATUS, default="New")
     ip = models.CharField(blank=True, max_length=20)
     is_ordered = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def full_name(self):
-        return f'{self.first_name} {self.last_name}'
+        return f"{self.first_name} {self.last_name}"
 
     def full_address(self):
-        return f'{self.address_line_1} {self.address_line_2}'
+        return f"{self.address_line_1} {self.address_line_2}"
 
     def __str__(self):
         return self.first_name
 
-    
-
 
 class OrderProduct(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
-    payment = models.ForeignKey(Payment, on_delete=models.SET_NULL, blank=True, null=True)
+    payment = models.ForeignKey(
+        Payment, on_delete=models.SET_NULL, blank=True, null=True
+    )
     user = models.ForeignKey(Account, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     variations = models.ManyToManyField(Variation, blank=True)
@@ -81,8 +83,7 @@ class OrderProduct(models.Model):
     discount = models.FloatField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    status = models.CharField(max_length=10, choices=STATUS1, default='New')
+    status = models.CharField(max_length=10, choices=STATUS1, default="New")
 
     def __str__(self):
         return self.product.product_name
-

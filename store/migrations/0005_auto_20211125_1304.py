@@ -6,14 +6,12 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('store', '0004_auto_20211118_0708'),
-    ]
+    dependencies = [("store", "0004_auto_20211118_0708")]
 
     operations = [
         migrations.AlterField(
-            model_name='variation',
-            name='variation_value',
-            field=colorfield.fields.ColorField(default='#FF0000', max_length=18),
-        ),
+            model_name="variation",
+            name="variation_value",
+            field=colorfield.fields.ColorField(default="#FF0000", max_length=18),
+        )
     ]

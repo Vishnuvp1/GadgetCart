@@ -5,14 +5,23 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('orders', '0009_auto_20211122_1410'),
-    ]
+    dependencies = [("orders", "0009_auto_20211122_1410")]
 
     operations = [
         migrations.AddField(
-            model_name='orderproduct',
-            name='status',
-            field=models.CharField(choices=[('New', 'New'), ('Placed', 'Placed'), ('Shipped', 'Shipped'), ('Accepted', 'Accepted'), ('Delivered', 'Delivered'), ('Canceled', 'Canceled')], default='New', max_length=10),
-        ),
+            model_name="orderproduct",
+            name="status",
+            field=models.CharField(
+                choices=[
+                    ("New", "New"),
+                    ("Placed", "Placed"),
+                    ("Shipped", "Shipped"),
+                    ("Accepted", "Accepted"),
+                    ("Delivered", "Delivered"),
+                    ("Canceled", "Canceled"),
+                ],
+                default="New",
+                max_length=10,
+            ),
+        )
     ]

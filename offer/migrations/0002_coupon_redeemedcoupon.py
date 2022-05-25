@@ -9,30 +9,62 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('offer', '0001_initial'),
+        ("offer", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Coupon',
+            name="Coupon",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('coupon_name', models.CharField(max_length=50)),
-                ('coupon_code', models.CharField(max_length=50, unique=True)),
-                ('discount', models.PositiveIntegerField(help_text='Offer in percentage', null=True)),
-                ('limit', models.PositiveIntegerField()),
-                ('used', models.PositiveIntegerField(default=0)),
-                ('valid_from', models.DateField()),
-                ('valid_to', models.DateField()),
-                ('is_active', models.BooleanField(default=False)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("coupon_name", models.CharField(max_length=50)),
+                ("coupon_code", models.CharField(max_length=50, unique=True)),
+                (
+                    "discount",
+                    models.PositiveIntegerField(
+                        help_text="Offer in percentage", null=True
+                    ),
+                ),
+                ("limit", models.PositiveIntegerField()),
+                ("used", models.PositiveIntegerField(default=0)),
+                ("valid_from", models.DateField()),
+                ("valid_to", models.DateField()),
+                ("is_active", models.BooleanField(default=False)),
             ],
         ),
         migrations.CreateModel(
-            name='RedeemedCoupon',
+            name="RedeemedCoupon",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('coupon', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='offer.coupon')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "coupon",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="offer.coupon"
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
     ]

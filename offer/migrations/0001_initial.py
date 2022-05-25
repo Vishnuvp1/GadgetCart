@@ -9,37 +9,94 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('brand', '0003_remove_brand_stock'),
-        ('category', '0008_auto_20211116_0826'),
-        ('store', '0009_auto_20211127_0516'),
+        ("brand", "0003_remove_brand_stock"),
+        ("category", "0008_auto_20211116_0826"),
+        ("store", "0009_auto_20211127_0516"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='ProductOffer',
+            name="ProductOffer",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('discount_offer', models.PositiveBigIntegerField(help_text='Offer in percentage')),
-                ('is_active', models.BooleanField(default=True)),
-                ('product', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='store.product')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "discount_offer",
+                    models.PositiveBigIntegerField(help_text="Offer in percentage"),
+                ),
+                ("is_active", models.BooleanField(default=True)),
+                (
+                    "product",
+                    models.OneToOneField(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="store.product",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='CategoryOffer',
+            name="CategoryOffer",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('discount_offer', models.PositiveBigIntegerField(help_text='Offer in percentage')),
-                ('is_active', models.BooleanField(default=True)),
-                ('category', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='category.category')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "discount_offer",
+                    models.PositiveBigIntegerField(help_text="Offer in percentage"),
+                ),
+                ("is_active", models.BooleanField(default=True)),
+                (
+                    "category",
+                    models.OneToOneField(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="category.category",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='BrandOffer',
+            name="BrandOffer",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('discount_offer', models.PositiveBigIntegerField(help_text='Offer in percentage')),
-                ('is_active', models.BooleanField(default=True)),
-                ('brand', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='brand.brand')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "discount_offer",
+                    models.PositiveBigIntegerField(help_text="Offer in percentage"),
+                ),
+                ("is_active", models.BooleanField(default=True)),
+                (
+                    "brand",
+                    models.OneToOneField(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="brand.brand",
+                    ),
+                ),
             ],
         ),
     ]
